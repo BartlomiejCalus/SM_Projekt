@@ -1,2 +1,3 @@
 # SM_Projekt
-TEST 1
+
+#Wstawię w wolnej chwili coś dokładniej
