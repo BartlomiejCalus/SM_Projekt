@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet'>
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <title>Wordle</title>
+    <script defer src="app.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Passion+One&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div class="menu">
+        <button id="login_button">Zaloguj Się</button>
+
+
+    </div>
+    <div class="main_page">
+
+        <div class="row_non">
+            <h1><a href=" @Url.Action("Index")">Wordle</a></h1>
+
+            <div class="login-container">
+                <h2>Zaloguj się do gry Wordle</h2>
+                <form id="login-form">
+                    <label for="username">Nazwa użytkownika:</label>
+                    <input type="text" id="username" name="username">
+                    <label for="password">Hasło:</label>
+                    <input type="password" id="password" name="password">
+                    <button type="submit">Zaloguj się</button>
+                </form>
+                <script src="~/js/site.js"></script>
+                Nie masz konta? <a href=" @Url.Action("Register")">Zarejestruj</a>
+            </div>
+
+        </div>
+
+    </div>
+   
+
+
+
+    <script src="js/bootstrap.bundle.js"></script>
+</body>

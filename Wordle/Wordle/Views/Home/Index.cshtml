@@ -1,8 +1,40 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<head>
+    <link rel="stylesheet" href="~/css/style.css">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+</head>
+<div class="menu">
+
+    <a href="@Url.Action("Login")" class="button-link">
+  
+        <button id="login_button">Zaloguj się</button>
+    </a>
+
+
+
+
 </div>
+<div class="main_page">
+
+    <div class="row_non">
+        <h1><a href=" @Url.Action("Index")">Wordle</a></h1>
+
+        <button class="gamemode_button">Tryb rankingowy</button>
+
+        <button class="gamemode_button">Tryb for fun</button>
+
+    </div>
+    <div class="row_non">
+        <button class="gamemode_button" id="rank_button">Ranking</button>
+        <button class="gamemode_button" id="settings_button"><i class="fa-solid fa-gears"></i></button>
+    </div>
+
+</div>
+
+
+
+
+<script src="js/bootstrap.bundle.js"></script>
