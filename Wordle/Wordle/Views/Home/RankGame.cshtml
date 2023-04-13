@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+@{
+    ViewData["Title"] = "Ranking";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/GameStyle.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle</title>
+</head>
+<div class="menu">
+    <a href="@Url.Action("Login")" class="button-link">
+        <button id="login_button">Zaloguj się</button>
+    </a>
+</div>
+<div class="main_page">
+    <div class="row_non">
+        <h1><a href="@Url.Action("Index")">Wordle</a></h1>
+
+    </div>
+
+    <div class="container">
+        <h2>Zgaduj!</h2>
+        <div class="input-container">
+            <input class="letter-input" type="text" maxlength="1">
+            <input class="letter-input" type="text" maxlength="1">
+            <input class="letter-input" type="text" maxlength="1">
+            <input class="letter-input" type="text" maxlength="1">
+            <input class="letter-input" type="text" maxlength="1">
+        </div>
+        <div id="attempts"></div>
+    </div>
+    <script src="~/js/RankGame.js"></script>
+</div>
+<script src="js/bootstrap.bundle.js"></script>
+
