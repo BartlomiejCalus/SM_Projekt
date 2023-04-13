@@ -1,152 +1,170 @@
-
 @font-face {
     font-family: December;
-    src: url(December.otf);
-  }
-body{
+    src: url(../fonts/December.otf);
+}
+
+body {
     background-color: #36393F;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0;
 }
-h1{
-    color:white;
+
+h1 {
+    color: white;
     text-align: center;
-    margin-top:4vh;
+    margin-top: 4vh;
     font-family: December;
     font-size: 80pt;
     cursor: pointer;
-    align-self: center;
-    
-}
-h1 a
-{
-    text-decoration: none;
-    color:white;
-}
-h1 a:hover
-{
-    text-decoration: none;
-    color:white;
 }
 
-.gamemode_button{
-    
-    width:20vw;
-    align-self: center;
+    h1 a {
+        text-decoration: none;
+        color: white;
+    }
+
+        h1 a:hover {
+            color: white;
+        }
+
+.gamemode_button {
+    width: 20vw;
     border-radius: 7px;
     font-size: 2vw;
+    background-color: #1e2124;
+    color: white;
+    border: none;
+    padding: 15px 32px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
-.main_page{
+
+    .gamemode_button:hover {
+        background-color: #4b4b4b;
+    }
+
+.main_page {
     display: flex;
     flex-wrap: wrap;
-    margin-top:5vh;
-    align-items:center;
+    margin-top: 5vh;
+    align-items: center;
     justify-content: center;
-   
 }
-.row_non{
-    margin-top:3vh;
+
+.row_non {
+    margin-top: 1vh;
     width: 100vw;
     text-align: center;
 }
-#rank_button
-{
-    margin-top:40vh;
-}
-#settings_button
-{
-background: none;
-border:0;
-width: auto;
-margin-left: 4vw;
-font-size: 2vw;
 
+#rank_button {
+    margin-top: 40vh;
 }
 
+#settings_button {
+    background-color: #1e2124;
+    border: 0;
+    width: 5vw;
+    margin-left: 0.2vw;
+    font-size: 2vw;
+    cursor: pointer;
+    text-align:center;
+}
+    #settings_button:hover {
+        background-color: #4b4b4b;
+    }
 
 /* Stopka */
 footer {
-    margin-top:2vh;
+    margin-top: 2vh;
     background-color: #1e2124;
     width: 100vw;
-    height: 10vh;
-    color:white;
-    position:fixed;
-    bottom:0px;
-   
-  }
-  
-  .container {
+    height: 7vh;
+    color: white;
+    position: fixed;
+    bottom: 0;
+}
+
+.container {
     max-width: 1200px;
     margin: 0 auto;
     text-align: center;
-  }
-  
-  ul {
+}
+
+ul {
     list-style: none;
     margin: 0;
     padding: 0;
     display: inline-block;
-  }
-  
-  li {
+}
+
+li {
     display: inline-block;
     margin: 0 10px;
-  }
-  
-  a {
+}
+
+a {
     color: #4b4b4b;
     text-decoration: none;
     transition: color 0.2s ease-in-out;
-  }
-  
-  a:hover {
-    color: #007bff;
-  }
-  
-  .menu
-  {
+}
+
+    a:hover {
+        color: #007bff;
+    }
+
+.menu {
     justify-content: right;
     display: flex;
-  }
-  #login_button
-  {
-    Color:white;
-    background: rgb(49, 49, 255);
+    width:80vw;
+}
+
+#login_button {
+    margin-top: 2vh;
+    color: white;
+    background-color: #1e2124;
     border-radius: 7px;
-  }
+    padding: 15px 32px;
+    cursor: pointer;
+    border: none;
+}
+    #login_button:hover {
+        background-color: #4b4b4b;
+    }
 
-  .login-container {
+/* Login and Register Forms */
+.login-container, .register-container {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    color:white;
+    color: white;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     text-align: center;
-  }
-  
-  h2 {
+}
+
+h2 {
     margin-top: 0;
-  }
-  
-  form {
+}
+
+form {
     display: flex;
     flex-direction: column;
-  }
-  
-  label {
+}
+
+label {
     margin-top: 10px;
     font-weight: bold;
-  }
-  
-  input {
+}
+
+input {
     padding: 5px;
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 3px;
     font-size: 16px;
-  }
-  
-  button[type="submit"] {
+}
+
+button [type="submit"] {
     background-color: #6b6b6b;
     color: #fff;
     padding: 10px 20px;
@@ -155,56 +173,56 @@ footer {
     border-radius: 3px;
     font-size: 16px;
     cursor: pointer;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #6b6b6b;
-  }
-  
+    transition: background-color 0.3s ease;
+}
 
-  .register-container {
-    max-width: 400px;
+    button[type="submit"]:hover {
+        background-color: #4b4b4b;
+    }
+
+/* Ranking */
+.ranking {
+    width: 100%;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    color:white;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 4px;
+}
+
+h2 {
     text-align: center;
-  }
-  
-  h2 {
-    margin-top: 0;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    margin-top: 10px;
-    font-weight: bold;
-  }
-  
-  input {
-    padding: 5px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    font-size: 16px;
-  }
-  
-  button[type="submit"] {
-    background-color: #6b6b6b;
-    color: #fff;
-    padding: 10px 20px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 3px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #6b6b6b;
-  }
-  
+    margin-bottom: 20px;
+}
+
+.ranking_table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .ranking_table thead th {
+        background-color: #f1f1f1;
+        text-align: left;
+        padding: 8px;
+    }
+
+    .ranking_table tbody td {
+        padding: 8px;
+        border-bottom: 1px solid #f1f1f1;
+    }
+
+    .ranking_table tbody tr:nth-child(even) {
+        background-color: #f8f8f8;
+    }
+
+.blinking-cursor {
+    user-select: none; 
+    animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+    to {
+        visibility: hidden;
+    }
+}

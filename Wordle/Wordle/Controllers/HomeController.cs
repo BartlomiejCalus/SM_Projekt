@@ -30,6 +30,14 @@ namespace Wordle.Controllers
         {
             return View();
         }
+        public IActionResult Ranking()
+        {
+            return View();
+        }
+        public IActionResult RankGame()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
