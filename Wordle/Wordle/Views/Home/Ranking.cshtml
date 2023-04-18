@@ -1,0 +1,52 @@
+﻿@{
+ViewData["Title"] = "Ranking";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<div class="menu">
+    <a href="@Url.Action("Login")" class="button-link">
+        <button id="login_button">Zaloguj się</button>
+    </a>
+</div>
+<div class="main_page">
+    <div class="row_non">
+        <h1><a href="@Url.Action("Index")">Wordle</a></h1>
+
+    </div>
+ 
+    <div class="ranking">
+        <h2>Ranking graczy</h2>
+        <table class="ranking_table">
+            <thead>
+                <tr>
+                    <th>Pozycja</th>
+                    <th>Nazwa użytkownika</th>
+                    <th>Punkty</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    // Wstaw tutaj dynamiczne dane na podstawie danych z bazy
+                    // Przykładowe dane:
+                    List<(int position, string username, int points)> rankingData = new List<(int, string, int)>
+                    {
+                        (1, "Gracz1", 1020),
+                        (2, "Gracz2", 980),
+                        (3, "Gracz3", 970),
+                    };
+                    foreach (var (position, username, points) in rankingData)
+                    {
+                        <tr>
+                            <td>@position</td>
+                            <td>@username</td>
+                            <td>@points</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="js/bootstrap.bundle.js"></script>
