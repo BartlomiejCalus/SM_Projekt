@@ -1,0 +1,94 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css">
+
+    <script src="https://kit.fontawesome.com/bd2b98c0b7.js" crossorigin="anonymous"></script>
+
+</head>
+<div class="menu">
+
+    <a href="@Url.Action("Login")" class="button-link">
+  
+        <button id="login_button">Zaloguj się</button>
+    </a>
+
+
+
+
+</div>
+<div class="main_page">
+
+    <div class="row_non">
+
+        <h1>
+            <span is="type-async" id="type-text">...</span>
+            <span class="blinking-cursor">_</span>
+        </h1>
+        <script>
+            async function init() {
+                const node = document.querySelector("#type-text")
+
+                await sleep(1000)
+                node.innerText = ""
+
+                while (true) {
+                    await node.type('Wordle')
+                    await sleep(2000)
+                    await node.delete('Wordle')
+                    await node.type('Słówka')
+                    await sleep(2000)
+                    await node.delete('Słówka')
+                }
+            }
+
+
+            // Source code 🚩
+
+            const sleep = time => new Promise(resolve => setTimeout(resolve, time))
+
+            class TypeAsync extends HTMLSpanElement {
+                get typeInterval() {
+                    const randomMs = 100 * Math.random()
+                    return randomMs < 50 ? 10 : randomMs
+                }
+
+                async type(text) {
+                    for (let character of text) {
+                        this.innerText += character
+                        await sleep(this.typeInterval)
+                    }
+                }
+
+                async delete(text) {
+                    for (let character of text) {
+                        this.innerText = this.innerText.slice(0, this.innerText.length - 1)
+                        await sleep(this.typeInterval)
+                    }
+                }
+            }
+
+            customElements.define('type-async', TypeAsync, { extends: 'span' })
+
+
+            init()
+            </script>
+     
+
+        <a href="@Url.Action("RankGame")"><button class="gamemode_button">Tryb rankingowy</button></a>
+
+        <button class="gamemode_button">Tryb for fun</button>
+
+    </div>
+    <div class="row_non">
+        <a href="@Url.Action("Ranking")"><button class="gamemode_button" id="rank_button"> <i class="fa-solid fa-ranking-star"></i> Ranking</button></a>
+        <button class="gamemode_button" id="settings_button"><i class="fa-solid fa-gears"></i></button>
+    </div>
+
+</div>
+
+
+
+
+<script src="js/bootstrap.bundle.js"></script>
