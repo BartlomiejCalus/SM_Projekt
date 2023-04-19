@@ -2,6 +2,10 @@
     font-family: December;
     src: url(../fonts/December.otf);
 }
+@font-face {
+    font-family: HeartWarming;
+    src: url('../fonts/Heart Warming Font by Situjuh (7NTypes).otf');
+}
 
 body {
     background-color: #36393F;
@@ -9,14 +13,17 @@ body {
     margin: 0;
 }
 
-h1 {
+
+#logo_text
+{
     color: white;
     text-align: center;
     margin-top: 4vh;
-    font-family: December;
+    font-family: HeartWarming;
     font-size: 80pt;
     cursor: pointer;
 }
+
 
     h1 a {
         text-decoration: none;
@@ -225,4 +232,13 @@ h2 {
     to {
         visibility: hidden;
     }
+}
+#register-submit
+{
+    margin-top: 1vw;
+    margin-bottom:1vw;
+}
+.odnosnik {
+    color: white;
+    font-weight: bold;
 }
