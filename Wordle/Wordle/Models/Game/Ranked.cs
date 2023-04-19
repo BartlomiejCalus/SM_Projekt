@@ -30,15 +30,45 @@ namespace Wordle.Models.Game
             wordInfo = _memoryCache.Get<WordInfo>(key);
             if (wordInfo == null)
             {
-                wordInfo.word = "test";
-
-                _memoryCache.Set(key, wordInfo, TimeSpan.FromTicks(expiration.Ticks));
+                wordInfo.word = randomWord(currentRound);
+                for (int i = currentRound+1; i < rounds; i++)
+                {
+                    string stored = randomWord(i);
+                    key = ToString() + i;
+                    _memoryCache.Set(key, stored, TimeSpan.FromTicks(expiration.Ticks));
+                }
             }
 
             return wordInfo;
         }
+        public List<List<bool>> Play(string querry)
+        {
+            List<List<bool>> list = new List<List<bool>>();
+            list[0] = letterPresence(querry);
+            list[1] = letterOccurrence(querry);
+            return list;
 
-        public List<bool> Guess(string querry)
+        }
+        private string randomWord(int round)
+        {
+            string result;
+            int random = rankedRandom.Next(round)%143888;// 143888 number of words in dictionary
+            using (var reader = new StreamReader(@"Dictionary\english.txt"))
+            {
+                for (int i = 0; i < random; i++)
+                {
+                    reader.ReadLine();
+                }
+                result = reader.ReadLine();
+                if(result == null)
+                {
+                    return "\0";
+                }
+            }
+            return result;
+        }
+
+        private List<bool> letterOccurrence(string querry)
         {
             List<bool> result = new List<bool>();
             string model = wordInfo.word;
@@ -55,6 +85,17 @@ namespace Wordle.Models.Game
                 }
             }
 
+            return result;
+        }
+        private List<bool> letterPresence(string querry)
+        {
+            List<bool> result = new List<bool>();
+            string model = wordInfo.word;
+            int querryLength = querry.Length;
+            for (int i = 0; i < querryLength; i++)
+            {
+                result.Add(model.Contains(querry[i]));
+            }
             return result;
         }
     }
