@@ -36,8 +36,11 @@ body {
 
 .gamemode_button {
     width: 20vw;
+    height: 10vh;
+    max-height: 10vw;
+
     border-radius: 7px;
-    font-size: 2vw;
+    font-size:1vw;
     background-color: #1e2124;
     color: white;
     border: none;
