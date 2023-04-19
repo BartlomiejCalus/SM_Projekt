@@ -24,7 +24,10 @@ Array.from(letterInputs).forEach((input, index) => {
             const word = Array.from(letterInputs)
                 .map((input) => input.value)
                 .join("");
-            if (word.length === 5) {
+            if (word.length < 5) {
+                flashRed();
+            }
+            else if (word.length === 5) {
                 if (alreadyUsedWords.has(word)) {
                     alert("To słowo zostało już wpisane!");
                 } else {
@@ -41,11 +44,60 @@ Array.from(letterInputs).forEach((input, index) => {
                     handleAttempt(word, serverResponse);
                 }
             }
+
             Array.from(letterInputs).forEach((input) => (input.value = ""));
             letterInputs[0].focus();
         }
     });
 });
+
+const submitButton = document.getElementById("submit_button");
+
+// Dodaj zdarzenie "click" do przycisku "Sprawdź"
+submitButton.addEventListener("click", function () {
+    const word = Array.from(letterInputs)
+        .map((input) => input.value)
+        .join("");
+    if (word.length === 5) {
+        if (alreadyUsedWords.has(word)) {
+            alert("To słowo zostało już wpisane!");
+        } else {
+            alreadyUsedWords.add(word);
+            // Tu powinien być wywołanie funkcji, która będzie komunikować się z serwerem.
+            // Na razie, dla demonstracji, zakładam przykładową macierz bool.
+            const serverResponse = [
+                [true, true],
+                [true, false],
+                [false, false],
+                [true, true],
+                [true, false]
+            ];
+            handleAttempt(word, serverResponse);
+        }
+    } else if (word.length < 5) {
+        // Podświetl inputy na czerwono na 1 sekundę
+        flashRed();
+    }
+    Array.from(letterInputs).forEach((input) => (input.value = ""));
+    letterInputs[0].focus();
+});
+
+
+
+
+
+function flashRed() {
+    Array.from(letterInputs).forEach(input => {
+        input.style.backgroundColor = "red";
+    });
+
+    setTimeout(() => {
+        Array.from(letterInputs).forEach(input => {
+            input.style.backgroundColor = "";
+            input.style.transition = "0.5s";
+        });
+    }, 500);
+}
 
 
 function handleAttempt(word, serverResponse) {
