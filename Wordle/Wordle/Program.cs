@@ -40,25 +40,3 @@ app.MapRazorPages();
 
 app.Run();
 
-/*
- 
- static async Task Main()
-    {
-        var client = new RestClient("https://random-word-api.herokuapp.com");
-        var request = new RestRequest("/word?length=6", Method.Get);
-
-        RestResponse restResponse = await client.GetAsync(request);
-        string responseContent = restResponse.Content;
-
-        JArray jsonArray = JArray.Parse(responseContent);
-        string[] wordsArray = jsonArray.ToObject<string[]>();
-
-        Console.WriteLine("Zwrócone s³owa:");
-        foreach (string word in wordsArray)
-        {
-            Console.WriteLine(word);
-        }
-
-    }
- 
- */
