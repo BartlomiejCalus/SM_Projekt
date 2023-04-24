@@ -37,21 +37,6 @@ h1 {
             color: white;
         }
 
-.gamemode_button {
-    width: 20vw;
-    border-radius: 7px;
-    font-size: 2vw;
-    background-color: #1e2124;
-    color: white;
-    border: none;
-    padding: 15px 32px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-    .gamemode_button:hover {
-        background-color: #4b4b4b;
-    }
 
 .main_page {
     display: flex;
@@ -69,31 +54,6 @@ h1 {
 
 #rank_button {
     margin-top: 40vh;
-}
-
-#settings_button {
-    background-color: #1e2124;
-    border: 0;
-    width: 5vw;
-    margin-left: 0.2vw;
-    font-size: 2vw;
-    cursor: pointer;
-    text-align: center;
-}
-
-    #settings_button:hover {
-        background-color: #4b4b4b;
-    }
-
-/* Stopka */
-footer {
-    margin-top: 2vh;
-    background-color: #1e2124;
-    width: 100vw;
-    height: 7vh;
-    color: white;
-    position: fixed;
-    bottom: 0;
 }
 
 
@@ -126,29 +86,7 @@ a {
     width: 80vw;
 }
 
-#login_button {
-    margin-top: 2vh;
-    color: white;
-    background-color: #1e2124;
-    border-radius: 7px;
-    padding: 15px 32px;
-    cursor: pointer;
-    border: none;
-}
 
-    #login_button:hover {
-        background-color: #4b4b4b;
-    }
-
-/* Login and Register Forms */
-.login-container, .register-container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    color: white;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-    text-align: center;
-}
 
 h2 {
     margin-top: 0;
@@ -162,6 +100,18 @@ form {
 label {
     margin-top: 10px;
     font-weight: bold;
+}
+/* Stopka */
+footer {
+    margin-top: 2vh;
+    background-color: #1e2124;
+    width: 100vw;
+    height: 100px;
+    color: white;
+    position: fixed;
+    text-align: center;
+    bottom: 0;
+    padding-top: 20px;
 }
 
 input {
@@ -188,56 +138,11 @@ button [type="submit"] {
         background-color: #4b4b4b;
     }
 
-/* Ranking */
-.ranking {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    border-radius: 4px;
-}
 
 h2 {
     text-align: center;
     margin-bottom: 20px;
 }
-
-.ranking_table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-    .ranking_table thead th {
-        background-color: #f1f1f1;
-        text-align: left;
-        padding: 8px;
-    }
-
-    .ranking_table tbody td {
-        padding: 8px;
-        border-bottom: 1px solid #f1f1f1;
-    }
-
-    .ranking_table tbody tr:nth-child(even) {
-        background-color: #f8f8f8;
-    }
-
-.blinking-cursor {
-    user-select: none;
-    animation: blink 1s steps(2, start) infinite;
-}
-
-@keyframes blink {
-    to {
-        visibility: hidden;
-    }
-}
-
-
-
-
 
 
 
@@ -245,6 +150,9 @@ h2 {
     max-width: 600px;
     padding: 20px;
     border-radius: 4px;
+    background-color: rgba(30, 33, 36, 0.9);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
 }
 
 h1 {
@@ -274,7 +182,7 @@ h1 {
     display: flex;
     justify-content: center;
     font-size: 30pt;
-    margin-bottom:5px;
+    margin-bottom:2vh;
     margin-right:5vw;
 }
 
@@ -285,8 +193,8 @@ h1 {
     margin: 0 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    line-height: 3vw;
     
+
 }
 
 .correct {
@@ -312,12 +220,33 @@ h1 {
 }
 #timer {
     color: white;
-    font-size: 30pt;
-    font-family:AlarmClock;
+    font-size: 70pt;
+    font-family: AlarmClock;
+    box-shadow: 10px black;
+   
 }
 #start_button {
-   margin-top:10vw;
+   margin-top:5vw;
 }
+#start_button {
+    display: inline-block;
+    padding: 20px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+    background-color: #28a745; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    #start_button:hover {
+        background-color: #218838; /* ciemniejszy odcień zielonego po najechaniu kursorem */
+    }
+
 h2
 {
     color:white;
@@ -360,9 +289,18 @@ h2
 
 #submit_button {
     height: 60px;
-    
-    
-    
+    display: inline-block;
+    padding: 20px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 .submit-container {
    
@@ -371,6 +309,8 @@ h2
    
    
 }
+
+
 
 
 

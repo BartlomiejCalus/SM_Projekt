@@ -15,7 +15,7 @@
         <div id="start_container">
             <div id="timer">00:00</div>
             <div id="ready">Gotowy? </div>
-            <button id="start_button" class="btn btn-primary">Start gry</button>
+            <button id="start_button">Start gry</button>
         </div>
 
        <div class="game-body" style="display: none;">
@@ -73,5 +73,24 @@
             timer.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }, 1000);
     });
+
+    window.onload = function() {
+  // Pobierz wszystkie elementy input z klasą "letter-input"
+  const inputs = document.querySelectorAll('.letter-input');
+  
+  // Dodaj słuchacza zdarzeń dla każdego elementu input
+  inputs.forEach(input => {
+    input.addEventListener('input', function(event) {
+      // Pobierz wprowadzoną wartość z inputa
+      let value = event.target.value;
+      
+      // Zamień małe litery na duże litery
+      value = value.toUpperCase();
+      
+      // Ustaw nową wartość w polu input
+      event.target.value = value;
+    });
+  });
+};
 </script>
 
