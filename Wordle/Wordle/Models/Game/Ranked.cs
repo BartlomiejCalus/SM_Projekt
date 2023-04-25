@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using System.ComponentModel;
+using Wordle.Controllers;
+using Wordle.Data;
 
 namespace Wordle.Models.Game
 {
@@ -21,6 +23,7 @@ namespace Wordle.Models.Game
             currentRound = 0;
             expiration.AddMinutes(5);
             wordInfo = GetWordInfo();
+
         }
 
         protected override WordInfo GetWordInfo()
@@ -31,6 +34,7 @@ namespace Wordle.Models.Game
             if (wordInfo == null)
             {
                 wordInfo.word = randomWord(currentRound);
+                _memoryCache.Set(key, wordInfo.word, TimeSpan.FromTicks(expiration.Ticks));
                 for (int i = currentRound+1; i < rounds; i++)
                 {
                     string stored = randomWord(i);
@@ -41,6 +45,12 @@ namespace Wordle.Models.Game
 
             return wordInfo;
         }
+        public int nextRound()
+        {
+            currentRound++;
+            return currentRound;
+        }
+
         public List<List<bool>> Play(string querry)
         {
             List<List<bool>> list = new List<List<bool>>();
