@@ -38,9 +38,9 @@ body {
     width: 20vw;
     height: 10vh;
     max-height: 10vw;
-
+    white-space: nowrap;
     border-radius: 7px;
-    font-size:1vw;
+    font-size: 1vw;
     background-color: #1e2124;
     color: white;
     border: none;
@@ -68,7 +68,7 @@ body {
 }
 
 #rank_button {
-    margin-top: 40vh;
+    margin-top: 30vh;
 }
 
 #settings_button {
@@ -76,23 +76,26 @@ body {
     border: 0;
     width: 5vw;
     margin-left: 0.2vw;
-    font-size: 2vw;
     cursor: pointer;
+    padding-left:3.3vh;
     text-align:center;
 }
     #settings_button:hover {
         background-color: #4b4b4b;
     }
-
+    
 /* Stopka */
 footer {
     margin-top: 2vh;
     background-color: #1e2124;
     width: 100vw;
-    height: 7vh;
+    height: 80px;
     color: white;
     position: fixed;
+    text-align: center;
     bottom: 0;
+    padding-top: 10px;
+    font-size: 10pt;
 }
 
 .container {
@@ -105,7 +108,7 @@ ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: inline-block;
+   
 }
 
 li {
@@ -190,41 +193,54 @@ button [type="submit"] {
         background-color: #4b4b4b;
     }
 
-/* Ranking */
-.ranking {
+/.ranking {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    border-radius: 4px;
+    background-color: rgba(30, 33, 36, 0.9);
+    border-radius: 12px; /* Increased border-radius for more rounded corners */
 }
 
 h2 {
     text-align: center;
     margin-bottom: 20px;
+    color: white;
 }
 
 .ranking_table {
     width: 100%;
     border-collapse: collapse;
+    border-radius: 12px; /* Added border-radius for table */
+    overflow: hidden; /* Added overflow hidden to make table rounded */
 }
 
     .ranking_table thead th {
-        background-color: #f1f1f1;
-        text-align: left;
+        background-color: rgba(241, 241, 241, 0.8); /* Added transparency */
+        text-align: center;
         padding: 8px;
+        font-weight: bold; /* Added font-weight for better readability */
+        width: 300px;
     }
 
     .ranking_table tbody td {
         padding: 8px;
         border-bottom: 1px solid #f1f1f1;
+        background-color: rgba(128, 128, 128, 0.6); /* Added transparency */
+        color: white; /* Changed text color for better readability */
+        text-align: center;
     }
 
-    .ranking_table tbody tr:nth-child(even) {
-        background-color: #f8f8f8;
+    .ranking_table tbody tr {
+        background-color: rgba(105, 105, 105, 0.6); /* Added transparency */
+        
     }
+
+        .ranking_table tbody tr:nth-child(even) {
+            background-color: rgba(248, 248, 248, 0.6); /* Added transparency */
+        }
+
 
 .blinking-cursor {
     user-select: none; 

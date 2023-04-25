@@ -3,37 +3,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wordle</title>
+    <script src="https://kit.fontawesome.com/bd2b98c0b7.js" crossorigin="anonymous"></script>
 </head>
 
 <!-- Dodaj przycisk "Start gry" i planszę gry jako osobne elementy -->
 <div class="container">
     <div class="game-container">
         <div class="game-header">
-            <h1><a href="@Url.Action("Index")">Wordle</a></h1>
+            <h1><a href="@Url.Action("Index")">Wordle</a> <div id="timer">00:00</div></h1>
         </div>
 
         <div id="start_container">
-            <div id="timer">00:00</div>
+            
             <div id="ready">Gotowy? </div>
-            <button id="start_button" class="btn btn-primary">Start gry</button>
+            <div id="countdown" style="font-size: 8vw;">3</div>
+
+
+            <button id="start_button">Start gry</button>
         </div>
 
-       <div class="game-body" style="display: none;">
-    <h2>Zgaduj!</h2>
-    <div class="input-container">
-        <div class="letter-input-container">
-            <input class="letter-input" type="text" maxlength="1">
-            <input class="letter-input" type="text" maxlength="1">
-            <input class="letter-input" type="text" maxlength="1">
-            <input class="letter-input" type="text" maxlength="1">
-            <input class="letter-input" type="text" maxlength="1">
-        </div>
-                <div class="submit-container">
-                    <button id="submit_button" class="btn btn-primary">Sprawdź</button>
+        <div class="game-body" style="display: none;">
+            <div class="gowno">
+
+                    
+
+                
+            </div>
+            <div id="attempts">
+                <div class="input-container">
+                    <div class="letter-input-container">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                    </div>
                 </div>
-    </div>
+                <div class="input-container">
+                    <div class="letter-input-container">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="letter-input-container">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="letter-input-container">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="letter-input-container">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                    </div>
+                </div>
+            </div>
+        </div>
+
     <div id="attempts"></div>
 </div>
+
+        <div class="keyboard-container">
+            <div class="keyboard-row">
+                <div class="keyboard-key">Q</div>
+                <div class="keyboard-key">W</div>
+                <div class="keyboard-key">E</div>
+                <div class="keyboard-key">R</div>
+                <div class="keyboard-key">T</div>
+                <div class="keyboard-key">Y</div>
+                <div class="keyboard-key">U</div>
+                <div class="keyboard-key">I</div>
+                <div class="keyboard-key">O</div>
+                <div class="keyboard-key">P</div>
+            </div>
+            <div class="keyboard-row">
+                <div class="keyboard-key">A</div>
+                <div class="keyboard-key">S</div>
+                <div class="keyboard-key">D</div>
+                <div class="keyboard-key">F</div>
+                <div class="keyboard-key">G</div>
+                <div class="keyboard-key">H</div>
+                <div class="keyboard-key">J</div>
+                <div class="keyboard-key">K</div>
+                <div class="keyboard-key">L</div>
+                <div id="backspace_button" class="backspace-key">⌫</div>
+            </div>
+            <div class="keyboard-row">
+                <div class="keyboard-key">Z</div>
+                <div class="keyboard-key">X</div>
+                <div class="keyboard-key">C</div>
+                <div class="keyboard-key">V</div>
+                <div class="keyboard-key">B</div>
+                <div class="keyboard-key">N</div>
+                <div class="keyboard-key">M</div>
+                <div id="submit_button" class="enter-key">Enter</div>
+            </div>
+        </div>
 
 
     </div>
@@ -41,37 +124,80 @@
 
 
 <script src="/js/RankGame.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
+
     // Pobierz elementy HTML do manipulacji
     const startButton = document.getElementById("start_button");
     const gameContainer = document.querySelector(".game-container");
     const gameBody = document.querySelector(".game-body");
     const timer = document.getElementById("timer");
+    const keyboard = document.getElementsByClassName("keyboard-container")[0];
     const ready = document.getElementById("ready");
+    const countdown = document.getElementById("countdown");
 
     // Ukryj element z timerem na początku
     timer.style.display = "none";
+    countdown.style.visibility = "hidden";
 
-    // Dodaj zdarzenie "click" do przycisku "Start gry"
+    // Funkcja, która animuje i zmniejsza wartość odliczania
+    function animateCountdown() {
+        countdown.classList.remove("countdown-animation");
+        void countdown.offsetWidth; // Przerwa między animacjami
+        countdown.classList.add("countdown-animation");
+    }
+
     startButton.addEventListener("click", function () {
-        // Ukryj przycisk "Start gry"
-        startButton.style.display = "none";
-        ready.style.display = "none";
+        startButton.style.visibility="hidden";
+        ready.style.visibility="hidden";
+        countdown.style.visibility="visible";
 
-        // Pokaż planszę gry i timer
-        gameBody.style.display = "block";
-        gameContainer.style.paddingTop = "0"; // Dodaj styl do usuwania marginesu na górze
-        timer.style.display = "block";
+        // Rozpocznij odliczanie
+        let counter = 3;
+        countdown.innerText = counter.toString();
+        animateCountdown();
 
+        const countdownInterval = setInterval(() => {
+            counter--;
 
-        // Rozpocznij odliczanie czasu
-        let startTime = Date.now();
-        setInterval(function () {
-            let elapsedTime = Date.now() - startTime;
-            let minutes = Math.floor(elapsedTime / 60000);
-            let seconds = Math.floor((elapsedTime % 60000) / 1000);
-            timer.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            if (counter === 0) {
+                clearInterval(countdownInterval);
+                countdown.style.display = "none";
+
+                // Pokaż planszę gry i timer
+                gameBody.style.display = "block";
+                gameContainer.style.paddingTop = "0";
+                timer.style.display = "flex";
+                keyboard.style.display = "flex";
+                startButton.style.display="none";
+                ready.style.display="none";
+
+                // Rozpocznij odliczanie czasu
+                let startTime = Date.now();
+                setInterval(function () {
+                    let elapsedTime = Date.now() - startTime;
+                    let minutes = Math.floor(elapsedTime / 60000);
+                    let seconds = Math.floor((elapsedTime % 60000) / 1000);
+                    timer.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }, 1000);
+            } else {
+                countdown.innerText = counter.toString();
+                animateCountdown();
+            }
         }, 1000);
     });
+
+
+
+
+
+
+  
+
+
+
+
+
 </script>
 
