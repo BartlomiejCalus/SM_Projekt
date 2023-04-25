@@ -1,0 +1,52 @@
+﻿@page
+@model Wordle.Areas.Identity.Pages.Account.StatsModel
+@inject UserManager<WordleUser> UserManager
+@{
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/GameStyle.css">
+    <title>Wordle - Statystyki gracza</title>
+</head>
+<body>
+    <div class="container">
+        <div class="stats-container">
+            <h1><a href=" @Url.Action("Index")">Wordle</a></h1>
+            <h2>Statystyki gracza @UserManager.GetUserName(User)!</h2>
+
+            <table id="stats">
+                <tr>
+                    <th>Statystyka</th>
+                    <th>Wartość</th>
+                </tr>
+                <tr>
+                    <td>Rozegrane gry</td>
+                    <td>100</td>
+                </tr>
+                <tr>
+                    <td>Zwycięstwa</td>
+                    <td>60</td>
+                </tr>
+                <tr>
+                    <td>Liczba sprawdzeń</td>
+                    <td>40</td>
+                </tr>
+                <tr>
+                    <td>Procent wygranych</td>
+                    <td>60%</td>
+                </tr>
+                <tr>
+                    <td>Średni czas gry</td>
+                    <td>2m 30s</td>
+                </tr>
+                <tr>
+                    <td>Najszybsze zwycięstwo</td>
+                    <td>1m 10s</td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</body>
