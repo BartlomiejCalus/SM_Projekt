@@ -60,15 +60,16 @@ namespace Wordle.Models.Game
         public List<List<bool>> Play(string querry)
         {
             List<List<bool>> list = new List<List<bool>>();
-            list[0] = letterPresence(querry);
-            list[1] = letterOccurrence(querry);
+            list.Add(letterPresence(querry));
+            list.Add(letterOccurrence(querry));
             return list;
         }
+
 
         private string randomWord(int round)
         {
             string result;
-            int random = rankedRandom.Next(0, 143888);// 143888 number of words in dictionary
+            int random = rankedRandom.Next(0, 5);// 143888 number of words in dictionary
             using (var reader = new StreamReader(@"Dictionary\english.txt"))
             {
                 for (int i = 0; i < random; i++)

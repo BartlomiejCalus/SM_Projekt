@@ -1,22 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using System.Diagnostics;
 using Wordle.Models;
+using Wordle.Models.Game;
 
 namespace Wordle.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IMemoryCache _memoryCache;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IMemoryCache memoryCache)
         {
-            _logger = logger;
+            _memoryCache = memoryCache;
+        }
+
+        [HttpPost]
+        public IActionResult Play(string generatedWord)
+        {
+            Ranked ranked = new Ranked(_memoryCache);
+            var serverResponse = ranked.Play(generatedWord);
+            return Json(serverResponse);
         }
 
         public IActionResult Index()
         {
             return View();
         }
+
+
 
         public IActionResult Privacy()
         {
