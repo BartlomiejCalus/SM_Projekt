@@ -5,10 +5,9 @@ namespace Wordle.Models
 {
     public class GameStat
     {
-        public GameStat(int statsId, DateTime quessTime, DateTime startTime, int tries, int points)
+        public GameStat(string userId, DateTime quessTime, DateTime startTime, int tries, int points)
         {
-            this.statsId = statsId;
-            this.userId = "579bee2f-4c4e-4ace-9eb5-a4bcd639d673";
+            this.userId = userId;
             this.quessTime = quessTime;
             this.startTime = startTime;
             this.tries = tries;

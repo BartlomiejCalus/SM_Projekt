@@ -1,6 +1,8 @@
-a
-a3
-a4
+kotek
+kajak
+sklep
+zegar
+obraz
 a5
 aaa
 aaas

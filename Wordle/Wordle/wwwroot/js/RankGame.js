@@ -164,3 +164,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
         .slice(5)
         .forEach((input) => (input.disabled = true));
 });
+
+
+
