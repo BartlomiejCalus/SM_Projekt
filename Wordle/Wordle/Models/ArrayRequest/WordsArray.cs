@@ -12,24 +12,31 @@ using Method = RestSharp.Method;
 namespace Wordle.Models.ArrayRequest
 {
     public class WordsArray
+{
+    public async Task<string[]> GetWordsArray()
     {
-        static async Task Main()
+        var client = new RestClient("https://random-word-api.herokuapp.com");
+        var request = new RestRequest("/all", Method.Get);
+
+        RestResponse restResponse = await client.GetAsync(request);
+        string responseContent = restResponse.Content;
+
+        JArray jsonArray = JArray.Parse(responseContent);
+        string[] wordsArray = jsonArray.ToObject<string[]>();
+
+        return wordsArray;
+    }
+
+    public async Task Main()
+    {
+        string[] wordsArray = await GetWordsArray();
+
+        Console.WriteLine("Zwrócone słowa:");
+        foreach (string word in wordsArray)
         {
-            var client = new RestClient("https://random-word-api.herokuapp.com");
-            var request = new RestRequest("/word?length=6", Method.Get);
-
-            RestResponse restResponse = await client.GetAsync(request);
-            string responseContent = restResponse.Content;
-
-            JArray jsonArray = JArray.Parse(responseContent);
-            string[] wordsArray = jsonArray.ToObject<string[]>();
-
-            Console.WriteLine("Zwrócone słowa:");
-            foreach (string word in wordsArray)
-            {
-                Console.WriteLine(word);
-            }
-
+            Console.WriteLine(word);
         }
     }
+}
+
 }
