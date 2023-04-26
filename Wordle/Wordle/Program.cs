@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Hosting;
 using Wordle.Areas.Identity.Data;
 using Wordle.Controllers;
 using Wordle.Data;
@@ -17,7 +19,6 @@ builder.Services.AddDefaultIdentity<WordleUser>(options => options.SignIn.Requir
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddMemoryCache();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -44,4 +45,3 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
-

@@ -1,4 +1,5 @@
-﻿<head>
+﻿@using Microsoft.Extensions.Caching.Memory
+<head>
     <link rel="stylesheet" href="~/css/GameStyle.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -200,4 +201,8 @@
 
 
 </script>
+@inject IMemoryCache _cache
+@{
+    Wordle.Models.Game.Ranked ranked = new Wordle.Models.Game.Ranked(_cache);
 
+}

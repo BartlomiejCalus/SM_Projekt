@@ -8,7 +8,7 @@ namespace Wordle.Models.Game
     public class Ranked : GameMaster
     {
         protected readonly IMemoryCache _memoryCache;
-        
+
         public Random rankedRandom { get; private set; }
         public int rounds { get; set; }
         public int currentRound { get; set; }
@@ -28,22 +28,26 @@ namespace Wordle.Models.Game
 
         protected override WordInfo GetWordInfo()
         {
-            WordInfo wordInfo;
+            WordInfo wordInfo =new WordInfo();
             string key = ToString() + currentRound.ToString();
             wordInfo = _memoryCache.Get<WordInfo>(key);
             if (wordInfo == null)
             {
-                wordInfo.word = randomWord(currentRound);
-                _memoryCache.Set(key, wordInfo.word, TimeSpan.FromTicks(expiration.Ticks));
+                wordInfo = new WordInfo(randomWord(currentRound));
+                _memoryCache.Set(key, wordInfo, TimeSpan.FromMinutes(2));
                 for (int i = currentRound+1; i < rounds; i++)
                 {
-                    string stored = randomWord(i);
+                    WordInfo stored = new WordInfo(randomWord(i));
                     key = ToString() + i;
-                    _memoryCache.Set(key, stored, TimeSpan.FromTicks(expiration.Ticks));
+                    _memoryCache.Set(key, stored, TimeSpan.FromMinutes(2));
                 }
             }
 
             return wordInfo;
+        }
+        public int getWordLength()
+        {
+            return wordInfo.word.Length;
         }
         public int nextRound()
         {
@@ -62,7 +66,7 @@ namespace Wordle.Models.Game
         private string randomWord(int round)
         {
             string result;
-            int random = rankedRandom.Next(round)%143888;// 143888 number of words in dictionary
+            int random = rankedRandom.Next(0, 143888);// 143888 number of words in dictionary
             using (var reader = new StreamReader(@"Dictionary\english.txt"))
             {
                 for (int i = 0; i < random; i++)

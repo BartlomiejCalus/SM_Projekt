@@ -4,5 +4,9 @@
     {
         public string word { get; set; }
         public WordInfo(string word) { this.word = word; }
+
+        public WordInfo() {
+            word = "N/A";
+        }
     }
 }
