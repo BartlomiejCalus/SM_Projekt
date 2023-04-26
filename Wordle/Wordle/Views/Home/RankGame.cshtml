@@ -204,5 +204,7 @@
 @inject IMemoryCache _cache
 @{
     Wordle.Models.Game.Ranked ranked = new Wordle.Models.Game.Ranked(_cache);
+    System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+    
 
 }

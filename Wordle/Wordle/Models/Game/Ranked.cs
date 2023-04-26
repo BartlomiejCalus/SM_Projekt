@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using System.ComponentModel;
+using System.Security.Principal;
+using Wordle.Areas.Identity.Data;
 using Wordle.Controllers;
 using Wordle.Data;
 
@@ -28,7 +30,7 @@ namespace Wordle.Models.Game
 
         protected override WordInfo GetWordInfo()
         {
-            WordInfo wordInfo =new WordInfo();
+            WordInfo wordInfo;
             string key = ToString() + currentRound.ToString();
             wordInfo = _memoryCache.Get<WordInfo>(key);
             if (wordInfo == null)
@@ -61,8 +63,8 @@ namespace Wordle.Models.Game
             list[0] = letterPresence(querry);
             list[1] = letterOccurrence(querry);
             return list;
-
         }
+
         private string randomWord(int round)
         {
             string result;
