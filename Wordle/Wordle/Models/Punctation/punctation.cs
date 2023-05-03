@@ -18,7 +18,7 @@ namespace Wordle.Models.Punctation
         public void endTime()
         {
             TimeSpan timeSpan = DateTime.Now - StartTime;
-            durationTime = (int)timeSpan.TotalSeconds;
+            durationTime = timeSpan.Seconds;
         }
 
         public int Stats(int row) { 

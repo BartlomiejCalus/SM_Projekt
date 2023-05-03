@@ -14,6 +14,7 @@ public class WordleContext : IdentityDbContext<WordleUser>
     public DbSet<GameStat> GameStat { get; set; }
 
     public DbSet<UserStat> UserStat { get; set; }
+
     public WordleContext(DbContextOptions<WordleContext> options)
         : base(options)
     {

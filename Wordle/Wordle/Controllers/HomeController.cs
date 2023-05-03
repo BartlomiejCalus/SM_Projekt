@@ -5,6 +5,8 @@ using Wordle.Models;
 using Wordle.Models.Game;
 using Wordle.Models.Punctation;
 using System;
+using System.Security.Claims;
+using Microsoft.CodeAnalysis.CodeActions;
 
 namespace Wordle.Controllers
 {
@@ -38,7 +40,31 @@ namespace Wordle.Controllers
         public IActionResult End([FromBody]int row)
         {
             p1.endTime();
-            p1.Stats(row);
+            var points=p1.Stats(row);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            UserStat userStat = new UserStat(userId,points);
+            using (var stat = new GameStatController().context)
+            {
+                try
+                {
+                    var entity = stat.UserStat.First(a => a.userId == userId);
+                    var p = points + entity.points;
+                    entity.points = p;
+                    stat.SaveChanges();
+                }
+                catch(Exception ex)
+                {
+                    stat.UserStat.Add(userStat);
+                    try
+                    {
+                        stat.SaveChanges();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+            }
             return Ok();
         }
 
