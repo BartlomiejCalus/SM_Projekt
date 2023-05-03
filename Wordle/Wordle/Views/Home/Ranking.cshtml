@@ -12,7 +12,10 @@ ViewData["Title"] = "Ranking";
         <h1 id="logo_text"><a href="@Url.Action("Index")">Wordle</a></h1>
 
     </div>
- 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
     <div class="ranking">
         <h2>Ranking graczy</h2>
         <table class="ranking_table">
@@ -23,27 +26,40 @@ ViewData["Title"] = "Ranking";
                     <th>Punkty</th>
                 </tr>
             </thead>
-            <tbody>
-                @{
-                    // Wstaw tutaj dynamiczne dane na podstawie danych z bazy
-                    // Przykładowe dane:
-                    List<(int position, string username, int points)> rankingData = new List<(int, string, int)>
-                    {
-                        (1, "Gracz1", 1020),
-                        (2, "Gracz2", 980),
-                        (3, "Gracz3", 970),
-                    };
-                    foreach (var (position, username, points) in rankingData)
-                    {
-                        <tr>
-                            <td>@position</td>
-                            <td>@username</td>
-                            <td>@points</td>
-                        </tr>
-                    }
-                }
+            <tbody id="ranking-tbody">
+                <!-- Wiersze tabeli zostaną wypełnione danymi z żądania AJAX -->
             </tbody>
         </table>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Home/Rank", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
+                dataType: "json", // Oczekiwany typ danych to JSON
+                success: function (response) {
+                    // Kod wykonywany po pomyślnym zakończeniu żądania
+                    console.log(response);
+
+                    // Wypełnij tabelę danymi z odpowiedzi
+                    var tbody = $("#ranking-tbody");
+                    response.forEach(function (player, index) {
+                        var row = $("<tr></tr>");
+                        row.append($("<td></td>").text(index + 1));
+                        row.append($("<td></td>").text(player.userId));
+                        row.append($("<td></td>").text(player.points));
+                        tbody.append(row);
+                    });
+                },
+                error: function (error) {
+                    alert("Wystąpił błąd:");
+                }
+            });
+        });
+    </script>
+
 </div>
+
+
 <script src="js/bootstrap.bundle.js"></script>

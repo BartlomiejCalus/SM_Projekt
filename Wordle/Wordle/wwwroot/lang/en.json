@@ -3,9 +3,12 @@
         "ready": "Ready?",
         "start": "Start game",
         "settings": "SETTINGS",
-        "rank_mode": "Tournanemt Mode",
+        "rank_mode": "Tournanent Mode",
         "4fun_mode": "4fun Mode",
-        "footer": " 2023 Wordle. All rights reserved."
+        "footer": "© 2023 Wordle. All rights reserved.",
+        "language": "Language: ",
+        "apperance": "Apperance: "
+
     },
     "pl": {
         "ready": "Gotowy?",
@@ -13,7 +16,9 @@
         "settings": "USTAWIENIA",
         "rank_mode": "Tryb Turniejowy",
         "4fun_mode": "Tryb 4fun",
-        "footer": " 2023 Wordle. Wszystkie prawa zastrzeżone."
+        "footer": "© 2023 Wordle. Wszystkie prawa zastrzeżone.",
+        "language": "Język: ",
+        "apperance": "Wygląd: "
     }
 
 }

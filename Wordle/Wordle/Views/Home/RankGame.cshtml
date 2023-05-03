@@ -258,25 +258,50 @@
             }
         });
 
-        function displayGameOverMessage() {
+        function displayGameOverMessage(punkty) {
             const gameOverMessage = document.createElement("div");
             gameOverMessage.className = "game-over-message";
             //gameOverMessage.innerHTML = "<h2>Koniec gry!</h2><br> <h3>Otrzymujesz X punktów!</h3>";
 
-            gameOverMessage.innerHTML = `<div class="game-over-message-content"><h2>Koniec gry!</h2><h3>Zgadywane słowo to: ` + zmienna + `</h3><br>
-                <h3>Otrzymujesz <span class="highlight">20</span> punktów!</h3>
-                <p>Aktualna liczba punktów: <span class="highlight">100</span></p>
-                <h4>Top 3 graczy:</h4>
-                <ol>
-                    <li><i class="fa-solid fa-trophy gold"></i> <span class="highlight">Gracz 1</span>: 150 punktów</li>
-                    <li><i class="fa-solid fa-trophy silver"></i> <span class="highlight">Gracz 2</span>: 130 punktów</li>
-                    <li><i class="fa-solid fa-trophy bronze"></i> <span class="highlight">Gracz 3</span>: 110 punktów</li>
-                </ol>
-        <br>
 
-        <a href="RankGame"> <button class="afterwin" type="submit"><i class="fa-solid fa-rotate-right"></i> Zagraj ponownie</button></a>
-        <a href="Ranking"> <button class="afterwin" type="submit"><i class="fa-solid fa-ranking-star"></i> Ranking</button></a>
-            </div>`;
+            $(document).ready(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "/Home/Rank",
+                    dataType: "json",
+                    success: function (response) {
+                        // Wyciągnij tylko 3 pierwszych graczy
+                        var top3 = response.slice(0, 3);
+
+                        // Wyświetl top 3 graczy w gameOverMessage
+                        var top3List = top3.map(function (player, index) {
+                            var trophyClass = index === 0 ? "gold" : index === 1 ? "silver" : "bronze";
+                            return `<li><i class="fa-solid fa-trophy ${trophyClass}"></i> <span class="highlight">${player.userId}</span>: ${player.points} punktów</li>`;
+                        }).join("");
+
+                        gameOverMessage.innerHTML = `
+                        <div class="game-over-message-content">
+                            <h2>Koniec gry!</h2>
+                            <h3>Zgadywane słowo to: ` + zmienna + `</h3><br>
+                            <h3>Otrzymujesz <span class="highlight">`+punkty+`</span> punktów!</h3>
+                                                    <p>Aktualna liczba punktów: <span class="highlight">`+ punkty + `</span></p >
+                            <h4>Top 3 graczy:</h4>
+                            <ol>
+                                ${top3List}
+                            </ol>
+                            <br>
+                            <a href="RankGame"> <button class="afterwin" type="submit"><i class="fa-solid fa-rotate-right"></i> Zagraj ponownie</button></a>
+                            <a href="Ranking"> <button class="afterwin" type="submit"><i class="fa-solid fa-ranking-star"></i> Ranking</button></a>
+                        </div>`;
+                    },
+                    error: function (error) {
+                        alert("Wystąpił błąd:");
+                    }
+                });
+            });
+
+
+
 
 
 
@@ -469,7 +494,7 @@
                     .slice(currentAttemptIndex * 5, currentAttemptIndex * 5 + 5)
                     .forEach((input) => (input.disabled = true));
                 gameOver = true;
-                displayGameOverMessage();
+                
                 stopTimer(); // Zatrzymaj timer
 
                 //Gdy użytkownik wygra
@@ -483,6 +508,7 @@
                     contentType: "application/json", // Ustaw typ zawartości na JSON
                     data: JSON.stringify(currentAttemptIndex+1), // Przekształć wartość parametru na łańcuch JSON
                     success: function (response) {
+                         displayGameOverMessage(response);
                         // Kod wykonywany po pomyślnym zakończeniu żądania
                     },
                     error: function (error) {
@@ -490,6 +516,7 @@
                     }
                 });
 
+               
 
             }
         }

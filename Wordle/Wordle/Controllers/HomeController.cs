@@ -27,6 +27,15 @@ namespace Wordle.Controllers
             return Json(serverResponse);
         }
 
+        [HttpGet]
+        public IActionResult Rank()
+        {
+            var gracze = new List<UserStat>() {new UserStat("fasgag",234), new UserStat("gfhdhd", 742) };
+            return Json(gracze);
+        }
+
+
+
         [HttpPost]
         public IActionResult Start()
         {
@@ -38,8 +47,8 @@ namespace Wordle.Controllers
         public IActionResult End([FromBody]int row)
         {
             p1.endTime();
-            p1.Stats(row);
-            return Ok();
+            var punkty = 10;
+            return Json(punkty);
         }
 
         public IActionResult Index()
