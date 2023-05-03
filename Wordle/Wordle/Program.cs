@@ -8,6 +8,7 @@ using Wordle.Data;
 using Wordle.Models;
 using Wordle.Models.Events;
 
+
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("WordleContextConnection") ?? throw new InvalidOperationException("Connection string 'WordleContextConnection' not found.");
 
@@ -46,4 +47,6 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 
+
 app.Run();
+

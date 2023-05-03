@@ -3,11 +3,13 @@ using Microsoft.Extensions.Caching.Memory;
 using System.Diagnostics;
 using Wordle.Models;
 using Wordle.Models.Game;
+using Wordle.Models.Punctation;
 
 namespace Wordle.Controllers
 {
     public class HomeController : Controller
     {
+        punctation p1 = new punctation();
         private readonly IMemoryCache _memoryCache;
 
         public HomeController(IMemoryCache memoryCache)
@@ -21,6 +23,21 @@ namespace Wordle.Controllers
             Ranked ranked = new Ranked(_memoryCache);
             var serverResponse = ranked.Play(generatedWord);
             return Json(serverResponse);
+        }
+
+        [HttpGet]
+        public IActionResult Start()
+        {
+            p1.startTime();
+            return Ok();
+        }
+
+        [HttpGet]
+        public IActionResult End([FromBody]int row)
+        {
+            p1.endTime();
+            p1.Stats(row);
+            return Ok();
         }
 
         public IActionResult Index()
