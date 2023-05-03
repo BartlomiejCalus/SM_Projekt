@@ -8,7 +8,7 @@ using static Wordle.Models.ArrayRequest.WordsArray;
 
 namespace Wordle.Models.Game
 {
-    public class Ranked : GameMaster
+    public class Casual : GameMaster
     {
         protected readonly IMemoryCache _memoryCache;
 
@@ -18,12 +18,11 @@ namespace Wordle.Models.Game
 
         private double expiration { get; set; }
 
-        public Ranked(IMemoryCache memoryCache)
+        public Casual(IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
             rankedRandom = new Random((int)this.time.Ticks);
-            gameMode = "Ranked";
-            rounds = 5;
+            gameMode = "Casual";
             currentRound = 0;
             expiration = 1440;
             wordInfo = GetWordInfo();
@@ -39,13 +38,6 @@ namespace Wordle.Models.Game
             {
                 wordInfo = new WordInfo(randomWord(currentRound));
                 _memoryCache.Set(key, wordInfo.word, TimeSpan.FromMinutes(expiration) - DateTime.Now.TimeOfDay);
-                for (int i = currentRound + 1; i < rounds; i++)
-                {
-                    string stored = randomWord(i);
-                    key = ToString() + i;
-                    _memoryCache.Set(key, stored, TimeSpan.FromMinutes(expiration) - DateTime.Now.TimeOfDay);
-                }
-                return wordInfo;
             }
             wordInfo = new WordInfo(get);
             return wordInfo;
@@ -63,12 +55,6 @@ namespace Wordle.Models.Game
         public List<List<bool>> Play(string querry)
         {
             List<List<bool>> list = new List<List<bool>>();
-            if (currentRound > rounds)
-            {
-                list.Add(letterPresence(querry));
-                list.Add(letterOccurrence(querry));
-                return list;
-            }
             list.Add(letterPresence(querry));
             list.Add(letterOccurrence(querry));
             return list;
@@ -78,7 +64,7 @@ namespace Wordle.Models.Game
         private string randomWord(int round)
         {
             string[] result;
-            WordsApi api= new WordsApi();
+            WordsApi api = new WordsApi();
             Task<string[]> task = api.GetRandomWords();
             task.Wait();
             result = task.Result;
