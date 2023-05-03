@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NuGet.Protocol;
+using System.Security.Cryptography.X509Certificates;
 using Wordle.Areas.Identity.Data;
 using Wordle.Models;
 
@@ -13,7 +14,12 @@ public class WordleContext : IdentityDbContext<WordleUser>
     public WordleContext(DbContextOptions<WordleContext> options)
         : base(options)
     {
+
     }
+
+    public DbSet<GameStat> GameStat { get; set; }
+
+    public DbSet<UserStat> UserStat { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
