@@ -39,7 +39,6 @@ namespace Wordle.Controllers
         {
             p1.endTime();
             p1.Stats(row);
-            Console.WriteLine(row);
             return Ok();
         }
 

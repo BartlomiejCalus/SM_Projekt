@@ -435,7 +435,7 @@
                     type: "POST",
                     url: "/Home/End", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
                     contentType: "application/json", // Ustaw typ zawartości na JSON
-                    data: JSON.stringify(5), // Przekształć wartość parametru na łańcuch JSON
+                    data: JSON.stringify(currentAttemptIndex), // Przekształć wartość parametru na łańcuch JSON
                     success: function (response) {
                         // Kod wykonywany po pomyślnym zakończeniu żądania
                     },
