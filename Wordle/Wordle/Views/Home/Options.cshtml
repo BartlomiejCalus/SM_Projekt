@@ -38,17 +38,71 @@
         <div class="game-header">
             <h1><a href="@Url.Action("Index")">Wordle</a></h1>
         </div>
-        <h2>SETTINGS</h2>
+        <h2 data-translate="settings">SETTINGS</h2>
 
         <div id="options">
                 Apperance:  <i class="fa-regular fa-sun"></i> <input id="theme-switch" onchange="toggleTheme()" class="switch" type="checkbox"> <i class="fa-regular fa-moon"></i>
             </div>
 
+            <div id="options">
+
+                <select id="language-select">
+                    <option value="en">English</option>
+                    <option value="pl">Polski</option>
+                </select>
+
+
+
+               
+
+
+            </div>
 
         </div>
 
 
        </div>
+
+       <script>
+
+
+        let translations;
+
+        function loadTranslations() {
+            fetch('../lang/en.json')
+                .then(response => response.json())
+                .then(data => {
+                    translations = data;
+                    applyLanguage(getStoredLanguage());
+                });
+        }
+
+        function getStoredLanguage() {
+            return localStorage.getItem('language') || 'en';
+        }
+
+        function storeLanguage(lang) {
+            localStorage.setItem('language', lang);
+        }
+
+        function applyLanguage(lang) {
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                element.textContent = translations[lang][key];
+            });
+        }
+
+        document.getElementById('language-select').addEventListener('change', event => {
+            const lang = event.target.value;
+            storeLanguage(lang);
+            applyLanguage(lang);
+        });
+
+        loadTranslations();
+
+           </script>
+
+
        <script>
  (function () {
     const themeSwitch = document.getElementById('theme-switch');
