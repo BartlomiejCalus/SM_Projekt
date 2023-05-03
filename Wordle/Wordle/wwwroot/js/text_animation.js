@@ -11,9 +11,6 @@ async function init() {
         await node.type("Wordle"); // Pisze "Wordle".
         await sleep(2000); // Czeka 2 sekundy.
         await node.delete("Wordle"); // Usuwa "Wordle".
-        await node.type("Słówka"); // Pisze "Słówka".
-        await sleep(2000); // Czeka 2 sekundy.
-        await node.delete("Słówka"); // Usuwa "Słówka".
         await node.type("W0rdl3"); // Pisze "Wordle".
         await sleep(2000); // Czeka 2 sekundy.
         await node.delete("W0rdl3"); // Usuwa "Wordle".
