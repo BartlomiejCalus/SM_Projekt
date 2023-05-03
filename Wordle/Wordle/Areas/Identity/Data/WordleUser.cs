@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Wordle.Models;
@@ -18,5 +19,7 @@ public class WordleUser : IdentityUser
     public string Nickname { get; set; }
 
     public virtual ICollection<GameStat> GameStats { get; set; }
+
+    public UserStat? UserStat { get; set; }
 }
 
