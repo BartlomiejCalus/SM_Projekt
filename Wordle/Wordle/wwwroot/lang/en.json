@@ -1,0 +1,19 @@
+﻿{
+    "en": {
+        "ready": "Ready?",
+        "start": "Start game",
+        "settings": "SETTINGS",
+        "rank_mode": "Tournanemt Mode",
+        "4fun_mode": "4fun Mode",
+        "footer": " 2023 Wordle. All rights reserved."
+    },
+    "pl": {
+        "ready": "Gotowy?",
+        "start": "Start gry",
+        "settings": "USTAWIENIA",
+        "rank_mode": "Tryb Turniejowy",
+        "4fun_mode": "Tryb 4fun",
+        "footer": " 2023 Wordle. Wszystkie prawa zastrzeżone."
+    }
+
+}

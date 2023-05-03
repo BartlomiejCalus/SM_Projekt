@@ -1,0 +1,60 @@
+﻿@inject IMemoryCache _cache
+@{
+    Wordle.Models.Game.Ranked ranked = new Wordle.Models.Game.Ranked(_cache);
+    System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+}
+
+@using Microsoft.Extensions.Caching.Memory
+<head>
+    <link rel="stylesheet" href="~/css/GameStyle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle</title>
+    <script src="https://kit.fontawesome.com/bd2b98c0b7.js" crossorigin="anonymous"></script>
+    <script src="~/js/theme-toggle.js"></script>
+
+
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="game-container">
+            <div class="game-header">
+                <h1><a href="@Url.Action("Index")">Wordle</a></h1>
+            </div>
+            <h2>Contact Us</h2>
+
+
+
+            <div class="contact-container">
+                <p>If you have any questions, suggestions, or concerns about our game Wordle, please feel free to contact us using the information provided below. We value your feedback and will do our best to respond to your inquiries as soon as possible.</p>
+
+                <h2>Email</h2>
+                <p>For general inquiries or support, please email us at: <a href="mailto:slowkaWordle@gmail.com">slowkaWordle@gmail.com</a></p>
+
+                <h2>Phone</h2>
+                <p>You can reach us by phone at: +1 (123) 456-7890</p>
+                <p>Our office hours are Monday to Friday, 9 AM to 5 PM [Your Time Zone].</p>
+
+                <h2>Mailing Address</h2>
+                <p>Wordle</p>
+                <p>ul. Bolesława Krzywoustego 2</p>
+                <p>44-100 Gliwice</p>
+                <p>Poland</p>
+
+                <h2>Social Media</h2>
+                <p>Stay connected with us through social media:</p>
+                <ul>
+                    <li><a href="https://www.facebook.com/yourcompany" target="_blank">Facebook</a></li>
+                    <li><a href="https://twitter.com/yourcompany" target="_blank">Twitter</a></li>
+                    <li><a href="https://www.instagram.com/yourcompany" target="_blank">Instagram</a></li>
+                </ul>
+</div>
+
+        </div>
+
+
+    </div>
+
+</body>

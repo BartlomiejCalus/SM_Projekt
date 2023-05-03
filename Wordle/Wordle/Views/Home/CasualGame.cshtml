@@ -1,0 +1,128 @@
+﻿@inject IMemoryCache _cache
+@{
+    Wordle.Models.Game.Ranked ranked = new Wordle.Models.Game.Ranked(_cache);
+    System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+}
+
+@using Microsoft.Extensions.Caching.Memory
+<head>
+    <link rel="stylesheet" href="~/css/GameStyle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle</title>
+    <script src="https://kit.fontawesome.com/bd2b98c0b7.js" crossorigin="anonymous"></script>
+     <script src="~/js/theme-toggle.js"></script>
+</head>
+
+
+<div class="container">
+    <div class="game-container">
+        <div class="game-header">
+            <h1><a href="@Url.Action("Index")">Wordle</a></h1>
+        </div>
+
+        <div id="start_container">
+            <div id="ready">Baw się dobrze!</div>
+            <div id="countdown" style="font-size: 8vw;">3</div>
+            <button id="start_button">Start gry</button>
+        </div>
+
+        <div class="game-body" style="display: none;">
+            <div class="testowa_klasa"></div>
+
+            <div id="attempts">
+                <div class="input-container">
+                    <div class="letter-input-container">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="letter-input-container">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="letter-input-container">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="letter-input-container">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="letter-input-container">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                        <input class="letter-input" type="text" maxlength="1">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="attempts"></div>
+    </div>
+
+    <div class="keyboard-container">
+        <div class="keyboard-row">
+            <div class="keyboard-key">Q</div>
+            <div class="keyboard-key">W</div>
+            <div class="keyboard-key">E</div>
+            <div class="keyboard-key">R</div>
+            <div class="keyboard-key">T</div>
+            <div class="keyboard-key">Y</div>
+            <div class="keyboard-key">U</div>
+            <div class="keyboard-key">I</div>
+            <div class="keyboard-key">O</div>
+            <div class="keyboard-key">P</div>
+        </div>
+        <div class="keyboard-row">
+            <div class="keyboard-key">A</div>
+            <div class="keyboard-key">S</div>
+            <div class="keyboard-key">D</div>
+            <div class="keyboard-key">F</div>
+            <div class="keyboard-key">G</div>
+            <div class="keyboard-key">H</div>
+            <div class="keyboard-key">J</div>
+            <div class="keyboard-key">K</div>
+            <div class="keyboard-key">L</div>
+            <div id="backspace_button" class="backspace-key">⌫</div>
+        </div>
+        <div class="keyboard-row">
+            <div class="keyboard-key">Z</div>
+            <div class="keyboard-key">X</div>
+            <div class="keyboard-key">C</div>
+            <div class="keyboard-key">V</div>
+            <div class="keyboard-key">B</div>
+            <div class="keyboard-key">N</div>
+            <div class="keyboard-key">M</div>
+            <div id="submit_button" class="enter-key">Enter</div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/CasualGame.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+

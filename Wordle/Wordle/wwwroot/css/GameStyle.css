@@ -1,4 +1,103 @@
-﻿
+﻿:root {
+    --text-color: #333;
+    --background-color: #fff;
+    --second-color: #F5F5F5;
+}
+
+.theme-dark {
+    --text-color: #eee;
+    --background-color: #333;
+    --second-color: rgba(30, 33, 36, 0.9);
+}
+
+body {
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+#options {
+    color: var(--text-color);
+    font-size: 22pt;
+    text-align: center;
+    padding-bottom: 20vh;
+    padding-top: 10vh;
+}
+#privacy-policy-container {
+    color: var(--text-color);
+    padding-bottom: 20vh;
+    padding-top: 10vh;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+#terms-container {
+    color: var(--text-color);
+    padding-bottom: 20vh;
+    padding-top: 10vh;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    max-width: 800px;
+    margin: 20px auto;
+}
+#contact-container {
+    color: var(--text-color);
+    padding-bottom: 20vh;
+    padding-top: 10vh;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    max-width: 800px;
+    margin: 20px auto;
+}
+.switch {
+    position: relative;
+    height: 1.5rem;
+    width: 3rem;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 9999px;
+    background-color: rgba(100, 116, 139, 0.377);
+    transition: all .3s ease;
+}
+
+    .switch:checked {
+        background-color: rgba(236, 72, 153, 1);
+    }
+
+    .switch::before {
+        position: absolute;
+        content: "";
+        left: calc(1.5rem - 1.6rem);
+        top: calc(1.5rem - 1.6rem);
+        display: block;
+        height: 1.6rem;
+        width: 1.6rem;
+        cursor: pointer;
+        border: 1px solid rgba(100, 116, 139, 0.527);
+        border-radius: 9999px;
+        background-color: rgba(255, 255, 255, 1);
+        box-shadow: 0 3px 10px rgba(100, 116, 139, 0.327);
+        transition: all .3s ease;
+    }
+
+    .switch:checked:before {
+        transform: translateX(100%);
+        border-color: rgba(236, 72, 153, 1);
+    }
 
 
 @font-face {
@@ -16,29 +115,33 @@
     src: url('../fonts/alarm clock.ttf');
 }
 
+@font-face {
+    font-family: SanFrancisco;
+    src: url('../fonts/SF-Pro-Text-Regular.otf');
+}
+
 body {
-    background-color: #36393F;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: SanFrancisco;
     margin: 0;
 }
 
 h1 {
-    color: white;
+    color: var(--text-color);
     text-align: center;
     margin-top: 4vh;
     font-family: HeartWarming;
-
     cursor: pointer;
     font-size: 5vw;
 }
 
     h1 a {
         text-decoration: none;
-        color: white;
+        color: var(--text-color);
     }
 
         h1 a:hover {
-            color: white;
+            font-weight: bold;
+            color: var(--text-color);
         }
 
 
@@ -68,16 +171,15 @@ form {
 
 
 footer {
-   
-    background-color: #1e2124;
+    background-color: var(--second-color);
     width: 100vw;
     height: 80px;
-    color: white;
+    color: var(--text-color);
     position: fixed;
     text-align: center;
     bottom: 0;
     padding-top: 10px;
-    font-size:10pt;
+    font-size: 10pt;
 }
     footer ul {
         list-style: none;
@@ -90,6 +192,9 @@ footer {
     margin: 0 10px;
 
     }
+    footer a {
+        text-decoration:none;
+    }
 h2 {
     text-align: center;
     margin-bottom: 20px;
@@ -99,10 +204,12 @@ h2 {
     max-width: 800px;
     padding: 20px;
     border-radius: 4px;
-    background-color: rgba(30, 33, 36, 0.9);
+    background-color: var(--second-color);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     margin-bottom: 20vh;
+
 }
+
 
 h1 {
     text-align: center;
@@ -160,24 +267,20 @@ h1 {
     flex-direction: column; /* Dodaj pionowy układ */
     align-items: center; /* Wyśrodkuj elementy w pionie */
     margin-bottom: 20px;
-
 }
 #ready {
-    color: white;
+    color: var(--text-color);
     font-size: 30pt;
 }
 #timer {
-    color: white;
+    color: var(--text-color);
     font-size: 50pt;
     font-family: AlarmClock;
     box-shadow: 10px black;
-    display:block;
-
-    flex:1;
-    display:none;
-    justify-content:center;
-
-   
+    display: block;
+    flex: 1;
+    display: none;
+    justify-content: center;
 }
 
 
@@ -203,9 +306,19 @@ h1 {
         background-color: #218838; /* ciemniejszy odcień zielonego po najechaniu kursorem */
     }
 
-h2
-{
-    color:white;
+.navbar {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+.nav-link {
+    color: var(--text-color);
+}
+    .nav-link:hover {
+        color: var(--text-color);
+    }
+
+h2 {
+    color: var(--text-color);
 }
 
 .letter-input.flash-red {
@@ -321,6 +434,7 @@ h2
     font-size: 24px;
     cursor: pointer;
     user-select: none;
+    color:black;
 }
 
     .keyboard-key:hover {
@@ -346,8 +460,8 @@ h2
         flex-direction:row;
     }
 #countdown {
-    visibility:hidden;
-    color: white;
+    visibility: hidden;
+    color: var(--text-color);
     font-family: HeartWarming;
 }
 
@@ -371,11 +485,82 @@ h2
 .countdown-animation {
     animation: scale 1s linear;
 }
-.game-over-message
-{
-    color:white;
-    text-align:center;
+.game-over-message {
+    color: var(--text-color);
+    text-align: center;
 }
+
+/* GameStyle.css */
+.game-over-message {
+
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+    margin:auto;
+}
+
+.game-over-message-content {
+    display: inline-block;
+    text-align: left;
+}
+
+.game-over-message h2 {
+    color: var(--text-color);
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.game-over-message h3 {
+    color: var(--text-color);
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.game-over-message h4 {
+    color: var(--text-color);
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.game-over-message p {
+    color: var(--text-color);
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.game-over-message ol {
+    list-style-type: none;
+    padding-left: 20px;
+    font-size: 18px;
+}
+
+.highlight {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* GameStyle.css */
+.gold {
+    color: #ffd700;
+}
+
+.silver {
+    color: #c0c0c0;
+}
+
+.bronze {
+    color: #cd7f32;
+}
+
+
 
 @media screen and (max-width: 768px) {
     .keyboard-row {
@@ -387,6 +572,7 @@ h2
         height: 30px;
         font-size: 18px;
         margin: 3px;
+        color: black;
     }
 
     #submit_button, #backspace_button {
@@ -429,3 +615,20 @@ h2
         #stats tbody tr:nth-child(even) {
             background-color: rgba(248, 248, 248, 0.6); /* Added transparency */
         }
+
+
+.afterwin {
+
+    width: 170px;
+    font-size:12pt;
+    height: 5vh;
+    max-height: 10vw;
+    white-space: nowrap;
+    border-radius: 7px;
+    background-color: lightgreen;
+    color: var(--text-color);
+    border: none;
+
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
