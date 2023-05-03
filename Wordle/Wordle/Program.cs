@@ -6,6 +6,7 @@ using Wordle.Areas.Identity.Data;
 using Wordle.Controllers;
 using Wordle.Data;
 using Wordle.Models;
+using Wordle.Models.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("WordleContextConnection") ?? throw new InvalidOperationException("Connection string 'WordleContextConnection' not found.");
@@ -19,6 +20,7 @@ builder.Services.AddDefaultIdentity<WordleUser>(options => options.SignIn.Requir
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddMemoryCache();
+builder.Services.AddHostedService<WeaklyReset>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
