@@ -1,0 +1,65 @@
+﻿@inject IMemoryCache _cache
+@{
+    Wordle.Models.Game.Ranked ranked = new Wordle.Models.Game.Ranked(_cache);
+    System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+}
+
+@using Microsoft.Extensions.Caching.Memory
+<head>
+    <link rel="stylesheet" href="~/css/GameStyle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle</title>
+    <script src="https://kit.fontawesome.com/bd2b98c0b7.js" crossorigin="anonymous"></script>
+
+    <script>
+        function setTheme(themeName) {
+            localStorage.setItem('theme', themeName);
+            document.documentElement.className = themeName;
+        }
+
+        function toggleTheme() {
+            if (localStorage.getItem('theme') === 'theme-dark') {
+                setTheme('theme-light');
+            } else {
+                setTheme('theme-dark');
+            }
+        }
+
+       
+
+    </script>
+
+</head>
+
+<body>
+<div class="container">
+    <div class="game-container">
+        <div class="game-header">
+            <h1><a href="@Url.Action("Index")">Wordle</a></h1>
+        </div>
+        <h2>SETTINGS</h2>
+
+        <div id="options">
+                Apperance:  <i class="fa-regular fa-sun"></i> <input id="theme-switch" onchange="toggleTheme()" class="switch" type="checkbox"> <i class="fa-regular fa-moon"></i>
+            </div>
+
+
+        </div>
+
+
+       </div>
+       <script>
+ (function () {
+    const themeSwitch = document.getElementById('theme-switch');
+    if (localStorage.getItem('theme') === 'theme-dark') {
+        setTheme('theme-dark');
+        themeSwitch.checked = true;
+    } else {
+        setTheme('theme-light');
+        themeSwitch.checked = false;
+    }
+})();
+
+       </script>
+</body>

@@ -1,3 +1,22 @@
+:root {
+    --text-color: #333;
+    --background-color: #fff;
+    --second-color: #F5F5F5;
+    --hover-color: #E5E5E5;
+}
+
+.theme-dark {
+    --text-color: #eee;
+    --background-color: #333;
+    --second-color: rgba(30, 33, 36, 0.9);
+    --hover-color: #4b4b4b;
+}
+
+body {
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
 @font-face {
     font-family: December;
     src: url(../fonts/December.otf);
@@ -7,32 +26,55 @@
     src: url('../fonts/Heart Warming Font by Situjuh (7NTypes).otf');
 }
 
+@font-face {
+    font-family: SanFrancisco;
+    src: url('../fonts/SF-Pro-Text-Regular.otf');
+}
+
+
+
+.navbar {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.nav-link {
+    color: var(--text-color);
+}
+
+    .nav-link:hover {
+        color: var(--text-color);
+    }
+
 body {
-    background-color: #36393F;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: SanFrancisco;
     margin: 0;
 }
 
 
-#logo_text
-{
-    color: white;
+#logo_text {
+    color: var(--text-color);
     text-align: center;
     margin-top: 4vh;
     font-family: HeartWarming;
     font-size: 80pt;
     cursor: pointer;
 }
+#logo_text a:hover
+{
+    font-weight:bold;
+}
 
 
-    h1 a {
-        text-decoration: none;
-        color: white;
+h1 a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+    h1 a:hover {
+        color: var(--text-color);
+
     }
-
-        h1 a:hover {
-            color: white;
-        }
 
 .gamemode_button {
     width: 20vw;
@@ -41,8 +83,8 @@ body {
     white-space: nowrap;
     border-radius: 7px;
     font-size: 1vw;
-    background-color: #1e2124;
-    color: white;
+    background-color: var(--second-color);
+    color: var(--text-color);
     border: none;
     padding: 15px 32px;
     cursor: pointer;
@@ -50,7 +92,7 @@ body {
 }
 
     .gamemode_button:hover {
-        background-color: #4b4b4b;
+        background-color: var(--hover-color);
     }
 
 .main_page {
@@ -72,25 +114,25 @@ body {
 }
 
 #settings_button {
-    background-color: #1e2124;
+    background-color: var(--second-color);
     border: 0;
     width: 5vw;
     margin-left: 0.2vw;
     cursor: pointer;
-    padding-left:3.3vh;
-    text-align:center;
+    padding-left: 3.3vh;
+    text-align: center;
 }
     #settings_button:hover {
-        background-color: #4b4b4b;
+        background-color: var(--hover-color);
     }
     
 /* Stopka */
 footer {
     margin-top: 2vh;
-    background-color: #1e2124;
+    background-color: var(--second-color);
     width: 100vw;
     height: 80px;
-    color: white;
+    color: var(--text-color);
     position: fixed;
     text-align: center;
     bottom: 0;
@@ -150,7 +192,8 @@ a {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    color: white;
+    margin-bottom:10vh;
+    color: var(--text-color);
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     text-align: center;
 }
@@ -206,7 +249,7 @@ button [type="submit"] {
 h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: white;
+    color: var(--text-color);
 }
 
 .ranking_table {
@@ -258,6 +301,6 @@ h2 {
     margin-bottom:1vw;
 }
 .odnosnik {
-    color: white;
+    color: var(--text-color);
     font-weight: bold;
 }

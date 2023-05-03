@@ -5,9 +5,9 @@
     <link rel="stylesheet" href="~/css/style.css">
 
     <script src="https://kit.fontawesome.com/bd2b98c0b7.js" crossorigin="anonymous"></script>
-
+    <script src="~/js/theme-toggle.js"></script>
 </head>
-
+<body>
 <div class="main_page">
 
     <div class="row_non">
@@ -23,17 +23,17 @@
 
         <a href="@Url.Action("RankGame")"><button class="gamemode_button">Tryb rankingowy</button></a>
 
-        <button class="gamemode_button">Tryb for fun</button>
+        <a href="@Url.Action("CasualGame")"><button class="gamemode_button">Tryb 4fun</button></a>
 
     </div>
     <div class="row_non">
         <a href="@Url.Action("Ranking")"><button class="gamemode_button" id="rank_button"> <i class="fa-solid fa-ranking-star"></i> Ranking</button></a>
-        <button class="gamemode_button" id="settings_button"><i class="fa-solid fa-gears"></i></button>
+        <a href="@Url.Action("Options")"><button class="gamemode_button" id="settings_button"><i class="fa-solid fa-gears"></i></button></a>
     </div>
 
 </div>
 
 
 
-
 <script src="js/bootstrap.bundle.js"></script>
+</body>
