@@ -41,23 +41,17 @@
         <h2 data-translate="settings">SETTINGS</h2>
 
         <div id="options">
-                Apperance:  <i class="fa-regular fa-sun"></i> <input id="theme-switch" onchange="toggleTheme()" class="switch" type="checkbox"> <i class="fa-regular fa-moon"></i>
-            </div>
+                <span data-translate="apperance">Apperance:</span>  <i class="fa-regular fa-sun"></i> <input id="theme-switch" onchange="toggleTheme()" class="switch" type="checkbox"> <i class="fa-regular fa-moon"></i><br />
 
-            <div id="options">
-
-                <select id="language-select">
+                <span data-translate="language">Language:</span>
+                    <select id="language-select">
                     <option value="en">English</option>
                     <option value="pl">Polski</option>
                 </select>
 
-
-
-               
-
-
             </div>
 
+          
         </div>
 
 
@@ -66,7 +60,7 @@
        <script>
 
 
-        let translations;
+     
 
         function loadTranslations() {
             fetch('../lang/en.json')
