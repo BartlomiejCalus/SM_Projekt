@@ -72,7 +72,8 @@ startButton.addEventListener("click", function () {
 //Wyświetlanie do debugowania
 //alert("@ranked.getWordLength()");
 //alert("@ranked.wordInfo.word");
-//let zmienna = ("@ranked.wordInfo.word");
+let zmienna = ("@ranked.wordInfo.word");
+let zmienna2 = zmienna.toLocaleUpperCase();
 
 
 //---------------------------------------------
@@ -108,9 +109,7 @@ function displayGameOverMessage() {
     gameOverMessage.className = "game-over-message";
     //gameOverMessage.innerHTML = "<h2>Koniec gry!</h2><br> <h3>Otrzymujesz X punktów!</h3>";
 
-    gameOverMessage.innerHTML = `
-    <div class="game-over-message-content">
-        <h2>Koniec gry!</h2>
+    gameOverMessage.innerHTML = `<div class="game-over-message-content"><h2>Koniec gry!</h2><h3>Zgadywane słowo to: ` + zmienna2 +`</h3><br><br>
         <h3>Otrzymujesz <span class="highlight">20</span> punktów!</h3>
         <p>Aktualna liczba punktów: <span class="highlight">100</span></p>
         <h4>Top 3 graczy:</h4>
@@ -268,6 +267,9 @@ function handleAttempt(word, serverResponse) {
             .forEach((input) => (input.disabled = true));
         gameOver = true;
         stopTimer(); // Zatrzymaj timer
+
+        //Gdy użytkownik przegra
+        //alert(currentAttemptIndex);
     }
 
 
@@ -288,6 +290,9 @@ function handleAttempt(word, serverResponse) {
         gameOver = true;
         displayGameOverMessage();
         stopTimer(); // Zatrzymaj timer
+
+        //Gdy użytkownik wygra
+        //alert(currentAttemptIndex+1);
         
     }
 }
