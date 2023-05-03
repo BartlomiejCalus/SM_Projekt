@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Wordle.Models;
 using Wordle.Models.Game;
 using Wordle.Models.Punctation;
+using System;
 
 namespace Wordle.Controllers
 {
@@ -22,17 +23,18 @@ namespace Wordle.Controllers
         {
             Ranked ranked = new Ranked(_memoryCache);
             var serverResponse = ranked.Play(generatedWord);
+            //Console.WriteLine("GITARA");
             return Json(serverResponse);
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Start()
         {
             p1.startTime();
             return Ok();
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult End([FromBody]int row)
         {
             p1.endTime();
