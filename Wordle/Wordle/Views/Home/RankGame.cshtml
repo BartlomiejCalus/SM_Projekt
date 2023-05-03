@@ -183,6 +183,28 @@
                     startButton.style.display = "none";
                     ready.style.display = "none";
 
+
+                    //START GRY
+                    /////////////////
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Home/Start", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
+                        data: {
+
+
+                        },
+                        success: function (response) {
+                            // Kod wykonywany po pomyślnym zakończeniu żądania
+                        },
+                        error: function (error) {
+                            alert("Wystąpił błąd:");
+                        }
+                    });
+
+
+                    ///////////////
+
                     // Rozpocznij odliczanie czasu
                     let startTime = Date.now();
                     timerInterval = setInterval(function () {
@@ -402,6 +424,33 @@
 
                 //Gdy użytkownik przegra
                 //alert(currentAttemptIndex);
+
+
+                ///////////////////
+
+              
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/End", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
+                    contentType: "application/json", // Ustaw typ zawartości na JSON
+                    data: JSON.stringify(5), // Przekształć wartość parametru na łańcuch JSON
+                    success: function (response) {
+                        // Kod wykonywany po pomyślnym zakończeniu żądania
+                    },
+                    error: function (error) {
+                        alert("Wystąpił błąd:");
+                    }
+                });
+
+
+
+
+                //////////////////
+
+
+
             }
 
 
@@ -425,6 +474,22 @@
 
                 //Gdy użytkownik wygra
                 //alert(currentAttemptIndex + 1);
+
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/End", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
+                    contentType: "application/json", // Ustaw typ zawartości na JSON
+                    data: JSON.stringify(currentAttemptIndex+1), // Przekształć wartość parametru na łańcuch JSON
+                    success: function (response) {
+                        // Kod wykonywany po pomyślnym zakończeniu żądania
+                    },
+                    error: function (error) {
+                        alert("Wystąpił błąd:");
+                    }
+                });
+
 
             }
         }
