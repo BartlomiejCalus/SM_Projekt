@@ -80,6 +80,7 @@ namespace Wordle.Controllers
                     }
                 }
             }
+            _memoryCache.Remove(User.FindFirstValue(ClaimTypes.NameIdentifier) + "p1");
             return Json(points);
         }
 
