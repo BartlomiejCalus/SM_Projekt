@@ -13,7 +13,8 @@ namespace Wordle.Models.Punctation
 
         public void startTime()
         {
-            StartTime =  DateTime.Now; 
+            StartTime =  DateTime.Now;
+            
         }
 
         public void endTime()
@@ -24,17 +25,28 @@ namespace Wordle.Models.Punctation
             durationSpan = timeSpan;
         }
 
-        public int Stats(int row) { 
+        public int Stats(int row)
+        {
 
-            if(row <= 0 || row > 5) return 0;
+            if (row <= 0 || row > 5) return 0;
             int positionPoints = 1000;
 
             for (int i = 1; i < row; i++)
             {
                 positionPoints -= 200;
             }
-                
-            int result = (durationTime * 45) + positionPoints;
+
+            int result = 0;
+            if (durationTime > 60)
+            {
+                result = 300 + positionPoints;
+            }
+            else
+            {
+                int pointsTime = durationTime * 45;
+                result = (3000 - pointsTime) + positionPoints;
+            }
+
 
             return result;
         }

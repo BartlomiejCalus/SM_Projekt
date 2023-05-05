@@ -7,6 +7,8 @@ using Wordle.Models.Punctation;
 using System;
 using System.Security.Claims;
 using Microsoft.CodeAnalysis.CodeActions;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Wordle.Controllers
 {
@@ -14,7 +16,7 @@ namespace Wordle.Controllers
     {
         punctation p1 = new punctation();
         private readonly IMemoryCache _memoryCache;
-
+        
         public HomeController(IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
@@ -33,8 +35,54 @@ namespace Wordle.Controllers
         public IActionResult Start()
         {
             p1.startTime();
+            var kamil = getDataFromDB();
             _memoryCache.Set(User.FindFirstValue(ClaimTypes.NameIdentifier) + "p1", p1, TimeSpan.FromMinutes(60));
             return Ok();
+        }
+
+
+        [HttpPost]
+        public IActionResult getDataFromDB() 
+        {
+            UserStat userStat = new UserStat();
+
+            using (var stat = new GameStatController().context)
+            {
+                /* var userStats = stat.UserStat.ToList();
+
+                 foreach (var item in userStats)
+                 {
+                     Console.WriteLine($"Id: {item.statsId}. " +
+                         $"UserId: {item.userId}. " +
+                         $"points: {item.points}. " +
+                         $"averagePlayTime: {item.averagePlayTime}. " +
+                         $"checks: {item.checks}. " +
+                         $"fastestWin: {item.fastestWin}. " +
+                         $"finishes: {item.finishes}. " +
+                         $"wins: {item.wins}");
+                 }
+                 return Json(userStats);*/
+
+                var userStats = stat.UserStat.ToList();
+
+                List<UserStat> userStatsList = new List<UserStat>();
+
+                foreach (var item in userStats)
+                {
+                   userStatsList.Add(item);
+                }
+
+                return Json(userStatsList.Select(item => new {
+                    item.statsId,
+                    item.userId,
+                    item.points,
+                    item.averagePlayTime,
+                    item.checks,
+                    item.fastestWin,
+                    item.finishes,
+                    item.wins
+                }));
+            }
         }
 
         [HttpPost]
@@ -63,11 +111,11 @@ namespace Wordle.Controllers
                     UserStat userStat;
                     if (row <= 5)
                     {
-                        userStat = new UserStat(userId, points, 1, 1, (uint)row+1, p1.durationSpan, p1.durationSpan);
+                        userStat = new UserStat(userId, points, 1, 1, (uint)row, p1.durationSpan, p1.durationSpan);
                     }
                     else
                     {
-                        userStat = new UserStat(userId, points, 1, 0, (uint)row+1, p1.durationSpan, p1.durationSpan);
+                        userStat = new UserStat(userId, points, 1, 0, (uint)row, p1.durationSpan, p1.durationSpan);
                     }
                     stat.UserStat.Add(userStat);
                     try

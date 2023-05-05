@@ -15,6 +15,7 @@ namespace Wordle.Models
             this.averagePlayTime = averagePlayTime;
             this.fastestWin = fastestWin;
         }
+        public UserStat() { }
 
         [Key]
         public int statsId { get; set; }
