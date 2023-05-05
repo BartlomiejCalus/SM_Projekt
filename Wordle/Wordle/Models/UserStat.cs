@@ -5,10 +5,15 @@ namespace Wordle.Models
 {
     public class UserStat
     {
-        public UserStat(string userId, int points)
+        public UserStat(string userId, int points, uint finishes,uint wins,uint checks,TimeSpan averagePlayTime,TimeSpan fastestWin)
         {
             this.userId = userId;
             this.points = points;
+            this.finishes = finishes;
+            this.wins = wins;
+            this.checks = checks;
+            this.averagePlayTime = averagePlayTime;
+            this.fastestWin = fastestWin;
         }
 
         [Key]
@@ -17,6 +22,16 @@ namespace Wordle.Models
         public string userId { get; set; }
 
         public int points { get; set; }
+
+        public uint finishes { get; set; }
+
+        public uint wins { get; set; }
+
+        public uint checks { get; set; }
+
+        public TimeSpan averagePlayTime { get; set; }
+
+        public TimeSpan fastestWin { get; set; }
 
         public virtual WordleUser user { get; set; } = null!;
     }

@@ -33,16 +33,17 @@ namespace Wordle.Controllers
         public IActionResult Start()
         {
             p1.startTime();
+            _memoryCache.Set(User.FindFirstValue(ClaimTypes.NameIdentifier) + "p1", p1, TimeSpan.FromMinutes(60));
             return Ok();
         }
 
         [HttpPost]
         public IActionResult End([FromBody]int row)
         {
-            p1.endTime();
+            p1 = _memoryCache.Get<punctation>(User.FindFirstValue(ClaimTypes.NameIdentifier) + "p1");
+            p1.endTime();;
             var points=p1.Stats(row);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            UserStat userStat = new UserStat(userId,points);
             using (var stat = new GameStatController().context)
             {
                 try
@@ -50,10 +51,24 @@ namespace Wordle.Controllers
                     var entity = stat.UserStat.First(a => a.userId == userId);
                     var p = points + entity.points;
                     entity.points = p;
+                    entity.finishes = entity.finishes + 1;
+                    if(row<=5) entity.wins = entity.wins + 1;
+                    entity.checks = (uint)row;
+                    entity.averagePlayTime = (entity.averagePlayTime + p1.durationSpan) / entity.finishes;
+                    if(p1.durationSpan<entity.fastestWin) entity.fastestWin = p1.durationSpan;
                     stat.SaveChanges();
                 }
-                catch(Exception ex)
+                catch(InvalidOperationException ex)
                 {
+                    UserStat userStat;
+                    if (row <= 5)
+                    {
+                        userStat = new UserStat(userId, points, 1, 1, (uint)row+1, p1.durationSpan, p1.durationSpan);
+                    }
+                    else
+                    {
+                        userStat = new UserStat(userId, points, 1, 0, (uint)row+1, p1.durationSpan, p1.durationSpan);
+                    }
                     stat.UserStat.Add(userStat);
                     try
                     {
@@ -61,11 +76,11 @@ namespace Wordle.Controllers
                     }
                     catch
                     {
-
+                        Console.WriteLine("User already exists");
                     }
                 }
             }
-            return Ok();
+            return Json(points);
         }
 
         public IActionResult Index()

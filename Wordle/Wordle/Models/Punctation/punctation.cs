@@ -5,8 +5,9 @@ namespace Wordle.Models.Punctation
 {
     public class punctation
     {
-        private DateTime StartTime;
-        private DateTime EndTime;
+        private DateTime StartTime { get; set; }
+        private DateTime EndTime { get; set; }
+        public TimeSpan durationSpan { get; private set; }
         private int durationTime;
         public punctation() { }
 
@@ -17,8 +18,10 @@ namespace Wordle.Models.Punctation
 
         public void endTime()
         {
-            TimeSpan timeSpan = DateTime.Now - StartTime;
+            EndTime = DateTime.Now;
+            TimeSpan timeSpan = TimeSpan.FromTicks(EndTime.Ticks) - TimeSpan.FromTicks(StartTime.Ticks);
             durationTime = timeSpan.Seconds;
+            durationSpan = timeSpan;
         }
 
         public int Stats(int row) { 

@@ -19,13 +19,8 @@ namespace Wordle.Models.Events
         {
             using (var stat = new GameStatController().context)
             {
-                var userToDelete = new List<UserStat>();
-                userToDelete = stat.UserStat.ToList();
-                foreach (var user in userToDelete)
-                {
-                    Console.WriteLine(user.userId.ToString());
-                }
-                stat.UserStat.RemoveRange(userToDelete);
+                var entity = stat.UserStat.Where(u => u.points>0).ToList();
+                entity.ForEach(u => u.points = 0);
                 await stat.SaveChangesAsync();
             }
         }
