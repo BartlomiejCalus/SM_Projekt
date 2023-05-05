@@ -3,13 +3,13 @@
 const startButton = document.getElementById("start_button");
 const gameContainer = document.querySelector(".game-container");
 const gameBody = document.querySelector(".game-body");
-const timer = document.getElementById("timer");
+
 const keyboard = document.getElementsByClassName("keyboard-container")[0];
 const ready = document.getElementById("ready");
 const countdown = document.getElementById("countdown");
 
 // Ukryj element z timerem na początku
-timer.style.display = "none";
+
 countdown.style.visibility = "hidden";
 
 // Funkcja, która animuje i zmniejsza wartość odliczania
@@ -19,11 +19,8 @@ function animateCountdown() {
     countdown.classList.add("countdown-animation");
 }
 
-let timerInterval; // Przenieś tutaj deklarację zmiennej timerInterval
 
-function stopTimer() {
-    clearInterval(timerInterval);
-}
+
 
 startButton.addEventListener("click", function () {
     startButton.style.visibility = "hidden";
@@ -45,19 +42,14 @@ startButton.addEventListener("click", function () {
             // Pokaż planszę gry i timer
             gameBody.style.display = "block";
             gameContainer.style.paddingTop = "0";
-            timer.style.display = "flex";
+
             keyboard.style.display = "flex";
             startButton.style.display = "none";
             ready.style.display = "none";
 
             // Rozpocznij odliczanie czasu
             let startTime = Date.now();
-            timerInterval = setInterval(function () {
-                let elapsedTime = Date.now() - startTime;
-                let minutes = Math.floor(elapsedTime / 60000);
-                let seconds = Math.floor((elapsedTime % 60000) / 1000);
-                timer.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }, 1000);
+
 
 
 
@@ -72,8 +64,7 @@ startButton.addEventListener("click", function () {
 //Wyświetlanie do debugowania
 //alert("@ranked.getWordLength()");
 //alert("@ranked.wordInfo.word");
-let zmienna = ("@ranked.wordInfo.word");
-let zmienna2 = zmienna.toLocaleUpperCase();
+//let zmienna = ("@ranked.wordInfo.word");
 
 
 //---------------------------------------------
@@ -84,9 +75,6 @@ const submitButton = document.getElementById("submit_button");
 const alreadyUsedWords = new Set();
 let currentAttemptIndex = 0;
 const backspaceButton = document.getElementById("backspace_button");
-
-
-
 let gameOver = false;
 
 backspaceButton.addEventListener("click", function () {
@@ -107,32 +95,9 @@ backspaceButton.addEventListener("click", function () {
 function displayGameOverMessage() {
     const gameOverMessage = document.createElement("div");
     gameOverMessage.className = "game-over-message";
-    //gameOverMessage.innerHTML = "<h2>Koniec gry!</h2><br> <h3>Otrzymujesz X punktów!</h3>";
-
-    gameOverMessage.innerHTML = `<div class="game-over-message-content"><h2>Koniec gry!</h2><h3>Zgadywane słowo to: ` + zmienna2 +`</h3><br><br>
-        <h3>Otrzymujesz <span class="highlight">20</span> punktów!</h3>
-        <p>Aktualna liczba punktów: <span class="highlight">100</span></p>
-        <h4>Top 3 graczy:</h4>
-        <ol>
-            <li><i class="fa-solid fa-trophy gold"></i> <span class="highlight">Gracz 1</span>: 150 punktów</li>
-            <li><i class="fa-solid fa-trophy silver"></i> <span class="highlight">Gracz 2</span>: 130 punktów</li>
-            <li><i class="fa-solid fa-trophy bronze"></i> <span class="highlight">Gracz 3</span>: 110 punktów</li>
-        </ol>
-<br>
-
-<a href="RankGame"> <button class="afterwin" type="submit"><i class="fa-solid fa-rotate-right"></i> Zagraj ponownie</button></a>
-<a href="Ranking"> <button class="afterwin" type="submit"><i class="fa-solid fa-ranking-star"></i> Ranking</button></a>
-    </div>`;
-
-
-
+    gameOverMessage.textContent = "Koniec gry!";
     const gameContainer = document.querySelector(".game-container");
     gameContainer.appendChild(gameOverMessage);
-    const attempts = document.getElementById("attempts");
-    attempts.style.display = "none";
-    const keyboard_container = document.getElementsByClassName("keyboard-container")[0];
-    keyboard_container.style.display = "none";
-
 }
 
 
@@ -243,7 +208,7 @@ function handleSubmit() {
 
 function handleAttempt(word, serverResponse) {
     //alert("ODPOWIEDZ HANDLE: "+serverResponse);
-    //console.error("Nieprawidłowy format danych wejściowych:", serverResponse);
+    console.error("Nieprawidłowy format danych wejściowych:", serverResponse);
     for (let i = 0; i < word.length; i++) {
         const letterInput = letterInputs[currentAttemptIndex * 5 + i];
 
@@ -266,10 +231,7 @@ function handleAttempt(word, serverResponse) {
             .slice(currentAttemptIndex + 1, currentAttemptIndex + 5)
             .forEach((input) => (input.disabled = true));
         gameOver = true;
-        stopTimer(); // Zatrzymaj timer
 
-        //Gdy użytkownik przegra
-        //alert(currentAttemptIndex);
     }
 
 
@@ -289,11 +251,7 @@ function handleAttempt(word, serverResponse) {
             .forEach((input) => (input.disabled = true));
         gameOver = true;
         displayGameOverMessage();
-        stopTimer(); // Zatrzymaj timer
 
-        //Gdy użytkownik wygra
-        //alert(currentAttemptIndex+1);
-        
     }
 }
 

@@ -51,6 +51,14 @@ namespace Wordle.Controllers
         {
             return View();
         }
+        public IActionResult Terms()
+        {
+            return View();
+        }
+        public IActionResult Contact()
+        {
+            return View();
+        }
         public IActionResult Login()
         {
             return View("Login");
@@ -64,6 +72,14 @@ namespace Wordle.Controllers
             return View();
         }
         public IActionResult RankGame()
+        {
+            return View();
+        }
+        public IActionResult CasualGame()
+        {
+            return View();
+        }
+        public IActionResult Options()
         {
             return View();
         }

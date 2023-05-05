@@ -2,11 +2,8 @@
 @{
     Wordle.Models.Game.Ranked ranked = new Wordle.Models.Game.Ranked(_cache);
     System.Security.Claims.ClaimsPrincipal currentUser = this.User;
-
-    string temp = "";
-
-
 }
+
 @using Microsoft.Extensions.Caching.Memory
 <head>
     <link rel="stylesheet" href="~/css/GameStyle.css">
@@ -14,341 +11,348 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wordle</title>
     <script src="https://kit.fontawesome.com/bd2b98c0b7.js" crossorigin="anonymous"></script>
+    <script src="~/js/theme-toggle.js"></script>
+    <script src="~/js/language-switcher.js"></script>
+
 </head>
 
-<!-- Dodaj przycisk "Start gry" i planszę gry jako osobne elementy -->
+
 <div class="container">
+
     <div class="game-container">
         <div class="game-header">
             <h1><a href="@Url.Action("Index")">Wordle</a> <div id="timer">00:00</div></h1>
         </div>
-
-        <div id="start_container">
-            
-            <div id="ready">Gotowy? </div>
-            <div id="countdown" style="font-size: 8vw;">3</div>
-
-
-            <button id="start_button">Start gry</button>
-        </div>
-
-        <div class="game-body" style="display: none;">
-            <div class="testowa_klasa">
-
-                    
-
-                
+        <div id="before_win">
+            <div id="start_container">
+                <div id="ready" data-translate="ready">Gotowy? </div>
+                <div id="countdown" style="font-size: 8vw;">3</div>
+                <button id="start_button">Start gry</button>
             </div>
-            <div id="attempts">
-                <div class="input-container">
-                    <div class="letter-input-container">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
+        
+            <div class="game-body" style="display: none;">
+                <div class="testowa_klasa"></div>
+
+                <div id="attempts">
+                    <div class="input-container">
+                        <div class="letter-input-container">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                        </div>
                     </div>
-                </div>
-                <div class="input-container">
-                    <div class="letter-input-container">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
+                    <div class="input-container">
+                        <div class="letter-input-container">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                        </div>
                     </div>
-                </div>
-                <div class="input-container">
-                    <div class="letter-input-container">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
+                    <div class="input-container">
+                        <div class="letter-input-container">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                        </div>
                     </div>
-                </div>
-                <div class="input-container">
-                    <div class="letter-input-container">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
+                    <div class="input-container">
+                        <div class="letter-input-container">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                        </div>
                     </div>
-                </div>
-                <div class="input-container">
-                    <div class="letter-input-container">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
-                        <input class="letter-input" type="text" maxlength="1">
+                    <div class="input-container">
+                        <div class="letter-input-container">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                            <input class="letter-input" type="text" maxlength="1">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-    <div id="attempts"></div>
-</div>
+            <div id="attempts"></div>
 
-        <div class="keyboard-container">
-            <div class="keyboard-row">
-                <div class="keyboard-key">Q</div>
-                <div class="keyboard-key">W</div>
-                <div class="keyboard-key">E</div>
-                <div class="keyboard-key">R</div>
-                <div class="keyboard-key">T</div>
-                <div class="keyboard-key">Y</div>
-                <div class="keyboard-key">U</div>
-                <div class="keyboard-key">I</div>
-                <div class="keyboard-key">O</div>
-                <div class="keyboard-key">P</div>
-            </div>
-            <div class="keyboard-row">
-                <div class="keyboard-key">A</div>
-                <div class="keyboard-key">S</div>
-                <div class="keyboard-key">D</div>
-                <div class="keyboard-key">F</div>
-                <div class="keyboard-key">G</div>
-                <div class="keyboard-key">H</div>
-                <div class="keyboard-key">J</div>
-                <div class="keyboard-key">K</div>
-                <div class="keyboard-key">L</div>
-                <div id="backspace_button" class="backspace-key">⌫</div>
-            </div>
-            <div class="keyboard-row">
-                <div class="keyboard-key">Z</div>
-                <div class="keyboard-key">X</div>
-                <div class="keyboard-key">C</div>
-                <div class="keyboard-key">V</div>
-                <div class="keyboard-key">B</div>
-                <div class="keyboard-key">N</div>
-                <div class="keyboard-key">M</div>
-                <div id="submit_button" class="enter-key">Enter</div>
-            </div>
-        </div>
 
+            <div class="keyboard-container">
+                <div class="keyboard-row">
+                    <div class="keyboard-key">Q</div>
+                    <div class="keyboard-key">W</div>
+                    <div class="keyboard-key">E</div>
+                    <div class="keyboard-key">R</div>
+                    <div class="keyboard-key">T</div>
+                    <div class="keyboard-key">Y</div>
+                    <div class="keyboard-key">U</div>
+                    <div class="keyboard-key">I</div>
+                    <div class="keyboard-key">O</div>
+                    <div class="keyboard-key">P</div>
+                </div>
+                <div class="keyboard-row">
+                    <div class="keyboard-key">A</div>
+                    <div class="keyboard-key">S</div>
+                    <div class="keyboard-key">D</div>
+                    <div class="keyboard-key">F</div>
+                    <div class="keyboard-key">G</div>
+                    <div class="keyboard-key">H</div>
+                    <div class="keyboard-key">J</div>
+                    <div class="keyboard-key">K</div>
+                    <div class="keyboard-key">L</div>
+                    <div id="backspace_button" class="backspace-key">⌫</div>
+                </div>
+                <div class="keyboard-row">
+                    <div class="keyboard-key">Z</div>
+                    <div class="keyboard-key">X</div>
+                    <div class="keyboard-key">C</div>
+                    <div class="keyboard-key">V</div>
+                    <div class="keyboard-key">B</div>
+                    <div class="keyboard-key">N</div>
+                    <div class="keyboard-key">M</div>
+                    <div id="submit_button" class="enter-key">Enter</div>
+                </div>
+            </div>
+            </div>
 
     </div>
-    
-</div>
 
-
-<!--
-    <script src="/js/RankGame.js"></script>
--->
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-
-    // Pobierz elementy HTML do manipulacji
-    const startButton = document.getElementById("start_button");
-    const gameContainer = document.querySelector(".game-container");
-    const gameBody = document.querySelector(".game-body");
-    const timer = document.getElementById("timer");
-    const keyboard = document.getElementsByClassName("keyboard-container")[0];
-    const ready = document.getElementById("ready");
-    const countdown = document.getElementById("countdown");
-
-    // Ukryj element z timerem na początku
-    timer.style.display = "none";
-    countdown.style.visibility = "hidden";
-
-    // Funkcja, która animuje i zmniejsza wartość odliczania
-    function animateCountdown() {
-        countdown.classList.remove("countdown-animation");
-        void countdown.offsetWidth; // Przerwa między animacjami
-        countdown.classList.add("countdown-animation");
-    }
-
-    let timerInterval; // Przenieś tutaj deklarację zmiennej timerInterval
-
-function stopTimer() {
-    clearInterval(timerInterval);
-}
-
-    startButton.addEventListener("click", function () {
-        startButton.style.visibility="hidden";
-        ready.style.visibility="hidden";
-        countdown.style.visibility="visible";
-
-        // Rozpocznij odliczanie
-        let counter = 3;
-        countdown.innerText = counter.toString();
-        animateCountdown();
-
-        const countdownInterval = setInterval(() => {
-            counter--;
-
-            if (counter === 0) {
-                clearInterval(countdownInterval);
-                countdown.style.display = "none";
-
-                // Pokaż planszę gry i timer
-                gameBody.style.display = "block";
-                gameContainer.style.paddingTop = "0";
-                timer.style.display = "flex";
-                keyboard.style.display = "flex";
-                startButton.style.display="none";
-                ready.style.display="none";
-
-                // Rozpocznij odliczanie czasu
-                let startTime = Date.now();
-                timerInterval = setInterval(function () {
-                    let elapsedTime = Date.now() - startTime;
-                    let minutes = Math.floor(elapsedTime / 60000);
-                    let seconds = Math.floor((elapsedTime % 60000) / 1000);
-                    timer.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                }, 1000);
-
-              
-
-            } else {
-                countdown.innerText = counter.toString();
-                animateCountdown();
-            }
-        }, 1000);
-    });
-
-
-
-
-
-
-    //alert("@ranked.getWordLength()");
-    //alert("@ranked.wordInfo.word");
-    let zmienna=("@ranked.wordInfo.word");
+    <!--
+         <script src="/js/RankGame.js"></script>
+    -->
    
 
-   
-    
-//---------------------------------------------
+    <script>
 
-
-    const letterInputs = document.getElementsByClassName("letter-input");
-    const keyboardKeys = document.getElementsByClassName("keyboard-key");
-    const attempts = document.getElementById("attempts");
-    const submitButton = document.getElementById("submit_button");
-    const alreadyUsedWords = new Set();
-    let currentAttemptIndex = 0;
-    const backspaceButton = document.getElementById("backspace_button");
-    let gameOver = false;
-
-    backspaceButton.addEventListener("click", function () {
-        // Sprawdź, czy gra się zakończyła
-        if (!gameOver) {
-            const currentInputIndex = currentAttemptIndex * 5;
-            const currentLetterInputs = Array.from(letterInputs).slice(currentInputIndex, currentInputIndex + 5);
-            const nonEmptyInputs = currentLetterInputs.filter((input) => input.value !== "");
-
-            if (nonEmptyInputs.length > 0) {
-                const lastNonEmptyInput = nonEmptyInputs[nonEmptyInputs.length - 1];
-                lastNonEmptyInput.value = "";
-                lastNonEmptyInput.focus();
-            }
-        }
-    });
-
-    function displayGameOverMessage() {
-        const gameOverMessage = document.createElement("div");
-        gameOverMessage.className = "game-over-message";
-        gameOverMessage.textContent = "Koniec gry!";
+        // Pobierz elementy HTML do manipulacji
+        const startButton = document.getElementById("start_button");
         const gameContainer = document.querySelector(".game-container");
-        gameContainer.appendChild(gameOverMessage);
-    }
+        const gameBody = document.querySelector(".game-body");
+        const timer = document.getElementById("timer");
+        const keyboard = document.getElementsByClassName("keyboard-container")[0];
+        const ready = document.getElementById("ready");
+        const countdown = document.getElementById("countdown");
+
+        // Ukryj element z timerem na początku
+        timer.style.display = "none";
+        countdown.style.visibility = "hidden";
+
+        // Funkcja, która animuje i zmniejsza wartość odliczania
+        function animateCountdown() {
+            countdown.classList.remove("countdown-animation");
+            void countdown.offsetWidth; // Przerwa między animacjami
+            countdown.classList.add("countdown-animation");
+        }
+
+        let timerInterval; // Przenieś tutaj deklarację zmiennej timerInterval
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        startButton.addEventListener("click", function () {
+            startButton.style.visibility = "hidden";
+            ready.style.visibility = "hidden";
+            countdown.style.visibility = "visible";
+
+            // Rozpocznij odliczanie
+            let counter = 3;
+            countdown.innerText = counter.toString();
+            animateCountdown();
+
+            const countdownInterval = setInterval(() => {
+                counter--;
+
+                if (counter === 0) {
+                    clearInterval(countdownInterval);
+                    countdown.style.display = "none";
+
+                    // Pokaż planszę gry i timer
+                    gameBody.style.display = "block";
+                    gameContainer.style.paddingTop = "0";
+                    timer.style.display = "flex";
+                    keyboard.style.display = "flex";
+                    startButton.style.display = "none";
+                    ready.style.display = "none";
+
+                    // Rozpocznij odliczanie czasu
+                    let startTime = Date.now();
+                    timerInterval = setInterval(function () {
+                        let elapsedTime = Date.now() - startTime;
+                        let minutes = Math.floor(elapsedTime / 60000);
+                        let seconds = Math.floor((elapsedTime % 60000) / 1000);
+                        timer.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    }, 1000);
 
 
-    Array.from(letterInputs).forEach((input, index) => {
-        input.addEventListener("input", (event) => {
-            input.value = input.value.toUpperCase();
-            if (input.value.length === 1 && index < letterInputs.length - 1) {
-                if (index % 5 !== 4) {
-                    letterInputs[index + 1].focus();
+
+                } else {
+                    countdown.innerText = counter.toString();
+                    animateCountdown();
                 }
-            }
-            if (input.value.length > 1) {
-                input.value = input.value.charAt(0);
+            }, 1000);
+        });
+
+
+        //Wyświetlanie do debugowania
+        //alert("@ranked.getWordLength()");
+        //alert("@ranked.wordInfo.word");
+        let zmienna = ("@ranked.wordInfo.word").toUpperCase();
+
+
+        //---------------------------------------------
+        const letterInputs = document.getElementsByClassName("letter-input");
+        const keyboardKeys = document.getElementsByClassName("keyboard-key");
+        const attempts = document.getElementById("attempts");
+        const submitButton = document.getElementById("submit_button");
+        const alreadyUsedWords = new Set();
+        let currentAttemptIndex = 0;
+        const backspaceButton = document.getElementById("backspace_button");
+
+
+
+        let gameOver = false;
+
+        backspaceButton.addEventListener("click", function () {
+            // Sprawdź, czy gra się zakończyła
+            if (!gameOver) {
+                const currentInputIndex = currentAttemptIndex * 5;
+                const currentLetterInputs = Array.from(letterInputs).slice(currentInputIndex, currentInputIndex + 5);
+                const nonEmptyInputs = currentLetterInputs.filter((input) => input.value !== "");
+
+                if (nonEmptyInputs.length > 0) {
+                    const lastNonEmptyInput = nonEmptyInputs[nonEmptyInputs.length - 1];
+                    lastNonEmptyInput.value = "";
+                    lastNonEmptyInput.focus();
+                }
             }
         });
 
-        input.addEventListener("keydown", (event) => {
-            if (event.key === "Backspace" && index > 0) {
-                if (input.value.length === 0) {
-                    letterInputs[index - 1].focus();
+        function displayGameOverMessage() {
+            const gameOverMessage = document.createElement("div");
+            gameOverMessage.className = "game-over-message";
+            //gameOverMessage.innerHTML = "<h2>Koniec gry!</h2><br> <h3>Otrzymujesz X punktów!</h3>";
+
+            gameOverMessage.innerHTML = `<div class="game-over-message-content"><h2>Koniec gry!</h2><h3>Zgadywane słowo to: ` + zmienna + `</h3><br>
+                <h3>Otrzymujesz <span class="highlight">20</span> punktów!</h3>
+                <p>Aktualna liczba punktów: <span class="highlight">100</span></p>
+                <h4>Top 3 graczy:</h4>
+                <ol>
+                    <li><i class="fa-solid fa-trophy gold"></i> <span class="highlight">Gracz 1</span>: 150 punktów</li>
+                    <li><i class="fa-solid fa-trophy silver"></i> <span class="highlight">Gracz 2</span>: 130 punktów</li>
+                    <li><i class="fa-solid fa-trophy bronze"></i> <span class="highlight">Gracz 3</span>: 110 punktów</li>
+                </ol>
+        <br>
+
+        <a href="RankGame"> <button class="afterwin" type="submit"><i class="fa-solid fa-rotate-right"></i> Zagraj ponownie</button></a>
+        <a href="Ranking"> <button class="afterwin" type="submit"><i class="fa-solid fa-ranking-star"></i> Ranking</button></a>
+            </div>`;
+
+
+
+            const gameContainer = document.querySelector(".game-container");
+            gameContainer.appendChild(gameOverMessage);
+            const attempts = document.getElementById("attempts");
+            attempts.style.display = "none";
+            const keyboard_container = document.getElementsByClassName("keyboard-container")[0];
+            keyboard_container.style.display = "none";
+
+        }
+
+
+        Array.from(letterInputs).forEach((input, index) => {
+            input.addEventListener("input", (event) => {
+                input.value = input.value.toUpperCase();
+                if (input.value.length === 1 && index < letterInputs.length - 1) {
+                    if (index % 5 !== 4) {
+                        letterInputs[index + 1].focus();
+                    }
                 }
-            } else if (event.key !== "Backspace" && event.key !== "Enter" && event.key.length === 1 && index % 5 === 4 && input.value.length === 1) {
-                event.preventDefault();
-                input.blur();
-            }
+                if (input.value.length > 1) {
+                    input.value = input.value.charAt(0);
+                }
+            });
+
+            input.addEventListener("keydown", (event) => {
+                if (event.key === "Backspace" && index > 0) {
+                    if (input.value.length === 0) {
+                        letterInputs[index - 1].focus();
+                    }
+                } else if (event.key !== "Backspace" && event.key !== "Enter" && event.key.length === 1 && index % 5 === 4 && input.value.length === 1) {
+                    event.preventDefault();
+                    input.blur();
+                }
+            });
+
+            input.addEventListener("keyup", (event) => {
+                if (!gameOver && event.key === "Enter") {
+                    handleSubmit();
+                }
+            });
+
+
         });
 
-        input.addEventListener("keyup", (event) => {
-            if (!gameOver && event.key === "Enter") {
+        submitButton.addEventListener("click", function () {
+            if (!gameOver) {
                 handleSubmit();
             }
         });
 
+        Array.from(keyboardKeys).forEach((key) => {
+            key.addEventListener("click", function () {
+                const currentInputIndex = currentAttemptIndex * 5;
+                const currentLetterInputs = Array.from(letterInputs).slice(currentInputIndex, currentInputIndex + 5);
+                const currentInput = currentLetterInputs.find((input) => input.value === "");
 
-    });
-
-    submitButton.addEventListener("click", function () {
-        if (!gameOver) {
-            handleSubmit();
-        }
-    });
-
-    Array.from(keyboardKeys).forEach((key) => {
-        key.addEventListener("click", function () {
-            const currentInputIndex = currentAttemptIndex * 5;
-            const currentLetterInputs = Array.from(letterInputs).slice(currentInputIndex, currentInputIndex + 5);
-            const currentInput = currentLetterInputs.find((input) => input.value === "");
-
-            if (currentInput) {
-                currentInput.value = key.textContent;
-                if (currentInput.nextElementSibling) {
-                    currentInput.nextElementSibling.focus();
+                if (currentInput) {
+                    currentInput.value = key.textContent;
+                    if (currentInput.nextElementSibling) {
+                        currentInput.nextElementSibling.focus();
+                    }
                 }
-            }
-        });
-    });
-
-    function flashRed() {
-        Array.from(letterInputs).forEach((input) => {
-            input.style.backgroundColor = "red";
-        });
-
-        setTimeout(() => {
-            Array.from(letterInputs).forEach((input) => {
-                input.style.backgroundColor = "";
-                input.style.transition = "0.5s";
             });
-        }, 500);
-    }
+        });
+
+        function flashRed() {
+            Array.from(letterInputs).forEach((input) => {
+                input.style.backgroundColor = "red";
+            });
+
+            setTimeout(() => {
+                Array.from(letterInputs).forEach((input) => {
+                    input.style.backgroundColor = "";
+                    input.style.transition = "0.5s";
+                });
+            }, 500);
+        }
 
 
 
-    function handleSubmit() {
-        const word = Array.from(letterInputs)
-            .slice(currentAttemptIndex * 5, currentAttemptIndex * 5 + 5)
-            .map((input) => input.value)
-            .join("");
-        if (word.length < 5) {
-            flashRed();
-        } else if (word.length === 5) {
-            if (alreadyUsedWords.has(word)) {
-                alert("To słowo zostało już wpisane!");
-            } else {
-     
-                alreadyUsedWords.add(word);
-                //-----------
-               
-              
+        function handleSubmit() {
+            const word = Array.from(letterInputs)
+                .slice(currentAttemptIndex * 5, currentAttemptIndex * 5 + 5)
+                .map((input) => input.value)
+                .join("");
+            if (word.length < 5) {
+                flashRed();
+            } else if (word.length === 5) {
+                if (alreadyUsedWords.has(word)) {
+                    alert("To słowo zostało już wpisane!");
+                } else {
+
+                    alreadyUsedWords.add(word);
 
 
-                var responseValue; // Zdefiniuj zmienną na wyższym poziomie
-
-
+                    //-----------
                     $(document).ready(function () {
                         var generatedWord = word.toLowerCase(); // Tutaj wprowadź swoją zmienną JavaScript
 
@@ -357,12 +361,7 @@ function stopTimer() {
                             url: "/Home/Play", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
                             data: { generatedWord: generatedWord },
                             success: function (response) {
-                                // Tutaj możesz wykorzystać odpowiedź z serwera, np. wyświetlić ją na stronie
-                               // alert("Aktualny Word" + word);
-                                //alert("Response " + response);
-                                responseValue = response;
-                                //alert("Response value: " + response)
-                                 handleAttempt(word, response);
+                                handleAttempt(word, response);
                             },
                             error: function (error) {
                                 // Tutaj obsłuż błędy, np. wyświetlając komunikat o błędzie
@@ -370,86 +369,75 @@ function stopTimer() {
                             }
                         });
                     });
-            }
-        }
-    }
-
-    function handleAttempt(word, serverResponse) {
-        //alert("ODPOWIEDZ HANDLE: "+serverResponse);
-        console.error("Nieprawidłowy format danych wejściowych:", serverResponse);
-        for (let i = 0; i < word.length; i++) {
-            const letterInput = letterInputs[currentAttemptIndex * 5 + i];
-
-            if (serverResponse[0][i] && serverResponse[1][i]) {
-                letterInput.classList.add("correct");
-            } else if (serverResponse[0][i]) {
-                letterInput.classList.add("partial");
+                }
             }
         }
 
-        let count=0;
-        for(i=0;i<5;i++)
-        {
-            if (serverResponse[0][i] && serverResponse[1][i]) {
-                count++;
+        function handleAttempt(word, serverResponse) {
+            //alert("ODPOWIEDZ HANDLE: "+serverResponse);
+            //console.error("Nieprawidłowy format danych wejściowych:", serverResponse);
+            for (let i = 0; i < word.length; i++) {
+                const letterInput = letterInputs[currentAttemptIndex * 5 + i];
+
+                if (serverResponse[0][i] && serverResponse[1][i]) {
+                    letterInput.classList.add("correct");
+                } else if (serverResponse[0][i]) {
+                    letterInput.classList.add("partial");
+                }
+            }
+
+            let count = 0;
+            for (i = 0; i < 5; i++) {
+                if (serverResponse[0][i] && serverResponse[1][i]) {
+                    count++;
+                }
+            }
+            if (count == 5) {
+                // Zablokuj pola tekstowe w ostatnim rzędzie po zatwierdzeniu
+                Array.from(letterInputs)
+                    .slice(currentAttemptIndex + 1, currentAttemptIndex + 5)
+                    .forEach((input) => (input.disabled = true));
+                gameOver = true;
+                stopTimer(); // Zatrzymaj timer
+
+                //Gdy użytkownik przegra
+                //alert(currentAttemptIndex);
+            }
+
+
+            if (currentAttemptIndex < 4 && !gameOver) {
+                currentAttemptIndex++;
+                Array.from(letterInputs)
+                    .slice(0, currentAttemptIndex * 5)
+                    .forEach((input) => (input.disabled = true));
+                Array.from(letterInputs)
+                    .slice(currentAttemptIndex * 5, currentAttemptIndex * 5 + 5)
+                    .forEach((input) => (input.disabled = false));
+                letterInputs[currentAttemptIndex * 5].focus();
+            } else {
+                // Zablokuj pola tekstowe w ostatnim rzędzie po zatwierdzeniu
+                Array.from(letterInputs)
+                    .slice(currentAttemptIndex * 5, currentAttemptIndex * 5 + 5)
+                    .forEach((input) => (input.disabled = true));
+                gameOver = true;
+                displayGameOverMessage();
+                stopTimer(); // Zatrzymaj timer
+
+                //Gdy użytkownik wygra
+                //alert(currentAttemptIndex + 1);
+
             }
         }
-        if(count==5)
-        {
-            // Zablokuj pola tekstowe w ostatnim rzędzie po zatwierdzeniu
+
+        window.addEventListener("DOMContentLoaded", (event) => {
+            letterInputs[0].focus();
             Array.from(letterInputs)
-                .slice(currentAttemptIndex+1, currentAttemptIndex + 5)
+                .slice(5)
                 .forEach((input) => (input.disabled = true));
-            gameOver=true;
-            stopTimer(); // Zatrzymaj timer
+        });
 
+        </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        }
-
-
-        if (currentAttemptIndex < 4 && !gameOver) {
-            currentAttemptIndex++;
-            Array.from(letterInputs)
-                .slice(0, currentAttemptIndex * 5)
-                .forEach((input) => (input.disabled = true));
-            Array.from(letterInputs)
-                .slice(currentAttemptIndex * 5, currentAttemptIndex * 5 + 5)
-                .forEach((input) => (input.disabled = false));
-            letterInputs[currentAttemptIndex * 5].focus();
-        } else {
-            // Zablokuj pola tekstowe w ostatnim rzędzie po zatwierdzeniu
-            Array.from(letterInputs)
-                .slice(currentAttemptIndex * 5, currentAttemptIndex * 5 + 5)
-                .forEach((input) => (input.disabled = true));
-            gameOver = true;
-            displayGameOverMessage();
-            stopTimer(); // Zatrzymaj timer
-        }
-    }
-
-
-
-
-
-    window.addEventListener("DOMContentLoaded", (event) => {
-        letterInputs[0].focus();
-        Array.from(letterInputs)
-            .slice(5)
-            .forEach((input) => (input.disabled = true));
-    });
-
-
-
-
-    //JsonConvert.SerializeObject(@@ranked.Play("FGDGG"));
-    //alert(serverResponse);
-
-
-
-
-
-
-
-</script>
 
 

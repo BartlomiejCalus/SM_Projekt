@@ -7,17 +7,14 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Wordle.styles.css" asp-append-version="true" />
-    <style>
-      
-
-    </style>
+    <script src="~/js/language-switcher.js"></script>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm text-white navbar-light mb-3 navbar-collapse">
+        <nav class="navbar navbar-expand-sm mb-3 navbar-collapse">
   <div class="container-fluid">
     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-      <ul class="navbar-nav flex-grow-1 text-white mr-auto navbar-nav-scroll">
+      <ul class="navbar-nav flex-grow-1 mr-auto navbar-nav-scroll">
         <!-- menu items -->
       </ul>
     </div>
@@ -36,12 +33,12 @@
     <footer>
 
         <div>
-                <p>&copy; 2023 Wordle. Wszystkie prawa zastrzeżone.</p>
+                <p data-translate="footer">&copy; 2023 Wordle. Wszystkie prawa zastrzeżone.</p>
         <nav>    
             <ul>
-                <li><a href="#">Polityka prywatności</a></li>
-                    <li><a href="#">Regulamin</a></li>
-                <li><a href="#">Kontakt</a></li>
+                    <li><a href=" @Url.Action("Privacy")">Polityka prywatności</a></li>
+                    <li><a href=" @Url.Action("Terms")">Regulamin</a></li>
+                    <li><a href=" @Url.Action("Contact")">Kontakt</a></li>
             </ul>
         </nav>
     </div>
