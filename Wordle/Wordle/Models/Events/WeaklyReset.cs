@@ -22,8 +22,16 @@ namespace Wordle.Models.Events
                 var entity = stat.UserStat.Where(u => u.points>0).ToList();
                 foreach (var point in entity)
                 {
-                    TopPointsStat topPointsStat = new TopPointsStat(point.userId, point.points);
-                    await stat.TopPointsStat.AddAsync(topPointsStat);
+                    try
+                    {
+                        var top = stat.TopPointsStat.First(a => a.userID == point.userId);
+                        top.points = top.points+point.points;
+                    }
+                    catch(InvalidOperationException ex)
+                    {
+                        TopPointsStat topPointsStat = new TopPointsStat(point.userId, point.points);
+                        await stat.TopPointsStat.AddAsync(topPointsStat);
+                    }
                 }
                 entity.ForEach(u => u.points = 0);
                 await stat.SaveChangesAsync();
