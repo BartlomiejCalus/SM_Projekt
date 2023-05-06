@@ -122,8 +122,12 @@ namespace Wordle.Controllers
             }
 
         }
-
         [HttpPost]
+        public IActionResult getTopFromDB()
+        {
+            return Json("Not supported");
+        }
+            [HttpPost]
         public IActionResult End([FromBody]int row)
         {
             p1 = _memoryCache.Get<punctation>(User.FindFirstValue(ClaimTypes.NameIdentifier) + "p1");
