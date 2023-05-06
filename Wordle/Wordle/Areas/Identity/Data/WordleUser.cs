@@ -21,5 +21,7 @@ public class WordleUser : IdentityUser
     public virtual ICollection<GameStat> GameStats { get; set; }
 
     public UserStat? UserStat { get; set; }
+
+    public TopPointsStat? TopPointsStat { get; set; }
 }
 
