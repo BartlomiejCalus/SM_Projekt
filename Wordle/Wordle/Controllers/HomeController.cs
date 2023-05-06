@@ -9,6 +9,7 @@ using System.Security.Claims;
 using Microsoft.CodeAnalysis.CodeActions;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using static Wordle.Models.ArrayRequest.WordsArray;
 
 namespace Wordle.Controllers
 {
@@ -35,11 +36,25 @@ namespace Wordle.Controllers
         public IActionResult Start()
         {
             p1.startTime();
-            var kamil = getDataFromDB();
+            //var kamil = getDataFromDB();
+            //var kamil1 = getUserFromDB();
             _memoryCache.Set(User.FindFirstValue(ClaimTypes.NameIdentifier) + "p1", p1, TimeSpan.FromMinutes(60));
             return Ok();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> GetDescriptionAsync(string word) 
+        {
+            DictionaryApi dictionaryApi = new DictionaryApi();
+            string definition = await dictionaryApi.GetDefinition(word);
+
+            // Console.WriteLine("\nDefinicja słowa:");
+            //Console.WriteLine(definition);
+
+            ViewBag.Definition = definition;
+
+            return View();
+        }
 
         [HttpPost]
         public IActionResult getDataFromDB() 
@@ -72,6 +87,40 @@ namespace Wordle.Controllers
                   return Json(userStatsList);
               }       
            
+        }
+
+        [HttpPost]
+        public IActionResult getUserFromDB()
+        {
+            UserStatWithoutVirtual userStat1 = new UserStatWithoutVirtual();
+
+            using (var stat = new GameStatController().context)
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var userStats = stat.UserStat.Where(item => item.userId == userId).ToList();
+
+                List<UserStatWithoutVirtual> userStatsList = new List<UserStatWithoutVirtual>();
+
+                foreach (var item in userStats)
+                {
+                    var userStatWithoutVirtual = new UserStatWithoutVirtual
+                    {
+                        statsId = item.statsId,
+                        userId = item.userId,
+                        points = item.points,
+                        finishes = item.finishes,
+                        wins = item.wins,
+                        checks = item.checks,
+                        averagePlayTime = item.averagePlayTime,
+                        fastestWin = item.fastestWin
+                    };
+
+                    userStatsList.Add(userStatWithoutVirtual);
+                }
+
+                return Json(userStatsList);
+            }
+
         }
 
         [HttpPost]
