@@ -44,45 +44,34 @@ namespace Wordle.Controllers
         [HttpPost]
         public IActionResult getDataFromDB() 
         {
-            UserStat userStat = new UserStat();
+            UserStatWithoutVirtual userStat = new UserStatWithoutVirtual();
 
-            using (var stat = new GameStatController().context)
-            {
-                /* var userStats = stat.UserStat.ToList();
+              using (var stat = new GameStatController().context)
+              {
+                var userStats = stat.UserStat.OrderByDescending(item => item.points).ToList();
 
-                 foreach (var item in userStats)
-                 {
-                     Console.WriteLine($"Id: {item.statsId}. " +
-                         $"UserId: {item.userId}. " +
-                         $"points: {item.points}. " +
-                         $"averagePlayTime: {item.averagePlayTime}. " +
-                         $"checks: {item.checks}. " +
-                         $"fastestWin: {item.fastestWin}. " +
-                         $"finishes: {item.finishes}. " +
-                         $"wins: {item.wins}");
-                 }
-                 return Json(userStats);*/
+                List<UserStatWithoutVirtual> userStatsList = new List<UserStatWithoutVirtual>();
 
-                var userStats = stat.UserStat.ToList();
+                  foreach (var item in userStats)
+                  {
+                    var userStatWithoutVirtual = new UserStatWithoutVirtual
+                    {
+                        statsId = item.statsId,
+                        userId = item.userId,
+                        points = item.points,
+                        finishes = item.finishes,
+                        wins = item.wins,
+                        checks = item.checks,
+                        averagePlayTime = item.averagePlayTime,
+                        fastestWin = item.fastestWin
+                    };
 
-                List<UserStat> userStatsList = new List<UserStat>();
-
-                foreach (var item in userStats)
-                {
-                   userStatsList.Add(item);
+                    userStatsList.Add(userStatWithoutVirtual);
                 }
 
-                return Json(userStatsList.Select(item => new {
-                    item.statsId,
-                    item.userId,
-                    item.points,
-                    item.averagePlayTime,
-                    item.checks,
-                    item.fastestWin,
-                    item.finishes,
-                    item.wins
-                }));
-            }
+                  return Json(userStatsList);
+              }       
+           
         }
 
         [HttpPost]

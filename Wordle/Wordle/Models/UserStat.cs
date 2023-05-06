@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Wordle.Areas.Identity.Data;
 
 namespace Wordle.Models
@@ -34,6 +35,7 @@ namespace Wordle.Models
 
         public TimeSpan fastestWin { get; set; }
 
+        [JsonIgnore]
         public virtual WordleUser user { get; set; } = null!;
     }
 }
