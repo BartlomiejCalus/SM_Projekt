@@ -35,7 +35,7 @@ namespace Wordle.Controllers
         [HttpGet]
         public IActionResult Rank()
         {
-            var gracze = new List<UserStat>() {new UserStat("fasgag",234), new UserStat("gfhdhd", 742) };
+            var gracze = new List<UserStat>() {new UserStat("fasgag",234, 1, 1, 3, DateTime.Now.TimeOfDay, DateTime.Now.TimeOfDay), new UserStat("gfhdhd", 7421, 1, 3, 3, DateTime.Now.TimeOfDay, DateTime.Now.TimeOfDay) };
             return Json(gracze);
         }
 
@@ -76,7 +76,7 @@ namespace Wordle.Controllers
                     var userStatWithoutVirtual = new UserStatWithoutVirtual
                     {
                         statsId = item.statsId,
-                        userId = item.userId,
+                        nickname = item.user.Nickname,
                         points = item.points,
                         finishes = item.finishes,
                         wins = item.wins,
@@ -110,7 +110,7 @@ namespace Wordle.Controllers
                     var userStatWithoutVirtual = new UserStatWithoutVirtual
                     {
                         statsId = item.statsId,
-                        userId = item.userId,
+                        nickname = item.user.Nickname,
                         points = item.points,
                         finishes = item.finishes,
                         wins = item.wins,
@@ -129,7 +129,27 @@ namespace Wordle.Controllers
         [HttpPost]
         public IActionResult getTopFromDB()
         {
-            return Json("Not supported");
+
+            using (var stat = new GameStatController().context)
+            {
+                var userStats = stat.TopPointsStat.OrderByDescending(item => item.points).Take(3).ToList();
+
+                List<TopWithoutVirtual> topList = new List<TopWithoutVirtual>();
+
+                foreach (var item in userStats)
+                {
+                    var topWithoutVirtual = new TopWithoutVirtual
+                    {
+                        topID = item.topID,
+                        nickname = item.user.Nickname,
+                        points = item.points,
+                    };
+
+                    topList.Add(topWithoutVirtual);
+                }
+
+                return Json(topList);
+            }
         }
             [HttpPost]
         public IActionResult End([FromBody]int row)
