@@ -19,13 +19,21 @@ namespace Wordle.Models.Events
         {
             using (var stat = new GameStatController().context)
             {
-                var userToDelete = new List<UserStat>();
-                userToDelete = stat.UserStat.ToList();
-                foreach (var user in userToDelete)
+                var entity = stat.UserStat.Where(u => u.points>0).ToList();
+                foreach (var point in entity)
                 {
-                    Console.WriteLine(user.userId.ToString());
+                    try
+                    {
+                        var top = stat.TopPointsStat.First(a => a.userID == point.userId);
+                        top.points = top.points+point.points;
+                    }
+                    catch(InvalidOperationException ex)
+                    {
+                        TopPointsStat topPointsStat = new TopPointsStat(point.userId, point.points);
+                        await stat.TopPointsStat.AddAsync(topPointsStat);
+                    }
                 }
-                stat.UserStat.RemoveRange(userToDelete);
+                entity.ForEach(u => u.points = 0);
                 await stat.SaveChangesAsync();
             }
         }
