@@ -77,7 +77,7 @@ namespace Wordle.Controllers
                     };
 
                     userStatsList.Add(userStatWithoutVirtual);
-                }
+                  }
 
                   return Json(userStatsList);
               }       
@@ -117,8 +117,12 @@ namespace Wordle.Controllers
             }
 
         }
-
         [HttpPost]
+        public IActionResult getTopFromDB()
+        {
+            return Json("Not supported");
+        }
+            [HttpPost]
         public IActionResult End([FromBody]int row)
         {
             p1 = _memoryCache.Get<punctation>(User.FindFirstValue(ClaimTypes.NameIdentifier) + "p1");
@@ -134,7 +138,7 @@ namespace Wordle.Controllers
                     entity.points = p;
                     entity.finishes = entity.finishes + 1;
                     if(row<=5) entity.wins = entity.wins + 1;
-                    entity.checks = (uint)row;
+                    entity.checks =entity.checks+ (uint)row;
                     entity.averagePlayTime = (entity.averagePlayTime + p1.durationSpan) / entity.finishes;
                     if(p1.durationSpan<entity.fastestWin) entity.fastestWin = p1.durationSpan;
                     stat.SaveChanges();
