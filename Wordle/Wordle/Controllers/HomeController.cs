@@ -32,6 +32,15 @@ namespace Wordle.Controllers
             return Json(serverResponse);
         }
 
+        [HttpGet]
+        public IActionResult Rank()
+        {
+            var gracze = new List<UserStat>() {new UserStat("fasgag",234), new UserStat("gfhdhd", 742) };
+            return Json(gracze);
+        }
+
+
+
         [HttpPost]
         public async Task<IActionResult> Start()
         {
