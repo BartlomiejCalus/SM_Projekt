@@ -33,31 +33,26 @@ namespace Wordle.Controllers
         }
 
         [HttpPost]
-        public IActionResult Start()
+        public async Task<IActionResult> Start()
         {
             p1.startTime();
-            //var kamil = getDataFromDB();
-            //var kamil1 = getUserFromDB();
+            //var AllUsers = getUsersFromDB();
+            //var OneUser = getUserFromDB();
+            //var Description = await GetDescriptionAsync("hello");
             _memoryCache.Set(User.FindFirstValue(ClaimTypes.NameIdentifier) + "p1", p1, TimeSpan.FromMinutes(60));
             return Ok();
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetDescriptionAsync(string word) 
+        public async Task<IActionResult> GetDescriptionAsync([FromBody]string word) 
         {
             DictionaryApi dictionaryApi = new DictionaryApi();
             string definition = await dictionaryApi.GetDefinition(word);
-
-            // Console.WriteLine("\nDefinicja słowa:");
-            //Console.WriteLine(definition);
-
-            ViewBag.Definition = definition;
-
-            return View();
+            return Json(definition);
         }
 
         [HttpPost]
-        public IActionResult getDataFromDB() 
+        public IActionResult getUsersFromDB() 
         {
             UserStatWithoutVirtual userStat = new UserStatWithoutVirtual();
 
