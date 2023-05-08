@@ -9,45 +9,136 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/css/GameStyle.css">
     <title>Wordle - Statystyki gracza</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="~/js/theme-toggle.js"></script>
 </head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <body>
     <div class="container">
         <div class="stats-container">
-            <h1><a href=" @Url.Action("Index")">Wordle</a></h1>
-            <h2>Statystyki gracza @UserManager.GetUserName(User)!</h2>
 
-            <table id="stats">
-                <tr>
-                    <th>Statystyka</th>
-                    <th>Wartość</th>
-                </tr>
-                <tr>
-                    <td>Rozegrane gry</td>
-                    <td>100</td>
-                </tr>
-                <tr>
-                    <td>Zwycięstwa</td>
-                    <td>60</td>
-                </tr>
-                <tr>
-                    <td>Liczba sprawdzeń</td>
-                    <td>40</td>
-                </tr>
-                <tr>
-                    <td>Procent wygranych</td>
-                    <td>60%</td>
-                </tr>
-                <tr>
-                    <td>Średni czas gry</td>
-                    <td>2m 30s</td>
-                </tr>
-                <tr>
-                    <td>Najszybsze zwycięstwo</td>
-                    <td>1m 10s</td>
-                </tr>
-            </table>
+
+            <div id="stats-container" class="stats-container">
+                <h1><a href="@Url.Action("Index")">Wordle</a></h1>
+                <h2>Statystyki gracza @UserManager.GetUserName(User)!</h2>
+
+
+
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>Rozegrane gry</h3>
+                        <p>100</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Procent wygranych</h3>
+                        <p>60%</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Najszybsze zwycięstwo</h3>
+                        <p>1m 10s</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Aktualny streak</h3>
+                        <p>5</p>
+                    </div>
+                </div>
+                <div class="stats-grid"></div>
+                <h3 class="chart-title">Ilość zgadnięć w danej próbie</h3>
+                <canvas id="attemptsChart"></canvas>
+
+            </div>
 
         </div>
+
+        <script>
+            var attempts;
+            $.ajax({
+                type: "GET",
+                url: "/Home/Stats",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    console.log(response[0].userName);
+                    var statsContainer = $('#stats-container');
+                    var statsGrid = $('<div>').addClass('stats-grid');
+                    attempts = response[0].attempts;
+
+                    $('.stat-item:nth-child(1) p').text(response[0].gamesPlayed);
+                    $('.stat-item:nth-child(2) p').text(response[0].winPercentage + '%');
+                    $('.stat-item:nth-child(3) p').text(response[0].fastestWin);
+                    $('.stat-item:nth-child(4) p').text(response[0].currentStreak);
+
+
+                    //////////
+                    const attemptsCtx = document.getElementById('attemptsChart').getContext('2d');
+                    const attemptsData = {
+                        labels: ['1', '2', '3', '4', '5'],
+                        datasets: [{
+                            label: 'Ilość zgadnięć',
+                            data: attempts,
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(75, 192, 192, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(75, 192, 192, 1)'
+                            ],
+                            borderWidth: 2,
+                            borderRadius: 10
+                        }]
+                    };
+                    const attemptsOptions = {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 5
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    boxWidth: 20
+                                }
+                            },
+                            title: {
+                                display: false
+                            }
+                        }
+                    };
+                    const attemptsChart = new Chart(attemptsCtx, {
+                        type: 'bar',
+                        data: attemptsData,
+                        options: attemptsOptions
+                    });
+                    //////////
+
+
+
+                },
+                error: function (error) {
+                    alert("Wystąpił błąd:");
+                }
+            });
+
+        </script>
+
+    </div>
+
+    <script>
+
+
+    </script>
     </div>
 </body>

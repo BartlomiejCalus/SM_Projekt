@@ -21,6 +21,7 @@ body {
     font-family: December;
     src: url(../fonts/December.otf);
 }
+
 @font-face {
     font-family: HeartWarming;
     src: url('../fonts/Heart Warming Font by Situjuh (7NTypes).otf');
@@ -60,10 +61,10 @@ body {
     font-size: 80pt;
     cursor: pointer;
 }
-#logo_text a:hover
-{
-    font-weight:bold;
-}
+
+    #logo_text a:hover {
+        font-weight: bold;
+    }
 
 
 h1 a {
@@ -73,7 +74,7 @@ h1 a {
 
     h1 a:hover {
         color: var(--text-color);
-
+        text-decoration: none;
     }
 
 .gamemode_button {
@@ -122,10 +123,11 @@ h1 a {
     padding-left: 3.3vh;
     text-align: center;
 }
+
     #settings_button:hover {
         background-color: var(--hover-color);
     }
-    
+
 /* Stopka */
 footer {
     margin-top: 2vh;
@@ -150,7 +152,6 @@ ul {
     list-style: none;
     margin: 0;
     padding: 0;
-   
 }
 
 li {
@@ -171,7 +172,7 @@ a {
 .menu {
     justify-content: right;
     display: flex;
-    width:80vw;
+    width: 80vw;
 }
 
 #login_button {
@@ -183,6 +184,7 @@ a {
     cursor: pointer;
     border: none;
 }
+
     #login_button:hover {
         background-color: #4b4b4b;
     }
@@ -192,7 +194,7 @@ a {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    margin-bottom:10vh;
+    margin-bottom: 10vh;
     color: var(--text-color);
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     text-align: center;
@@ -233,17 +235,16 @@ button [type="submit"] {
 }
 
     button[type="submit"]:hover {
-        background-color: #4b4b4b;
     }
 
-/.ranking {
+.ranking {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: rgba(30, 33, 36, 0.9);
-    border-radius: 12px; /* Increased border-radius for more rounded corners */
+    background-color: var(--second-color);
+    border-radius: 12px;
 }
 
 h2 {
@@ -252,41 +253,53 @@ h2 {
     color: var(--text-color);
 }
 
+.nav-tabs {
+    justify-content: center; /* Center the tabs */
+    margin-bottom: 20px;
+}
+
+    .nav-tabs .nav-link {
+        color: var(--hover-color);
+    }
+
+        .nav-tabs .nav-link.active {
+            color: black;
+            font-weight: bold;
+        }
+
 .ranking_table {
     width: 100%;
     border-collapse: collapse;
-    border-radius: 12px; /* Added border-radius for table */
-    overflow: hidden; /* Added overflow hidden to make table rounded */
+    border-radius: 12px;
+    overflow: hidden;
 }
 
     .ranking_table thead th {
-        background-color: rgba(241, 241, 241, 0.8); /* Added transparency */
+        background-color: var(--hover-color);
         text-align: center;
         padding: 8px;
-        font-weight: bold; /* Added font-weight for better readability */
+        font-weight: bold;
         width: 300px;
     }
 
     .ranking_table tbody td {
         padding: 8px;
         border-bottom: 1px solid #f1f1f1;
-        background-color: rgba(128, 128, 128, 0.6); /* Added transparency */
-        color: white; /* Changed text color for better readability */
+        color: var(--text-color);
         text-align: center;
     }
 
     .ranking_table tbody tr {
-        background-color: rgba(105, 105, 105, 0.6); /* Added transparency */
-        
+        background-color: var(--second-color);
     }
 
         .ranking_table tbody tr:nth-child(even) {
-            background-color: rgba(248, 248, 248, 0.6); /* Added transparency */
+            background-color: var(--hover-color);
         }
 
 
 .blinking-cursor {
-    user-select: none; 
+    user-select: none;
     animation: blink 1s steps(2, start) infinite;
 }
 
@@ -295,11 +308,12 @@ h2 {
         visibility: hidden;
     }
 }
-#register-submit
-{
+
+#register-submit {
     margin-top: 1vw;
-    margin-bottom:1vw;
+    margin-bottom: 1vw;
 }
+
 .odnosnik {
     color: var(--text-color);
     font-weight: bold;

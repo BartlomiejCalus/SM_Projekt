@@ -10,6 +10,7 @@ using Microsoft.CodeAnalysis.CodeActions;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using static Wordle.Models.ArrayRequest.WordsArray;
+using MessagePack.Formatters;
 
 namespace Wordle.Controllers
 {
@@ -33,15 +34,56 @@ namespace Wordle.Controllers
         }
 
         [HttpGet]
+
+
         public IActionResult Rank()
         {
-            var gracze = new List<UserStat>() {new UserStat("fasgag",234), new UserStat("gfhdhd", 742) };
+            TimeSpan ts1 = new TimeSpan(1, 30, 0); // 1 hour and 30 minutes
+            TimeSpan ts2 = new TimeSpan(1, 30, 0); // 1 hour and 30 minutes
+            List<UserStatWithoutVirtual> gracze = getUsersFromDB();
+            //var gracze = new List<UserStat>() { };
+            //string userId, int points, uint finishes,uint wins,uint checks,TimeSpan averagePlayTime,TimeSpan fastestWin
             return Json(gracze);
         }
 
+        //DODANE DLA STATYSTYK
+        [HttpGet]
+        public IActionResult Stats()
+        {
+            var attemptsData = new int[] { 10, 20, 15, 8, 7 };
+            var gracze2 = new List<UserStat2>() {
+
+                new UserStat2("fasgag", 110, 65, "1m 10s", 5, attemptsData),
+            };
+            return Json(gracze2);
+        }
+        //DOTĄD
+        //DODANE DLA STATYSTYK
+        public class UserStat2
+        {
+            public string UserName { get; set; }
+            public int GamesPlayed { get; set; }
+            public int WinPercentage { get; set; }
+            public string FastestWin { get; set; }
+            public int CurrentStreak { get; set; }
+            public int[] Attempts { get; set; }
+
+            public UserStat2(string userName, int gamesPlayed, int winPercentage, string fastestWin, int currentStreak, int[] attempts)
+            {
+                UserName = userName;
+                GamesPlayed = gamesPlayed;
+                WinPercentage = winPercentage;
+                FastestWin = fastestWin;
+                CurrentStreak = currentStreak;
+                Attempts = attempts;
+            }
+        }
+        //DOTĄD
 
 
-        [HttpPost]
+
+
+    [HttpPost]
         public async Task<IActionResult> Start()
         {
             p1.startTime();
@@ -61,7 +103,7 @@ namespace Wordle.Controllers
         }
 
         [HttpPost]
-        public IActionResult getUsersFromDB() 
+        public List<UserStatWithoutVirtual> getUsersFromDB() 
         {
             UserStatWithoutVirtual userStat = new UserStatWithoutVirtual();
 
@@ -88,13 +130,12 @@ namespace Wordle.Controllers
                     userStatsList.Add(userStatWithoutVirtual);
                   }
 
-                  return Json(userStatsList);
+                  return userStatsList;
               }       
            
         }
-
         [HttpPost]
-        public IActionResult getUserFromDB()
+        public List<UserStatWithoutVirtual> GetUserFromDB()
         {
             UserStatWithoutVirtual userStat1 = new UserStatWithoutVirtual();
 
@@ -122,10 +163,10 @@ namespace Wordle.Controllers
                     userStatsList.Add(userStatWithoutVirtual);
                 }
 
-                return Json(userStatsList);
+                return userStatsList;
             }
-
         }
+
         [HttpPost]
         public IActionResult getTopFromDB()
         {

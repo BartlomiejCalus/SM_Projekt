@@ -1,8 +1,9 @@
 ﻿@{
-ViewData["Title"] = "Ranking";
+    ViewData["Title"] = "Ranking";
 }
 
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/style.css">
     <script src="~/js/theme-toggle.js"></script>
 </head>
@@ -10,30 +11,53 @@ ViewData["Title"] = "Ranking";
 <div class="main_page">
     <div class="row_non">
         <h1 id="logo_text"><a href="@Url.Action("Index")">Wordle</a></h1>
-
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
-
     <div class="ranking">
         <h2>Ranking graczy</h2>
-        <table class="ranking_table">
-            <thead>
-                <tr>
-                    <th>Pozycja</th>
-                    <th>Nazwa użytkownika</th>
-                    <th>Punkty</th>
-                </tr>
-            </thead>
-            <tbody id="ranking-tbody">
-                <!-- Wiersze tabeli zostaną wypełnione danymi z żądania AJAX -->
-            </tbody>
-        </table>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" id="weekly-tab" data-toggle="tab" href="#weekly">Ranking tygodniowy</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="overall-tab" data-toggle="tab" href="#overall">Ranking ogólny</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="weekly">
+                <table class="ranking_table">
+                    <thead>
+                        <tr>
+                            <th>Pozycja</th>
+                            <th>Nazwa użytkownika</th>
+                            <th>Punkty</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ranking-tbody-weekly">
+                        <!-- Wiersze tabeli zostaną wypełnione danymi z żądania AJAX -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="overall">
+                <table class="ranking_table">
+                    <thead>
+                        <tr>
+                            <th>Pozycja</th>
+                            <th>Nazwa użytkownika</th>
+                            <th>Punkty</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ranking-tbody-overall">
+                        <!-- Wiersze tabeli zostaną wypełnione danymi z żądania AJAX -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <script>
-        $(document).ready(function () {
+        function loadWeeklyRanking() {
             $.ajax({
                 type: "GET",
                 url: "/Home/Rank", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
@@ -43,7 +67,8 @@ ViewData["Title"] = "Ranking";
                     console.log(response);
 
                     // Wypełnij tabelę danymi z odpowiedzi
-                    var tbody = $("#ranking-tbody");
+                    var tbody = $("#ranking-tbody-weekly");
+                    tbody.empty();
                     response.forEach(function (player, index) {
                         var row = $("<tr></tr>");
                         row.append($("<td></td>").text(index + 1));
@@ -56,10 +81,52 @@ ViewData["Title"] = "Ranking";
                     alert("Wystąpił błąd:");
                 }
             });
+        }
+
+
+        //UZUPEŁNIĆ RANKING OGÓLNY
+        function loadOverallRanking() {
+            $.ajax({
+                type: "GET",
+                url: "/Home/Rank", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
+                dataType: "json", // Oczekiwany typ danych to JSON
+                success: function (response) {
+                    // Kod wykonywany po pomyślnym zakończeniu żądania
+                    console.log(response);
+
+                    // Wypełnij tabelę danymi z odpowiedzi
+                    var tbody = $("#ranking-tbody-overall");
+                    tbody.empty();
+                    response.forEach(function (player, index) {
+                        var row = $("<tr></tr>");
+                        row.append($("<td></td>").text(index + 1));
+                        row.append($("<td></td>").text(player.userId));
+                        row.append($("<td></td>").text(player.points));
+                        tbody.append(row);
+                    });
+                },
+                error: function (error) {
+                    alert("Wystąpił błąd:");
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            loadWeeklyRanking();
+
+            $('#weekly-tab').on('click', function () {
+                loadWeeklyRanking();
+            });
+
+            $('#overall-tab').on('click', function () {
+                loadOverallRanking();
+            });
         });
     </script>
 
 </div>
 
-
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="js/bootstrap.bundle.js"></script>
+
+
