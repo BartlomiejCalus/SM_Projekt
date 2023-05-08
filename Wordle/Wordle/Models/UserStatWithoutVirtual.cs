@@ -11,7 +11,7 @@ namespace Wordle.Models
         [Key]
         public int statsId { get; set; }
         [Required]
-        public string userId { get; set; }
+        public string nickname { get; set; }
 
         public int points { get; set; }
 
