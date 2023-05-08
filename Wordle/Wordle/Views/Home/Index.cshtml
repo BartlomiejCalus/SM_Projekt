@@ -1,5 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    var imagePath = "css/6000421.png";
+    var imagePath2 = "css/zebatka.png";
 }
 <head>
     <link rel="stylesheet" href="~/css/style.css">
@@ -27,9 +29,8 @@
 
     </div>
     <div class="row_non" style="margin-top:40vh;">
-            <a href="@Url.Action("Ranking")"><button class="gamemode_button" data-bs-toggle="tooltip" data-bs-placement="top" title="Here you can see weekly ranking of best players" id="settings_button"> <i class="fa-solid fa-ranking-star"></i></button></a>
-        <a href="@Url.Action("Options")"><button class="gamemode_button" data-bs-toggle="tooltip" data-bs-placement="top" title="Here you can change all settings" id="settings_button"><i class="fa-solid fa-gears"></i></button></a>
-            <a href="@Url.Action("Instructions")"><button class="gamemode_button" data-bs-toggle="tooltip" data-bs-placement="top" title="Here you can change all settings" id="settings_button"><i class="fa-solid fa-gears"></i></button></a>
+            <a href="@Url.Action("Ranking")"><img src="@imagePath" alt="Costam" data-bs-toggle="tooltip" data-bs-placement="top" title="Here you can see table with everybodys score" ></a>
+            <a href="@Url.Action("Options")"><img src="@imagePath2" alt="Costam" data-bs-toggle="tooltip" data-bs-placement="top" title="Here you can change all settings"></a>
     </div>
 
 </div>
