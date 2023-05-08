@@ -70,7 +70,7 @@ namespace Wordle.Controllers
 
               using (var stat = new GameStatController().context)
               {
-                var userStats = stat.UserStat.OrderByDescending(item => item.points).ToList();
+                var userStats = stat.UserStat.OrderByDescending(item => item.points).Take(100).ToList();
 
                 List<UserStatWithoutVirtual> userStatsList = new List<UserStatWithoutVirtual>();
 
