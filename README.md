@@ -10,6 +10,8 @@ The app is our interpretation of the popular game Worlde. We made it in a group 
 
 [![.NET version](https://img.shields.io/badge/.NET-v.6-green)](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 
+[![Entity Framework Core](https://img.shields.io/badge/EntityFrameworkCore-v.6.0.15-green)](https://learn.microsoft.com/pl-pl/ef/core/)
+
 [![RestSharp version](https://img.shields.io/badge/RestSharp-v.110.2.0-green)](https://restsharp.dev)
 
 
