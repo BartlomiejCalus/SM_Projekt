@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Principal;
 using Wordle.Areas.Identity.Data;
@@ -50,6 +51,46 @@ namespace Wordle.Models.Game
             wordInfo = new WordInfo(get);
             return wordInfo;
         }
+        public int getSavedRound(string userId)
+        {
+            using (var stat = new GameStatController().context)
+            {
+                try
+                {
+                    var entity = stat.UserStat.First(a => a.userId == userId);
+                    var temp = entity.todayPlays;
+                    if(temp>rounds)
+                    {
+                        return 6;
+                    }
+                    else
+                    {
+                        currentRound = temp;
+                    }
+                    return currentRound;
+                }
+                catch (InvalidOperationException e)
+                {
+                    return currentRound;
+                }
+            }
+        }
+        public void saveCurrentRound(string userId)
+        {
+            using (var stat = new GameStatController().context)
+            {
+                try
+                {
+                    var entity = stat.UserStat.First(a => a.userId == userId);
+                    entity.todayPlays = currentRound;
+                    stat.SaveChanges();
+                }
+                catch (InvalidOperationException e)
+                {
+
+                }
+            }
+        }
         public int getWordLength()
         {
             return wordInfo.word.Length;
@@ -62,7 +103,7 @@ namespace Wordle.Models.Game
 
         public List<List<bool>> Play(string querry)
         {
-            List<List<bool>> list = new List<List<bool>>();
+            List < List<bool> > list = new List <List<bool>>();
             if (currentRound > rounds)
             {
                 list.Add(letterPresence(querry));
