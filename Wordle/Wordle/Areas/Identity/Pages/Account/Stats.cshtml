@@ -1,5 +1,5 @@
 ﻿@page
-@model Wordle.Areas.Identity.Pages.Account.StatsModel
+@model Wordle.Areas.Identity.Pages.Account.StatsModel;
 @inject UserManager<WordleUser> UserManager
 @{
 }
@@ -14,14 +14,38 @@
 </head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
+
 <body>
     <div class="container">
         <div class="stats-container">
 
+        
+
+
+                             <script>
+                    
+                $.ajax({
+    type: "GET",
+    url: "/Home/GetUserNickname", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
+    success: function (response) {
+        // Kod wykonywany po pomyślnym zakończeniu żądania
+        document.getElementById("stats").innerHTML+=response;
+
+    },
+    error: function (error) {
+        alert("Wystąpił błąd:");
+    }
+});
+
+
+
+                </script>
 
             <div id="stats-container" class="stats-container">
                 <h1><a href="@Url.Action("Index")">Wordle</a></h1>
-                <h2>Statystyki gracza @UserManager.GetUserName(User)!</h2>
+                <h2 id="stats">Statystyki gracza 
+                </h2>
 
 
 
@@ -29,30 +53,48 @@
                 <div class="stats-grid">
                     <div class="stat-item">
                         <h3>Rozegrane gry</h3>
-                        <p>100</p>
+                        <p></p>
                     </div>
                     <div class="stat-item">
-                        <h3>Procent wygranych</h3>
-                        <p>60%</p>
+                        <h3>Liczba wygranych</h3>
+                        <p></p>
                     </div>
                     <div class="stat-item">
                         <h3>Najszybsze zwycięstwo</h3>
-                        <p>1m 10s</p>
+                        <p></p>
                     </div>
                     <div class="stat-item">
-                        <h3>Aktualny streak</h3>
-                        <p>5</p>
+                        <h3>Średni czas</h3>
+                        <p></p>
                     </div>
                 </div>
-                <div class="stats-grid"></div>
-                <h3 class="chart-title">Ilość zgadnięć w danej próbie</h3>
-                <canvas id="attemptsChart"></canvas>
+          
 
             </div>
 
         </div>
 
         <script>
+            function formatTime(timeString) {
+                const parts = timeString.split(":");
+                const hours = parseInt(parts[0], 10);
+                const minutes = parseInt(parts[1], 10);
+                const seconds = parseFloat(parts[2]).toFixed(0);
+
+                let result = "";
+                if (hours > 0) {
+                    result += `${hours} godz. `;
+                }
+                if (minutes > 0) {
+                    result += `${minutes} min `;
+                }
+                if (seconds > 0) {
+                    result += `${seconds} sek`;
+                }
+
+                return result;
+            }
+
             var attempts;
             $.ajax({
                 type: "GET",
@@ -65,10 +107,10 @@
                     var statsGrid = $('<div>').addClass('stats-grid');
                     attempts = response[0].attempts;
 
-                    $('.stat-item:nth-child(1) p').text(response[0].gamesPlayed);
-                    $('.stat-item:nth-child(2) p').text(response[0].winPercentage + '%');
-                    $('.stat-item:nth-child(3) p').text(response[0].fastestWin);
-                    $('.stat-item:nth-child(4) p').text(response[0].currentStreak);
+                    $('.stat-item:nth-child(1) p').text(response[0].finishes);
+                    $('.stat-item:nth-child(2) p').text(response[0].wins);
+                    $('.stat-item:nth-child(3) p').text(formatTime(response[0].fastestWin));
+                    $('.stat-item:nth-child(4) p').text(formatTime(response[0].averagePlayTime));
 
 
                     //////////

@@ -1,4 +1,8 @@
-﻿@inject IMemoryCache _cache
+﻿@using Microsoft.AspNetCore.Identity
+@using Wordle.Areas.Identity.Data
+@inject IMemoryCache _cache
+@inject SignInManager<WordleUser> SignInManager
+@inject UserManager<WordleUser> UserManager
 @{
     Wordle.Models.Game.Ranked ranked = new Wordle.Models.Game.Ranked(_cache);
     System.Security.Claims.ClaimsPrincipal currentUser = this.User;
@@ -13,8 +17,11 @@
     <script src="https://kit.fontawesome.com/bd2b98c0b7.js" crossorigin="anonymous"></script>
     <script src="~/js/theme-toggle.js"></script>
     <script src="~/js/language-switcher.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
+
+    
 
 
 <div class="container">
@@ -23,11 +30,14 @@
         <div class="game-header">
             <h1><a href="@Url.Action("Index")">Wordle</a> <div id="timer">00:00</div></h1>
         </div>
+    @if (SignInManager.IsSignedIn(User))
+{
         <div id="before_win">
             <div id="start_container">
                 <div id="ready" data-translate="ready">Gotowy? </div>
                 <div id="countdown" style="font-size: 1vw; font-family:SanFrancisco;">Zgaduj słowa i rywalizuj z innymi graczami.</div>
                 <button id="start_button">Start gry</button>
+                <span id="youcant"></span>
             </div>
 
             <div class="game-body" style="display: none;">
@@ -121,8 +131,11 @@
                     <div id="submit_button" class="enter-key">Enter</div>
                 </div>
             </div>
-        </div>
-
+            </div>
+        }else
+        {
+            <div id="logintoplay">Zaloguj się aby zagrać w trybie turniejowym.</div>
+        }
     </div>
 
     <!--
@@ -161,75 +174,95 @@
             clearInterval(timerInterval);
         }
 
-        startButton.addEventListener("click", function () {
-            startButton.style.visibility = "hidden";
-            ready.style.visibility = "hidden";
-            countdown.style.visibility = "visible";
-            countdown.style.fontSize = "8vw";
-            countdown.style.fontFamily = "HeartWarming";
-            countdown.style.transition = "all 0.3s ease";
+        $.ajax({
+            type: "POST",
+            url: "/Home/Start", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
+            success: function (response) {
+                // Kod wykonywany po pomyślnym zakończeniu żądania
+                console.log("START!");
 
-            // Rozpocznij odliczanie
-            let counter = 3;
-            countdown.innerText = counter.toString();
-            animateCountdown();
+                $.ajax({
+                    type: "GET",
+                    url: "/Home/getRound", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
+                    success: function (response) {
+                        console.log("Autkalna runda: ", response);
 
-            const countdownInterval = setInterval(() => {
-                counter--;
+                        if (response <= 4) {
+                            startButton.addEventListener("click", function () {
+                                startButton.style.visibility = "hidden";
+                                ready.style.visibility = "hidden";
+                                countdown.style.visibility = "visible";
+                                countdown.style.fontSize = "8vw";
+                                countdown.style.fontFamily = "HeartWarming";
+                                countdown.style.transition = "all 0.3s ease";
 
-                if (counter === 0) {
-                    clearInterval(countdownInterval);
-                    countdown.style.display = "none";
+                                // Rozpocznij odliczanie
+                                let counter = 3;
+                                countdown.innerText = counter.toString();
+                                animateCountdown();
 
-                    // Pokaż planszę gry i timer
-                    gameBody.style.display = "block";
-                    gameContainer.style.paddingTop = "0";
-                    timer.style.display = "flex";
-                    keyboard.style.display = "flex";
-                    startButton.style.display = "none";
-                    ready.style.display = "none";
+                                const countdownInterval = setInterval(() => {
+                                    counter--;
 
+                                    if (counter === 0) {
+                                        clearInterval(countdownInterval);
+                                        countdown.style.display = "none";
 
+                                        // Pokaż planszę gry i timer
+                                        gameBody.style.display = "block";
+                                        gameContainer.style.paddingTop = "0";
+                                        timer.style.display = "flex";
+                                        keyboard.style.display = "flex";
+                                        startButton.style.display = "none";
+                                        ready.style.display = "none";
 
+                                        //START GRY
+                                        /////////////////
 
-                    //START GRY
-                    /////////////////
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "/Home/Start", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
+                                            data: {},
+                                            success: function (response) {
+                                                // Kod wykonywany po pomyślnym zakończeniu żądania
+                                            },
+                                            error: function (error) {
+                                                alert("Wystąpił błąd:");
+                                            }
+                                        });
+                                    } else {
+                                        countdown.innerText = counter.toString();
+                                        animateCountdown();
+                                    }
+                                }, 1000);
+                            });
 
-                    $.ajax({
-                        type: "POST",
-                        url: "/Home/Start", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
-                        data: {
+                            // Rozpocznij odliczanie czasu
+                            let startTime = Date.now();
+                            timerInterval = setInterval(function () {
+                                let elapsedTime = Date.now() - startTime;
+                                let minutes = Math.floor(elapsedTime / 60000);
+                                let seconds = Math.floor((elapsedTime % 60000) / 1000);
+                                timer.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                            }, 1000);
 
-
-                        },
-                        success: function (response) {
-                            // Kod wykonywany po pomyślnym zakończeniu żądania
-                        },
-                        error: function (error) {
-                            alert("Wystąpił błąd:");
+                        } else
+                        {
+                            document.getElementById("start_button").innerText="Wykorzystałeś już swoje próby.";
+                            document.getElementById("start_button").style.backgroundColor="grey";
                         }
-                    });
-
-
-                    ///////////////
-
-                    // Rozpocznij odliczanie czasu
-                    let startTime = Date.now();
-                    timerInterval = setInterval(function () {
-                        let elapsedTime = Date.now() - startTime;
-                        let minutes = Math.floor(elapsedTime / 60000);
-                        let seconds = Math.floor((elapsedTime % 60000) / 1000);
-                        timer.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                    }, 1000);
-
-
-
-                } else {
-                    countdown.innerText = counter.toString();
-                    animateCountdown();
-                }
-            }, 1000);
+                    },
+                    error: function (error) {
+                        alert("Wystąpił błąd:");
+                    }
+                });
+            },
+            error: function (error) {
+                alert("Wystąpił błąd:");
+            }
         });
+
+        
 
 
         //Wyświetlanie do debugowania
@@ -284,15 +317,27 @@
                         // Wyświetl top 3 graczy w gameOverMessage
                         var top3List = top3.map(function (player, index) {
                             var trophyClass = index === 0 ? "gold" : index === 1 ? "silver" : "bronze";
-                            return `<li><i class="fa-solid fa-trophy ${trophyClass}"></i> <span class="highlight">${player.userId}</span>: ${player.points} punktów</li>`;
+                            return `<li><i class="fa-solid fa-trophy ${trophyClass}"></i> <span class="highlight">${player.nickname}</span>: ${player.points} punktów</li>`;
                         }).join("");
+                        var punkty_aktualne;
+                        $.ajax({
+                    type: "POST",
+                            url: "/Home/GetUserFromDB",
+                    contentType: "application/json",
+                    success: function (response2) {
+                        $.ajax({
+                            type: "POST",
+                                    url: "/Home/getWord", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
+                            success: function (response3) {
+                               console.log(response3)
+                           
 
                         gameOverMessage.innerHTML = `
                                 <div class="game-over-message-content">
                                     <h2>Koniec gry!</h2>
-                                    <h3>Zgadywane słowo to: ` + zmienna + `</h3><br>
+                                            <h3>Zgadywane słowo to: ` + response3.toUpperCase() + `</h3><br>
                                     <h3>Otrzymujesz <span class="highlight">`+ punkty + `</span> punktów!</h3>
-                                                            <p>Aktualna liczba punktów: <span class="highlight">`+ punkty + `</span></p >
+                                                                    <p>Aktualna liczba punktów: <span class="highlight">`+ response2[0].points + `</span></p >
                                     <h4>Top 3 graczy:</h4>
                                     <ol>
                                         ${top3List}
@@ -301,6 +346,45 @@
                                     <a href="RankGame"> <button class="afterwin" type="submit"><i class="fa-solid fa-rotate-right"></i> Zagraj ponownie</button></a>
                                     <a href="Ranking"> <button class="afterwin" type="submit"><i class="fa-solid fa-ranking-star"></i> Ranking</button></a>
                                 </div>`;
+
+                                /////////////
+
+                                $.ajax({
+                                    type: "GET",
+                                    url: "/Home/getRound",
+                                    success: function (response) {
+                                        console.log("Autkalna runda: ", response);
+
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "/Home/nextRound",
+                                            success: function (response) {
+                                                console.log("Next round: ", response);
+                                            },
+                                            error: function (error) {
+                                                alert("Wystąpił błąd:");
+                                            }
+                                        });
+                                            },
+                                            error: function (error) {
+                                                // Tutaj obsłuż błędy, np. wyświetlając komunikat o błędzie
+                                                alert("Wystąpił błąd:");
+                                            }
+                                        });
+                                    },
+                                    error: function (error) {
+                                        alert("Wystąpił błąd:");
+                                    }
+                                });
+
+                                /////////
+
+                            },
+                            error: function (error) {
+                                alert("Wystąpił błąd:");
+                            }
+                        });
+
                     },
                     error: function (error) {
                         alert("Wystąpił błąd:");
@@ -447,47 +531,35 @@
                     count++;
                 }
             }
-            if (count == 5) {
-                // Zablokuj pola tekstowe w ostatnim rzędzie po zatwierdzeniu
-                Array.from(letterInputs)
-                    .slice(currentAttemptIndex + 1, currentAttemptIndex + 5)
-                    .forEach((input) => (input.disabled = true));
+
+            if (count == 5 || currentAttemptIndex == 4) {
                 gameOver = true;
-                stopTimer(); // Zatrzymaj timer
 
-                //Gdy użytkownik przegra
-                //alert(currentAttemptIndex);
+                if (count == 5) {
+                    //alert("Gdy użytkownik wygra: " + (currentAttemptIndex + 1));
+                } else {
+                    //alert("Gdy użytkownik przegra: " + (currentAttemptIndex+2));
+                }
 
-
-                ///////////////////
-
-
-
+                Array.from(letterInputs)
+                    .slice(currentAttemptIndex * 5, currentAttemptIndex * 5 + 5)
+                    .forEach((input) => (input.disabled = true));
 
                 $.ajax({
                     type: "POST",
-                    url: "/Home/End", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
-                    contentType: "application/json", // Ustaw typ zawartości na JSON
-                    data: JSON.stringify(currentAttemptIndex), // Przekształć wartość parametru na łańcuch JSON
+                    url: "/Home/End",
+                    contentType: "application/json",
+                    data: JSON.stringify(count == 5 ? currentAttemptIndex + 1 : currentAttemptIndex+2),
                     success: function (response) {
-                        // Kod wykonywany po pomyślnym zakończeniu żądania
+                        stopTimer();
+                        displayGameOverMessage(response);
+                        console.log(response);
                     },
                     error: function (error) {
                         alert("Wystąpił błąd:");
                     }
                 });
-
-
-
-
-                //////////////////
-
-
-
-            }
-
-
-            if (currentAttemptIndex < 4 && !gameOver) {
+            } else {
                 currentAttemptIndex++;
                 Array.from(letterInputs)
                     .slice(0, currentAttemptIndex * 5)
@@ -496,36 +568,6 @@
                     .slice(currentAttemptIndex * 5, currentAttemptIndex * 5 + 5)
                     .forEach((input) => (input.disabled = false));
                 letterInputs[currentAttemptIndex * 5].focus();
-            } else {
-                // Zablokuj pola tekstowe w ostatnim rzędzie po zatwierdzeniu
-                Array.from(letterInputs)
-                    .slice(currentAttemptIndex * 5, currentAttemptIndex * 5 + 5)
-                    .forEach((input) => (input.disabled = true));
-                gameOver = true;
-
-                stopTimer(); // Zatrzymaj timer
-
-                //Gdy użytkownik wygra
-                //alert(currentAttemptIndex + 1);
-
-
-
-                $.ajax({
-                    type: "POST",
-                    url: "/Home/End", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
-                    contentType: "application/json", // Ustaw typ zawartości na JSON
-                    data: JSON.stringify(currentAttemptIndex + 1), // Przekształć wartość parametru na łańcuch JSON
-                    success: function (response) {
-                        displayGameOverMessage(response);
-                        // Kod wykonywany po pomyślnym zakończeniu żądania
-                    },
-                    error: function (error) {
-                        alert("Wystąpił błąd:");
-                    }
-                });
-
-
-
             }
         }
 
@@ -537,7 +579,7 @@
         });
 
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   
 
 
 

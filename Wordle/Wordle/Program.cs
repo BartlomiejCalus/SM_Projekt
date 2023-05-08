@@ -22,6 +22,7 @@ builder.Services.AddDefaultIdentity<WordleUser>(options => options.SignIn.Requir
 builder.Services.AddControllersWithViews();
 builder.Services.AddMemoryCache();
 builder.Services.AddHostedService<WeaklyReset>();
+builder.Services.AddHostedService<DailyReset>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

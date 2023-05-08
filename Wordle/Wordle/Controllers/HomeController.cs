@@ -11,17 +11,40 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using static Wordle.Models.ArrayRequest.WordsArray;
 using MessagePack.Formatters;
+using Microsoft.AspNetCore.Identity;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Wordle.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly UserManager<IdentityUser> _userManager;
         punctation p1 = new punctation();
         private readonly IMemoryCache _memoryCache;
         
         public HomeController(IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
+        }
+
+        [HttpGet]
+        public string GetUserNickname()
+        {
+            UserStatWithoutVirtual userStat1 = new UserStatWithoutVirtual();
+
+            using (var stat = new GameStatController().context)
+            {
+                try
+                {
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    string nick = stat.Users.FirstOrDefault(item => item.Id == userId).Nickname;
+                    return nick;
+                }
+                catch
+                {
+                    return "Not logged in";
+                }
+            }
         }
 
         [HttpPost]
@@ -35,6 +58,51 @@ namespace Wordle.Controllers
             }
             var serverResponse = ranked.Play(generatedWord);
             return Json(serverResponse);
+        }
+
+  
+        /// /////////////////
+        //[AllowAnonymous]
+        [HttpPost]
+        public IActionResult nextRoundCasual()
+        {
+            Casual casual = _memoryCache.Get<Casual>(User.FindFirstValue(ClaimTypes.NameIdentifier) + "casual");
+            int round = casual.nextRound();
+            return Json(round);
+        }
+
+        //[AllowAnonymous]
+        [HttpPost]
+        public IActionResult PlayCasual(string generatedWord)
+        {
+            //Console.WriteLine("Słowo:", generatedWord);
+            Casual casual = _memoryCache.Get<Casual>(User.FindFirstValue(ClaimTypes.NameIdentifier) + "casual");
+            if (casual == null)
+            {
+                casual = new Casual(_memoryCache);
+                _memoryCache.Set(User.FindFirstValue(ClaimTypes.NameIdentifier) + "casual", casual, TimeSpan.FromMinutes(60));
+            }
+            //Console.WriteLine("Słowo:", generatedWord);
+            var serverResponseCasual = casual.Play(generatedWord);
+            return Json(serverResponseCasual);
+        }
+
+        /// /////////////
+        [HttpPost]
+        public async Task<IActionResult> StartCasual()
+        {
+            p1.startTime();
+            //var AllUsers = getUsersFromDB();
+            //var OneUser = getUserFromDB();
+            //var Description = await GetDescriptionAsync("hello");
+            Casual casual = _memoryCache.Get<Casual>(User.FindFirstValue(ClaimTypes.NameIdentifier) + "casual");
+            if (casual == null)
+            {
+                casual = new Casual(_memoryCache);
+                _memoryCache.Set(User.FindFirstValue(ClaimTypes.NameIdentifier) + "casual", casual, TimeSpan.FromMinutes(60));
+            }
+            _memoryCache.Set(User.FindFirstValue(ClaimTypes.NameIdentifier) + "p1", p1, TimeSpan.FromMinutes(60));
+            return Ok();
         }
 
         [HttpGet]
@@ -52,14 +120,16 @@ namespace Wordle.Controllers
 
         //DODANE DLA STATYSTYK
         [HttpGet]
+      
         public IActionResult Stats()
         {
+            var AllUsers = GetUserFromDB();
             var attemptsData = new int[] { 10, 20, 15, 8, 7 };
             var gracze2 = new List<UserStat2>() {
 
                 new UserStat2("fasgag", 110, 65, "1m 10s", 5, attemptsData),
             };
-            return Json(gracze2);
+            return Json(AllUsers);
         }
         //DOTĄD
         //DODANE DLA STATYSTYK
@@ -94,58 +164,106 @@ namespace Wordle.Controllers
             //var AllUsers = getUsersFromDB();
             //var OneUser = getUserFromDB();
             //var Description = await GetDescriptionAsync("hello");
-            Ranked ranked = new Ranked(_memoryCache);
-            _memoryCache.Set(User.FindFirstValue(ClaimTypes.NameIdentifier) + "ranked", ranked, TimeSpan.FromMinutes(60));
+            Ranked ranked = _memoryCache.Get<Ranked>(User.FindFirstValue(ClaimTypes.NameIdentifier) + "ranked");
+            if (ranked == null)
+            {
+                ranked = new Ranked(_memoryCache);
+                _memoryCache.Set(User.FindFirstValue(ClaimTypes.NameIdentifier) + "ranked", ranked, TimeSpan.FromMinutes(60));
+            }
             _memoryCache.Set(User.FindFirstValue(ClaimTypes.NameIdentifier) + "p1", p1, TimeSpan.FromMinutes(60));
             return Ok();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> GetDescriptionAsync([FromBody]string word) 
+        [HttpGet]
+        public async Task<IActionResult> Dupa2(string word)
         {
+            //Console.WriteLine(word);
             DictionaryApi dictionaryApi = new DictionaryApi();
             string definition = await dictionaryApi.GetDefinition(word);
+            //Console.WriteLine(definition);
             return Json(definition);
         }
+        public IActionResult Dupa(string row)
+        {
+            //Console.WriteLine(row);
+
+            string result;
+            DictionaryApi dictionaryApi = new DictionaryApi();
+            Task<string> task = dictionaryApi.GetDefinition(row);
+            task.Wait();
+            result = task.Result;
+            //Console.WriteLine(result);
+            return Json(result);
+        }
+
+        [HttpPost]
+        public IActionResult getWord()
+        {
+            Ranked ranked = _memoryCache.Get<Ranked>(User.FindFirstValue(ClaimTypes.NameIdentifier) + "ranked");
+            return Json(ranked.wordInfo.word);
+        }
+
+        [HttpPost]
+        public IActionResult getWordCasual()
+        {
+            Casual casual = _memoryCache.Get<Casual>(User.FindFirstValue(ClaimTypes.NameIdentifier) + "casual");
+            return Json(casual.wordInfo.word);
+        }
+
 
         [HttpPost]
         public List<UserStatWithoutVirtual> getUsersFromDB() 
         {
             UserStatWithoutVirtual userStat = new UserStatWithoutVirtual();
 
-              using (var stat = new GameStatController().context)
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            using (var stat = new GameStatController().context)
               {
                 var userStats = stat.UserStat.OrderByDescending(item => item.points).Take(100).ToList();
 
                 List<UserStatWithoutVirtual> userStatsList = new List<UserStatWithoutVirtual>();
 
-                  foreach (var item in userStats)
-                  {
-                    var userStatWithoutVirtual = new UserStatWithoutVirtual
+                    try
                     {
-                        statsId = item.statsId,
-                        nickname = item.user.Nickname,
-                        points = item.points,
-                        finishes = item.finishes,
-                        wins = item.wins,
-                        checks = item.checks,
-                        averagePlayTime = item.averagePlayTime,
-                        fastestWin = item.fastestWin
-                    };
+                        foreach (var item in userStats)
+                        {
+                        UserStatWithoutVirtual userStatWithoutVirtual = new UserStatWithoutVirtual
 
-                    userStatsList.Add(userStatWithoutVirtual);
-                  }
+                            {
+                                statsId = item.statsId,
+                                nickname = stat.Users.FirstOrDefault(u => u.Id == item.userId).Nickname,
+                                points = item.points,
+                                finishes = item.finishes,
+                                wins = item.wins,
+                                checks = item.checks,
+                                averagePlayTime = item.averagePlayTime,
+                                fastestWin = item.fastestWin
+                            };
+
+                            userStatsList.Add(userStatWithoutVirtual);
+                        }
+
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Wystąpił błąd");
+                    }   
+                  
 
                   return userStatsList;
               }       
            
         }
+
+
+
         [HttpPost]
         public IActionResult nextRound()
         {
             Ranked ranked = _memoryCache.Get<Ranked>(User.FindFirstValue(ClaimTypes.NameIdentifier) + "ranked");
             int round = ranked.nextRound();
             ranked.saveCurrentRound(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            _memoryCache.Set(User.FindFirstValue(ClaimTypes.NameIdentifier) + "ranked", ranked, TimeSpan.FromMinutes(60));
             return Json(round);
         }
         [HttpGet]
@@ -172,7 +290,7 @@ namespace Wordle.Controllers
                     var userStatWithoutVirtual = new UserStatWithoutVirtual
                     {
                         statsId = item.statsId,
-                        nickname = item.user.Nickname,
+                        nickname = stat.Users.FirstOrDefault(u => u.Id == item.userId).Nickname,
                         points = item.points,
                         finishes = item.finishes,
                         wins = item.wins,
@@ -194,6 +312,7 @@ namespace Wordle.Controllers
 
             using (var stat = new GameStatController().context)
             {
+
                 var userStats = stat.TopPointsStat.OrderByDescending(item => item.points).Take(3).ToList();
 
                 List<TopWithoutVirtual> topList = new List<TopWithoutVirtual>();
@@ -203,7 +322,7 @@ namespace Wordle.Controllers
                     var topWithoutVirtual = new TopWithoutVirtual
                     {
                         topID = item.topID,
-                        nickname = item.user.Nickname,
+                        nickname = stat.Users.FirstOrDefault(u => u.Id == item.userID).Nickname,
                         points = item.points,
                     };
 
@@ -226,7 +345,7 @@ namespace Wordle.Controllers
                 {
                     var entity = stat.UserStat.First(a => a.userId == userId);
                     var p = points + entity.points;
-                    entity.points = p;
+                    if (row <= 5) entity.points = p;
                     entity.finishes = entity.finishes + 1;
                     if(row<=5) entity.wins = entity.wins + 1;
                     entity.checks =entity.checks+ (uint)row;

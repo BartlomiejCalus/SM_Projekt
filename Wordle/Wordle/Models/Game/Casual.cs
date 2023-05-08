@@ -38,6 +38,7 @@ namespace Wordle.Models.Game
             {
                 wordInfo = new WordInfo(randomWord(currentRound));
                 _memoryCache.Set(key, wordInfo.word, TimeSpan.FromMinutes(expiration) - DateTime.Now.TimeOfDay);
+                return wordInfo;
             }
             wordInfo = new WordInfo(get);
             return wordInfo;
@@ -49,6 +50,7 @@ namespace Wordle.Models.Game
         public int nextRound()
         {
             currentRound++;
+            wordInfo = GetWordInfo();
             return currentRound;
         }
 

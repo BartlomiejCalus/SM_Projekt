@@ -14,27 +14,7 @@
     <script src="~/js/theme-toggle.js"></script>
 </head>
 
-<script>
-    //OTRZYMYWANIE PODPOWIEDZI
-    /*
-    $.ajax({
-                type: "GET",
-                url: "/Home/Rank", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
-                dataType: "json", // Oczekiwany typ danych to JSON
-                success: function (response) {
-                    // Kod wykonywany po pomyślnym zakończeniu żądania
-                    console.log(response);
 
-                    //WPISANIE DO ID DEFINITION RESPONSA
-                    });
-                },
-                error: function (error) {
-                    alert("Wystąpił błąd:");
-                }
-            });
-            */
-
-</script>
 <div class="container">
     <div class="game-container">
         <div class="game-header">
@@ -44,7 +24,7 @@
         <div id="start_container">
             <div id="ready">Baw się dobrze!</div>
             <div id="countdown" style="font-size: 1vw; font-family:SanFrancisco;">Zgaduj słowa na podstawie ich definicji ucząc się znaczenia.</div>
-            <div id="definition">Definicja: Zgaduj słowa na podstawie ich definicji ucząc się znaczenia. Zgaduj słowa na podstawie ich definicji ucząc się znaczenia.</div>
+            <div id="definition"></div>
             <button id="start_button">Start gry</button>
         </div>
 
@@ -149,6 +129,74 @@
 
 <script>
 
+    //Wyświetlanie do debugowania
+    //alert("@ranked.getWordLength()");
+    //alert("@ranked.wordInfo.word");
+    let zmienna = ("@ranked.wordInfo.word").toUpperCase();
+
+    //START GRY
+    /////////////////
+
+    $.ajax({
+        type: "POST",
+        url: "/Home/StartCasual", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
+        data: {
+
+
+        },
+        success: function (response) {
+            $.ajax({
+                type: "POST",
+                url: "/Home/getWordCasual", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
+                success: function (response3) {
+                    console.log(response3)
+                    $.ajax({
+                        type: "GET",
+                        url: "/Home/Dupa",
+                        data: { row: response3 },
+                        success: function (response) {
+                            document.getElementById("definition").innerHTML += response;
+                        },
+                        error: function (error) {
+                            alert("Wystąpił błąd:");
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("Wystąpił błąd:");
+                }
+            });
+            // Kod wykonywany po pomyślnym zakończeniu żądania
+        },
+        error: function (error) {
+            alert("Wystąpił błąd:");
+        }
+    });
+
+  
+  
+
+
+    
+
+
+
+    /*
+       $.ajax({
+        type: "POST",
+        url: "/Home/Start2", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
+        contentType: "application/json", // Ustaw typ zawartości na JSON
+        dataType: "json", // Oczekiwany typ danych w odpowiedzi
+        data: JSON.stringify({ word: zmienna }), // Przekształć wartość parametru na łańcuch JSON
+                    success: function (response) {
+                        // Kod wykonywany po pomyślnym zakończeniu żądania
+                    },
+                    error: function (error) {
+                        alert("Wystąpił błąd:");
+                    }
+                });
+*/
+
     // Pobierz elementy HTML do manipulacji
     const startButton = document.getElementById("start_button");
     const gameContainer = document.querySelector(".game-container");
@@ -201,24 +249,6 @@
                 definition.style.display = "flex";
 
 
-                //START GRY
-                /////////////////
-
-                $.ajax({
-                    type: "POST",
-                    url: "/Home/Start", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
-                    data: {
-
-
-                    },
-                    success: function (response) {
-                        // Kod wykonywany po pomyślnym zakończeniu żądania
-                    },
-                    error: function (error) {
-                        alert("Wystąpił błąd:");
-                    }
-                });
-
 
                 ///////////////
 
@@ -231,10 +261,14 @@
     });
 
 
-    //Wyświetlanie do debugowania
-    //alert("@ranked.getWordLength()");
-    //alert("@ranked.wordInfo.word");
-    let zmienna = ("@ranked.wordInfo.word").toUpperCase();
+
+
+
+
+
+   
+
+      
 
 
     //---------------------------------------------
@@ -271,45 +305,42 @@
         //gameOverMessage.innerHTML = "<h2>Koniec gry!</h2><br> <h3>Otrzymujesz X punktów!</h3>";
 
 
-        $(document).ready(function () {
-            $.ajax({
-                type: "GET",
-                url: "/Home/Rank",
-                dataType: "json",
-                success: function (response) {
-                    // Wyciągnij tylko 3 pierwszych graczy
-                    var top3 = response.slice(0, 3);
 
-                    // Wyświetl top 3 graczy w gameOverMessage
-                    var top3List = top3.map(function (player, index) {
-                        var trophyClass = index === 0 ? "gold" : index === 1 ? "silver" : "bronze";
-                        return `<li><i class="fa-solid fa-trophy ${trophyClass}"></i> <span class="highlight">${player.userId}</span>: ${player.points} punktów</li>`;
-                    }).join("");
 
+
+        $.ajax({
+            type: "POST",
+            url: "/Home/getWordCasual", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
+            success: function (response4) {
+                console.log(response4)
                     gameOverMessage.innerHTML = `
                                 <div class="game-over-message-content">
                                     <h2>Koniec gry!</h2>
-                                    <h3>Zgadywane słowo to: ` + zmienna + `</h3><br>
-                                    <h3>Otrzymujesz <span class="highlight">`+ punkty + `</span> punktów!</h3>
-                                                            <p>Aktualna liczba punktów: <span class="highlight">`+ punkty + `</span></p >
-                                    <h4>Top 3 graczy:</h4>
-                                    <ol>
-                                        ${top3List}
-                                    </ol>
+                                    <h3>Zgadywane słowo to: ` + response4.toUpperCase() + `</h3><br>
+                                 
                                     <br>
-                                    <a href="RankGame"> <button class="afterwin" type="submit"><i class="fa-solid fa-rotate-right"></i> Zagraj ponownie</button></a>
-                                    <a href="Ranking"> <button class="afterwin" type="submit"><i class="fa-solid fa-ranking-star"></i> Ranking</button></a>
+                                    <a href="CasualGame"> <button class="afterwin" type="submit"><i class="fa-solid fa-rotate-right"></i> Zagraj ponownie</button></a>
+                                            <a href="Index"> <button class="afterwin" type="submit"><i class="fa-solid fa-house"></i></i> Strona główna</button></a>
                                 </div>`;
-                },
-                error: function (error) {
-                    alert("Wystąpił błąd:");
-                }
-            });
-        });
+                                },
+                    error: function (error) {
+                        alert("Wystąpił błąd:");
+                    }
+                });
 
 
 
-
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/nextRoundCasual",
+                    success: function (response) {
+                        console.log("Next round: ", response);
+                    },
+                    error: function (error) {
+                        alert("Wystąpił błąd:");
+                    }
+                });
+      
 
 
         const gameContainer = document.querySelector(".game-container");
@@ -406,13 +437,14 @@
                 alreadyUsedWords.add(word);
 
 
-                //-----------
+                //////
+
                 $(document).ready(function () {
                     var generatedWord = word.toLowerCase(); // Tutaj wprowadź swoją zmienną JavaScript
 
                     $.ajax({
                         type: "POST",
-                        url: "/Home/Play", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
+                        url: "/Home/PlayCasual", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
                         data: { generatedWord: generatedWord },
                         success: function (response) {
                             handleAttempt(word, response);
@@ -423,9 +455,12 @@
                         }
                     });
                 });
+                //-----------
+              
             }
         }
     }
+    let wrongAttempts = 0;
 
     function handleAttempt(word, serverResponse) {
         //alert("ODPOWIEDZ HANDLE: "+serverResponse);
@@ -441,79 +476,45 @@
         }
 
         let count = 0;
+
         for (i = 0; i < 5; i++) {
             if (serverResponse[0][i] && serverResponse[1][i]) {
                 count++;
             }
         }
+
         if (count == 5) {
-            // Zablokuj pola tekstowe w ostatnim rzędzie po zatwierdzeniu
-            Array.from(letterInputs)
-                .slice(currentAttemptIndex + 1, currentAttemptIndex + 5)
-                .forEach((input) => (input.disabled = true));
-            gameOver = true;
+            endGame(true, currentAttemptIndex + 1);
+        } else {
+            currentAttemptIndex++;
+            wrongAttempts++;
 
-
-            //Gdy użytkownik przegra
-            //alert(currentAttemptIndex);
-
-
-            ///////////////////
-
-
-
-
-            $.ajax({
-                type: "POST",
-                url: "/Home/End", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
-                contentType: "application/json", // Ustaw typ zawartości na JSON
-                data: JSON.stringify(currentAttemptIndex), // Przekształć wartość parametru na łańcuch JSON
-                success: function (response) {
-                    // Kod wykonywany po pomyślnym zakończeniu żądania
-                },
-                error: function (error) {
-                    alert("Wystąpił błąd:");
-                }
-            });
-
-
-
-
-            //////////////////
-
-
-
+            if (wrongAttempts >= 5) {
+                endGame(false, currentAttemptIndex);
+            } else {
+                Array.from(letterInputs)
+                    .slice(0, currentAttemptIndex * 5)
+                    .forEach((input) => (input.disabled = true));
+                Array.from(letterInputs)
+                    .slice(currentAttemptIndex * 5, currentAttemptIndex * 5 + 5)
+                    .forEach((input) => (input.disabled = false));
+                letterInputs[currentAttemptIndex * 5].focus();
+            }
         }
 
-
-        if (currentAttemptIndex < 4 && !gameOver) {
-            currentAttemptIndex++;
-            Array.from(letterInputs)
-                .slice(0, currentAttemptIndex * 5)
-                .forEach((input) => (input.disabled = true));
-            Array.from(letterInputs)
-                .slice(currentAttemptIndex * 5, currentAttemptIndex * 5 + 5)
-                .forEach((input) => (input.disabled = false));
-            letterInputs[currentAttemptIndex * 5].focus();
-        } else {
-            // Zablokuj pola tekstowe w ostatnim rzędzie po zatwierdzeniu
+        function endGame(isWinner, attemptIndex) {
             Array.from(letterInputs)
                 .slice(currentAttemptIndex * 5, currentAttemptIndex * 5 + 5)
                 .forEach((input) => (input.disabled = true));
             gameOver = true;
 
-
-
-            //Gdy użytkownik wygra
-            //alert(currentAttemptIndex + 1);
-
-
+            //alert(isWinner ? 'Wygrałeś!' : 'Przegrałeś.');
 
             $.ajax({
                 type: "POST",
                 url: "/Home/End", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
                 contentType: "application/json", // Ustaw typ zawartości na JSON
-                data: JSON.stringify(currentAttemptIndex + 1), // Przekształć wartość parametru na łańcuch JSON
+                data: JSON.stringify(attemptIndex), // Przekształć wartość parametru na łańcuch JSON
                 success: function (response) {
                     displayGameOverMessage(response);
                     // Kod wykonywany po pomyślnym zakończeniu żądania
@@ -522,10 +523,9 @@
                     alert("Wystąpił błąd:");
                 }
             });
-
-
-
         }
+
+
     }
 
     window.addEventListener("DOMContentLoaded", (event) => {
