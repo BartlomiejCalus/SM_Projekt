@@ -26,10 +26,10 @@
         <div id="before_win">
             <div id="start_container">
                 <div id="ready" data-translate="ready">Gotowy? </div>
-                <div id="countdown" style="font-size: 8vw;">3</div>
+                <div id="countdown" style="font-size: 1vw; font-family:SanFrancisco;">Zgaduj słowa i rywalizuj z innymi graczami.</div>
                 <button id="start_button">Start gry</button>
             </div>
-        
+
             <div class="game-body" style="display: none;">
                 <div class="testowa_klasa"></div>
 
@@ -121,14 +121,14 @@
                     <div id="submit_button" class="enter-key">Enter</div>
                 </div>
             </div>
-            </div>
+        </div>
 
     </div>
 
     <!--
          <script src="/js/RankGame.js"></script>
     -->
-   
+
 
     <script>
 
@@ -141,9 +141,12 @@
         const ready = document.getElementById("ready");
         const countdown = document.getElementById("countdown");
 
+
         // Ukryj element z timerem na początku
         timer.style.display = "none";
-        countdown.style.visibility = "hidden";
+        countdown.style.visibility = "visible";
+
+
 
         // Funkcja, która animuje i zmniejsza wartość odliczania
         function animateCountdown() {
@@ -162,6 +165,9 @@
             startButton.style.visibility = "hidden";
             ready.style.visibility = "hidden";
             countdown.style.visibility = "visible";
+            countdown.style.fontSize = "8vw";
+            countdown.style.fontFamily = "HeartWarming";
+            countdown.style.transition = "all 0.3s ease";
 
             // Rozpocznij odliczanie
             let counter = 3;
@@ -182,6 +188,8 @@
                     keyboard.style.display = "flex";
                     startButton.style.display = "none";
                     ready.style.display = "none";
+
+
 
 
                     //START GRY
@@ -280,19 +288,19 @@
                         }).join("");
 
                         gameOverMessage.innerHTML = `
-                        <div class="game-over-message-content">
-                            <h2>Koniec gry!</h2>
-                            <h3>Zgadywane słowo to: ` + zmienna + `</h3><br>
-                            <h3>Otrzymujesz <span class="highlight">`+punkty+`</span> punktów!</h3>
-                                                    <p>Aktualna liczba punktów: <span class="highlight">`+ punkty + `</span></p >
-                            <h4>Top 3 graczy:</h4>
-                            <ol>
-                                ${top3List}
-                            </ol>
-                            <br>
-                            <a href="RankGame"> <button class="afterwin" type="submit"><i class="fa-solid fa-rotate-right"></i> Zagraj ponownie</button></a>
-                            <a href="Ranking"> <button class="afterwin" type="submit"><i class="fa-solid fa-ranking-star"></i> Ranking</button></a>
-                        </div>`;
+                                <div class="game-over-message-content">
+                                    <h2>Koniec gry!</h2>
+                                    <h3>Zgadywane słowo to: ` + zmienna + `</h3><br>
+                                    <h3>Otrzymujesz <span class="highlight">`+ punkty + `</span> punktów!</h3>
+                                                            <p>Aktualna liczba punktów: <span class="highlight">`+ punkty + `</span></p >
+                                    <h4>Top 3 graczy:</h4>
+                                    <ol>
+                                        ${top3List}
+                                    </ol>
+                                    <br>
+                                    <a href="RankGame"> <button class="afterwin" type="submit"><i class="fa-solid fa-rotate-right"></i> Zagraj ponownie</button></a>
+                                    <a href="Ranking"> <button class="afterwin" type="submit"><i class="fa-solid fa-ranking-star"></i> Ranking</button></a>
+                                </div>`;
                     },
                     error: function (error) {
                         alert("Wystąpił błąd:");
@@ -453,7 +461,7 @@
 
                 ///////////////////
 
-              
+
 
 
                 $.ajax({
@@ -494,7 +502,7 @@
                     .slice(currentAttemptIndex * 5, currentAttemptIndex * 5 + 5)
                     .forEach((input) => (input.disabled = true));
                 gameOver = true;
-                
+
                 stopTimer(); // Zatrzymaj timer
 
                 //Gdy użytkownik wygra
@@ -506,9 +514,9 @@
                     type: "POST",
                     url: "/Home/End", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
                     contentType: "application/json", // Ustaw typ zawartości na JSON
-                    data: JSON.stringify(currentAttemptIndex+1), // Przekształć wartość parametru na łańcuch JSON
+                    data: JSON.stringify(currentAttemptIndex + 1), // Przekształć wartość parametru na łańcuch JSON
                     success: function (response) {
-                         displayGameOverMessage(response);
+                        displayGameOverMessage(response);
                         // Kod wykonywany po pomyślnym zakończeniu żądania
                     },
                     error: function (error) {
@@ -516,7 +524,7 @@
                     }
                 });
 
-               
+
 
             }
         }
@@ -528,7 +536,7 @@
                 .forEach((input) => (input.disabled = true));
         });
 
-        </script>
+    </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
