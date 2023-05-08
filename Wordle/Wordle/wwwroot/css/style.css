@@ -32,6 +32,22 @@ body {
     src: url('../fonts/SF-Pro-Text-Regular.otf');
 }
 
+@media screen and (min-width:768px) {
+    .gamemode_button {
+        width: 20vw;
+        height: 10vh;
+        max-height: 10vw;
+        white-space: nowrap;
+        border-radius: 7px;
+        font-size: 4vw;
+        background-color: var(--second-color);
+        color: var(--text-color);
+        border: none;
+        padding: 15px 32px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+}
 
 
 .navbar {

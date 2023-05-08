@@ -1,0 +1,52 @@
+
+@inject IMemoryCache _cache
+@{
+    Wordle.Models.Game.Ranked ranked = new Wordle.Models.Game.Ranked(_cache);
+    System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+}
+@{
+    ViewData["Title"] = "Instruction";
+}
+
+@using Microsoft.Extensions.Caching.Memory
+<head>
+    <link rel="stylesheet" href="~/css/style.css">
+
+    <script src="https://kit.fontawesome.com/bd2b98c0b7.js" crossorigin="anonymous"></script>
+    <script src="~/js/theme-toggle.js"></script>
+</head>
+<body>
+<div class="main_page">
+
+    <div class="row_non">
+
+        <h1 id="logo_text">
+            How to play
+        </h1>
+
+
+    </div>
+   <div class="row_non">
+       <h2>
+           You have five chances to guess correct word, every color means something.
+       </h2>
+       <p>
+           Green: Correct letter is in correct place.
+       </p>
+       <p>
+           Yellow: You guessed letter that is included in a word of the day, but its in a wrong place.
+       </p>
+       <p>
+           None: Letter isnt in a word.
+       </p>
+
+
+    </div>
+
+</div>
+
+
+
+<script src="js/bootstrap.bundle.js"></script>
+<script src="~/js/language-switcher.js"></script>
+</body>

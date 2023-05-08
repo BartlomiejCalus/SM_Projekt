@@ -26,9 +26,10 @@
             <a href="@Url.Action("CasualGame")"><button class="gamemode_button" data-translate="4fun_mode">Tryb 4fun</button></a>
 
     </div>
-    <div class="row_non">
-        <a href="@Url.Action("Ranking")"><button class="gamemode_button" id="rank_button"> <i class="fa-solid fa-ranking-star"></i> Ranking</button></a>
-        <a href="@Url.Action("Options")"><button class="gamemode_button" id="settings_button"><i class="fa-solid fa-gears"></i></button></a>
+    <div class="row_non" style="margin-top:40vh;">
+            <a href="@Url.Action("Ranking")"><button class="gamemode_button" data-bs-toggle="tooltip" data-bs-placement="top" title="Here you can see weekly ranking of best players" id="settings_button"> <i class="fa-solid fa-ranking-star"></i></button></a>
+        <a href="@Url.Action("Options")"><button class="gamemode_button" data-bs-toggle="tooltip" data-bs-placement="top" title="Here you can change all settings" id="settings_button"><i class="fa-solid fa-gears"></i></button></a>
+            <a href="@Url.Action("Instructions")"><button class="gamemode_button" data-bs-toggle="tooltip" data-bs-placement="top" title="Here you can change all settings" id="settings_button"><i class="fa-solid fa-gears"></i></button></a>
     </div>
 
 </div>
