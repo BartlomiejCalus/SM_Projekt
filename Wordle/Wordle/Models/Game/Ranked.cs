@@ -67,6 +67,7 @@ namespace Wordle.Models.Game
                     {
                         currentRound = temp;
                     }
+                    wordInfo = GetWordInfo();
                     return currentRound;
                 }
                 catch (InvalidOperationException e)
@@ -98,6 +99,7 @@ namespace Wordle.Models.Game
         public int nextRound()
         {
             currentRound++;
+            wordInfo = GetWordInfo();
             return currentRound;
         }
 
