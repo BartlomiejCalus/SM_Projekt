@@ -1,16 +1,11 @@
 {
   "dependencies": {
-    "mssql1": {
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:WordleContextConnection"
-    },
     "secrets1": {
       "type": "secrets"
     },
-    "mssql2": {
+    "mssql1": {
       "type": "mssql",
-      "connectionId": "ConnectionStrings:WordleContextConnectionString",
-      "dynamicId": null
+      "connectionId": "ConnectionStrings:WordleContextConnection"
     }
   }
 }
