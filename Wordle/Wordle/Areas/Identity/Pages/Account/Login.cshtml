@@ -50,7 +50,13 @@
                         <span class="text-danger">Nieprawidłowe dane logowania.</span>
                     }
                     <p>
+                        <a class="odnosnik" id="forgot-password" asp-page="./ForgotPassword">Zapomniałeś hasła?</a>
+                    </p>
+                    <p>
                         <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="odnosnik">Zarejestruj się</a>
+                    </p>
+                    <p>
+                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation" class="odnosnik">Wyślij jeszcze raz kod aktywacyjny</a>
                     </p>
                 </form>
             </div>
