@@ -58,7 +58,7 @@ namespace Wordle.Models.Game
                 try
                 {
                     var entity = stat.UserStat.First(a => a.userId == userId);
-                    var temp = entity.todayPlays;
+                    var temp = entity.TodayPlays;
                     if(temp>rounds)
                     {
                         return 6;
@@ -83,7 +83,7 @@ namespace Wordle.Models.Game
                 try
                 {
                     var entity = stat.UserStat.First(a => a.userId == userId);
-                    entity.todayPlays = currentRound;
+                    entity.TodayPlays = currentRound;
                     stat.SaveChanges();
                 }
                 catch (InvalidOperationException e)

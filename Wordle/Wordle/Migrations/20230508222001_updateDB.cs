@@ -4,7 +4,7 @@
 
 namespace Wordle.Migrations
 {
-    public partial class Wordle13 : Migration
+    public partial class updateDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

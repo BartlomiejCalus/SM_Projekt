@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Wordle.Data;
 
@@ -11,9 +12,10 @@ using Wordle.Data;
 namespace Wordle.Migrations
 {
     [DbContext(typeof(WordleContext))]
-    partial class WordleContextModelSnapshot : ModelSnapshot
+    [Migration("20230426195744_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -260,70 +262,6 @@ namespace Wordle.Migrations
                     b.ToTable("GameStat");
                 });
 
-            modelBuilder.Entity("Wordle.Models.TopPointsStat", b =>
-                {
-                    b.Property<int>("topID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("topID"), 1L, 1);
-
-                    b.Property<int>("points")
-                        .HasColumnType("int");
-
-                    b.Property<string>("userID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("topID");
-
-                    b.HasIndex("userID")
-                        .IsUnique();
-
-                    b.ToTable("TopPointsStat");
-                });
-
-            modelBuilder.Entity("Wordle.Models.UserStat", b =>
-                {
-                    b.Property<int>("statsId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("statsId"), 1L, 1);
-
-                    b.Property<int>("TodayPlays")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("averagePlayTime")
-                        .HasColumnType("time");
-
-                    b.Property<long>("checks")
-                        .HasColumnType("bigint");
-
-                    b.Property<TimeSpan>("fastestWin")
-                        .HasColumnType("time");
-
-                    b.Property<long>("finishes")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("points")
-                        .HasColumnType("int");
-
-                    b.Property<string>("userId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<long>("wins")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("statsId");
-
-                    b.HasIndex("userId")
-                        .IsUnique();
-
-                    b.ToTable("UserStat");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -386,35 +324,9 @@ namespace Wordle.Migrations
                     b.Navigation("user");
                 });
 
-            modelBuilder.Entity("Wordle.Models.TopPointsStat", b =>
-                {
-                    b.HasOne("Wordle.Areas.Identity.Data.WordleUser", "user")
-                        .WithOne("TopPointsStat")
-                        .HasForeignKey("Wordle.Models.TopPointsStat", "userID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("user");
-                });
-
-            modelBuilder.Entity("Wordle.Models.UserStat", b =>
-                {
-                    b.HasOne("Wordle.Areas.Identity.Data.WordleUser", "user")
-                        .WithOne("UserStat")
-                        .HasForeignKey("Wordle.Models.UserStat", "userId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("user");
-                });
-
             modelBuilder.Entity("Wordle.Areas.Identity.Data.WordleUser", b =>
                 {
                     b.Navigation("GameStats");
-
-                    b.Navigation("TopPointsStat");
-
-                    b.Navigation("UserStat");
                 });
 #pragma warning restore 612, 618
         }

@@ -20,8 +20,8 @@ namespace Wordle.Models.Events
         {
             using (var stat = new GameStatController().context)
             {
-                var entity = stat.UserStat.Where(u => u.todayPlays > 0).ToList();
-                entity.ForEach(u => u.todayPlays = 0);
+                var entity = stat.UserStat.Where(u => u.TodayPlays > 0).ToList();
+                entity.ForEach(u => u.TodayPlays = 0);
                 await stat.SaveChangesAsync();
             }
         }

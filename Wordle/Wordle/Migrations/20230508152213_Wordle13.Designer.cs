@@ -308,7 +308,7 @@ namespace Wordle.Migrations
                     b.Property<int>("points")
                         .HasColumnType("int");
 
-                    b.Property<int>("todayPlays")
+                    b.Property<int>("TodayPlays")
                         .HasColumnType("int");
 
                     b.Property<string>("userId")

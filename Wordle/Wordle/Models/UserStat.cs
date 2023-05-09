@@ -31,7 +31,7 @@ namespace Wordle.Models
 
         public uint checks { get; set; }
 
-        public int todayPlays { get; set; }
+        public int TodayPlays { get; set; }
 
         public TimeSpan averagePlayTime { get; set; }
 

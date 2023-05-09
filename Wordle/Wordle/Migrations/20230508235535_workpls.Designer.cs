@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Wordle.Data;
 
@@ -11,9 +12,10 @@ using Wordle.Data;
 namespace Wordle.Migrations
 {
     [DbContext(typeof(WordleContext))]
-    partial class WordleContextModelSnapshot : ModelSnapshot
+    [Migration("20230508235535_workpls")]
+    partial class workpls
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -291,9 +293,6 @@ namespace Wordle.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("statsId"), 1L, 1);
 
-                    b.Property<int>("TodayPlays")
-                        .HasColumnType("int");
-
                     b.Property<TimeSpan>("averagePlayTime")
                         .HasColumnType("time");
 
@@ -307,6 +306,9 @@ namespace Wordle.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<int>("points")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TodayPlays")
                         .HasColumnType("int");
 
                     b.Property<string>("userId")
