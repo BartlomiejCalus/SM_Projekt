@@ -8,7 +8,8 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-            Witaj @UserManager.GetUserName(User)!
+
+        <span id="manage" class="nav-link" asp-area="Identity"  title="Manage"> </span>
     </li>
         <li class="nav-item">
             <a  class="nav-link" asp-area="Identity" asp-page="/Account/Stats" title="Stats">Statystyki</a>
@@ -18,6 +19,25 @@
             <button id="logout" type="submit" class="nav-link btn btn-link">Wyloguj</button>
         </form>
     </li>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                  <script>
+
+                        $.ajax({
+        type: "GET",
+        url: "/Home/GetUserNickname", // Zaktualizuj URL zgodnie z właściwym kontrolerem i akcją
+        success: function (response) {
+            // Kod wykonywany po pomyślnym zakończeniu żądania
+            console.log(response);
+                document.getElementById("manage").innerHTML += "Witaj "+response+"!";
+
+        },
+        error: function (error) {
+                alert("Wystąpił błąd:");
+        }
+    });
+
+    </script>
+
 }
 else
 {
